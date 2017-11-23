@@ -341,7 +341,7 @@
                                                 type: "all",
                                                 source: "Twitter",
                                                 sort: "recency",
-                                                since: since + '000',
+                                                since: since + '001',
                                                 until: until,
                                                 nPerPage: 2000,
                                                 Page: 1
@@ -384,6 +384,9 @@
 
                                         break;
                                     case 'Youtube':
+                                        since = String(user.socialTracker.lastUpdated.ytTs);
+                                        console.log("YT GP Last saved datein ST - now: ", since, until);
+
                                         $.ajax({
                                             method: "GET",
                                             url: "http://augreal.mklab.iti.gr:81/api/items",
@@ -396,8 +399,8 @@
                                                 type: "all",
                                                 source: "Youtube",
                                                 sort: "recency",
-                                                /*since: since,
-                                                until: until,*/
+                                                since: since+'001',
+                                                until: until,
                                                 nPerPage: 2000,
                                                 Page: 1
 
@@ -406,6 +409,8 @@
 
                                                 console.log("YT: ", arr);
 
+                                                // Fire callback
+                                                refreshDataCallback.requestComplete(true);
 
                                             }, error:function() { alert("Error, Could not get YT items");
                                                 // Fire callback
@@ -413,8 +418,7 @@
                                             }
                                         });
 
-                                        // Fire callback
-                                        refreshDataCallback.requestComplete(true);
+
 
                                         break;
                                     case 'GooglePlus':
@@ -434,7 +438,7 @@
                                                 type: "all",
                                                 source: "GooglePlus",
                                                 sort: "recency",
-                                                since: since+'000',
+                                                since: since+'001',
                                                 until: until,
                                                 nPerPage: 2000,
                                                 Page: 1
