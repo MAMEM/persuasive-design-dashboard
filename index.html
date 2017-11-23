@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Home</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700&amp;subset=cyrillic,greek" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/normalize.css" type="text/css">
+    <link rel="stylesheet" href="css/skeleton.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script src="js/jquery-3.2.1.min.js"></script>
+
+</head>
+<body>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId            : '340229343095066',
+            autoLogAppEvents : true,
+            xfbml            : true,
+            version          : 'v2.10'
+        });
+        FB.AppEvents.logPageView();
+        FB.Event.subscribe('auth.statusChange', function(response) {
+            FB.getLoginStatus(function(response) {
+                if (response.status === 'connected') {
+
+                    var token = response.authResponse.accessToken;
+
+
+                    // TODO Reminder: This is a code for recursive parse of paging
+                    /*var temp = [];
+                    var count = 0;
+                    function doSomething(response) {
+
+                        count++;
+
+                        if (typeof response.paging === "undefined" || typeof response.paging.next === "undefined" || count===5) {
+                            console.log("data collected");
+                            console.log("TEST FEED: ", temp);
+                        }else{
+
+                            temp.push(response.data);
+
+                            FB.api(response.paging.next, doSomething);
+
+                        }
+                    }
+                    FB.api('/me/feed', {
+                        access_token: token,
+                        fields: 'name, message, link, likes, shares, comments, created_time, permalink_url, status_type, type, source, picture'
+                    }, function(response) {
+                        console.log("TEST TOKEN (FEED): ", response);
+                        doSomething(response)
+                    });*/
+
+                    loadHomepage(true, token);
+                } else {
+                    loadHomepage(false);
+                }
+            });
+        });
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    } (document, 'script', 'facebook-jssdk'));
+</script>
+
+
+<div id="fb-login-section" class="section hero">
+    <div class="container">
+        <div class="row">
+            <div class="twelve columns">
+                <h4>Please login with Facebook to proceed</h4>
+                <br>
+                <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                <br>
+                <div class="whitespace-separator"><button id="noFbBtn" class="button"> Continue without FaceBook</button></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="whitespace-separator"></div>
+
+<div id="homepage-section" style="display: none;">
+    <div class="container">
+        <div class="row">
+            <div class="two columns">
+                <button class="interface-btn">
+                    <i class="material-icons text-XL">help</i>
+                    <span class="text-MD">HELP</span>
+                </button>
+                <p class="align-text-center text-caption">Contact us if you need help</p>
+            </div>
+            <div class="two columns">
+                <button class="interface-btn">
+                    <i class="material-icons text-XL">desktop_windows</i>
+                    <span class="text-MD">TRAINING</span>
+                </button>
+                <p class="align-text-center text-caption">Replay the training app to score better</p>
+            </div>
+            <div class="two columns">
+                <button class="interface-btn">
+                    <i class="material-icons text-XL">insert_chart</i>
+                    <span class="text-MD">SOCIAL&nbsp;TRACKER</span>
+                </button>
+                <p class="align-text-center text-caption">Access usage graphs</p>
+            </div>
+            <div class="six columns">
+                <span id="interfaceUsername" class="u-pull-right">Put username here</span>
+                <br>
+                <span class="u-pull-right">Total score</span>
+                <br>
+                <span class="u-pull-right"><b>6.0</b></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="whitespace-separator"></div>
+
+    <div class="container">
+        <div class="row content-style">
+
+            <div class="twelve columns">
+
+                <div class="six columns">
+                    <button class="tab-btn tab-btn-active" id="detailsPanelBtn">
+                        <span class="text-LG">DETAILS</span>
+                        <span class="text-SM align-text-center">See an overview of your score</span>
+                    </button>
+                </div>
+                <div class="six columns">
+                    <button class="tab-btn tab-btn-inactive" id="graphPanelBtn">
+                        <span class="text-LG">GRAPH</span>
+                        <span class="text-SM align-text-center">See how well you perform over time</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="twelve columns details-panel-style">
+
+                <div id="detailsPanel">
+
+                    <div class="three columns">
+                        <h5 class="section-heading">Score summary</h5>
+
+                        <div class="row align-text-center text-white">
+                            <div class="three columns"><span>Weeks</span></div>
+                            <div class="three columns"><i class="material-icons">people</i></div>
+                            <div class="three columns"><i class="material-icons">mood</i></div>
+                            <div class="three columns"><i class="material-icons">school</i></div>
+                        </div>
+
+                        <hr>
+
+                        <div id="table-content">
+                            <div class="row align-text-center text-white">
+                                <div class="three columns"><span>1</span></div>
+                                <div class="three columns"><span>8.2</span></div>
+                                <div class="three columns"><span>6.6</span></div>
+                                <div class="three columns"><span>7</span></div>
+                            </div>
+
+                            <hr class="thin-separator">
+                            <div class="row align-text-center text-white">
+                                <div class="three columns"><span>2</span></div>
+                                <div class="three columns"><span>8.2</span></div>
+                                <div class="three columns"><span>6.6</span></div>
+                                <div class="three columns"><span>7</span></div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="nine columns">
+                        <h5 class="section-heading">How to get better</h5>
+
+                        <div class="row">
+                            <div class="twelve columns text-white">
+                                <i class="material-icons text-LG" style="vertical-align: bottom">people</i>
+                                <span class="text-MD">Participation & Social</span>
+                                <hr>
+                                <p> sdjfhdskjfhdsjhds </p>
+                                <p> sadfw39423rdews </p>
+
+                                <br>
+
+                                <i class="material-icons text-LG" style="vertical-align: bottom">mood</i>
+                                <span class="text-MD">Empowerment & Wellbeing</span>
+                                <hr>
+                                <br>
+
+                                <i class="material-icons text-LG" style="vertical-align: bottom">school</i>
+                                <span class="text-MD">Education & Employment</span>
+                                <hr>
+                                <br>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div id="graphPanel" style="display: none">
+
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
+<script>
+    // Initialize Firebase
+    // TODO get apiKey & projectId information from GTW (along with email & password)
+    var config = {
+        apiKey: "AIzaSyBMa9gSXsoDo27S7P959QZYf3rJBGDGEIA",
+        projectId: "mamem-phase2-fall17"
+    };
+    config.authDomain = config.projectId + ".firebaseapp.com";
+    config.databaseURL = "https://" + config.projectId + ".firebaseio.com";
+    config.storageBucket = config.projectId + ".appspot.com";
+
+    firebase.initializeApp(config);
+</script>
+<script type="text/javascript" src="js/init.js"></script>
+<script type="text/javascript">
+
+    // Set global vars
+    var initializationCallback;
+    var currentUser;
+
+    $( "#noFbBtn" ).click(function() {
+        loadHomepage(false);
+    });
+
+    $( "#detailsPanelBtn" ).click(function() {
+        $( "#detailsPanel" ).show();
+        $( "#graphPanel" ).hide();
+        $( "#detailsPanelBtn" ).addClass('tab-btn-active').removeClass('tab-btn-inactive');
+        $( "#graphPanelBtn" ).removeClass('tab-btn-active').addClass('tab-btn-inactive');
+    });
+
+    $( "#graphPanelBtn" ).click(function() {
+        $( "#detailsPanel" ).hide();
+        $( "#graphPanel" ).show();
+        $( "#graphPanelBtn" ).addClass('tab-btn-active').removeClass('tab-btn-inactive');
+        $( "#detailsPanelBtn" ).removeClass('tab-btn-active').addClass('tab-btn-inactive');
+    });
+
+
+
+    function loadHomepage(fbIsLoggedIn, token) {
+
+        user.hasFB = fbIsLoggedIn;
+
+        $("#fb-login-section").hide();
+
+        initializationCallback = new MyRequestsCompleted({
+            numRequest: 2,
+            singleCallback: function() {
+
+                // 3. Authenticate with Social Tracker - Get Collection
+                $.ajax({
+                    method: "GET",
+                    url: "http://augreal.mklab.iti.gr:81/api/collection/"+ownerId,
+                    success: function(data) {
+
+                        console.log(user.ST.sources);
+
+                        var refreshDataCallback = new MyRequestsCompleted({
+                            numRequest: user.ST.sources,
+                            singleCallback: function() {
+
+                                console.log("CALLBACK 2");
+
+                                console.log(user.ST.sources);
+
+                                // 4. Upload info to FIREBASE.
+
+                                // 5. Load new information from FIREBASE.
+
+                                // 6. Render Dashboard.
+                                $("#homepage-section").show();
+
+
+                            }
+                        });
+
+                        // Owner not found, create owner collection and log everything from this timestamp and onward!
+                        // Maybe this will never happen but let's handle it if the user creates a FB account in the future!
+                        if (data.count === 0) {
+
+                            // TODO Add FIREBASE user details -> collection name.
+                            alert("Social Tracker Collection not found. Please add a Collection!");
+
+
+                        } else {
+
+                            var i, socialSource = '';
+                            for (i=0; i < data.collections[0].accounts.length; i++) {
+
+                                socialSource = data.collections[0].accounts[i].source;
+                                var until = String(Math.floor(Date.now()));
+                                var since;
+
+                                console.log(socialSource);
+
+                                // Facebook not applicable, since we don't save FB data on the Social Tracker.
+                                switch(socialSource) {
+
+                                    case 'Twitter':
+
+                                        since = String(user.socialTracker.lastUpdated.twTs);
+                                        console.log("ST TWITTER Last saved datein ST - now: ", since, until);
+
+                                        $.ajax({
+                                            method: "GET",
+                                            url: "http://augreal.mklab.iti.gr:81/api/items",
+                                            data: {
+                                                collection: data.collections[0]._id,
+                                                language: 'all',
+                                                topics: '*',
+                                                unique: false,
+                                                original: "all",
+                                                type: "all",
+                                                source: "Twitter",
+                                                sort: "recency",
+                                                since: since + '000',
+                                                until: until,
+                                                nPerPage: 2000,
+                                                Page: 1
+
+                                            },
+                                            success: function (arr) {
+
+                                                console.log("TW: ", arr);
+
+                                                if (arr.length !== 0) {
+
+                                                    var tweets = createTwitterItems(arr);
+
+                                                    var reference = firebase.database().ref('users/' + currentUser.uid + '/socialTracker/twitter/tweets');
+                                                    reference.once('value').then(function (snapshot) {
+
+                                                        // Upload Twitter items
+                                                        for (var i in tweets) { reference.child(tweets[i].publicationTime).set(tweets[i]); }
+
+                                                        // Update timestamp!
+                                                        firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
+                                                            "twTs": tweets[0].publicationTime
+                                                        });
+
+                                                        console.log("Twitter Data collection - COMPLETE");
+
+                                                        // Fire callback
+                                                        refreshDataCallback.requestComplete(true);
+                                                    });
+
+                                                } else { refreshDataCallback.requestComplete(true); }
+
+                                            }, error:function() { alert("Error, Could not get Twitter items");
+                                                // Fire callback
+                                                refreshDataCallback.requestComplete(true);
+                                            }
+                                        });
+
+
+
+                                        break;
+                                    case 'Youtube':
+                                        $.ajax({
+                                            method: "GET",
+                                            url: "http://augreal.mklab.iti.gr:81/api/items",
+                                            data: {
+                                                collection: data.collections[0]._id,
+                                                language: 'all',
+                                                topics: '*',
+                                                unique: false,
+                                                original: "all",
+                                                type: "all",
+                                                source: "Youtube",
+                                                sort: "recency",
+                                                /*since: since,
+                                                until: until,*/
+                                                nPerPage: 2000,
+                                                Page: 1
+
+                                            },
+                                            success: function (arr) {
+
+                                                console.log("YT: ", arr);
+
+
+                                            }, error:function() { alert("Error, Could not get YT items");
+                                                // Fire callback
+                                                refreshDataCallback.requestComplete(true);
+                                            }
+                                        });
+
+                                        // Fire callback
+                                        refreshDataCallback.requestComplete(true);
+
+                                        break;
+                                    case 'GooglePlus':
+
+                                        since = String(user.socialTracker.lastUpdated.gpTs);
+                                        console.log("ST GP Last saved datein ST - now: ", since, until);
+
+                                        $.ajax({
+                                            method: "GET",
+                                            url: "http://augreal.mklab.iti.gr:81/api/items",
+                                            data: {
+                                                collection: data.collections[0]._id,
+                                                language: 'all',
+                                                topics: '*',
+                                                unique: false,
+                                                original: "all",
+                                                type: "all",
+                                                source: "GooglePlus",
+                                                sort: "recency",
+                                                since: since+'000',
+                                                until: until,
+                                                nPerPage: 2000,
+                                                Page: 1
+
+                                            },
+                                            success: function (arr) {
+
+                                                console.log("GP: ", arr);
+
+                                                if (arr.length !== 0) {
+
+                                                    var gPosts = createGooglePlusItems(arr);
+
+                                                    var reference = firebase.database().ref('users/' + currentUser.uid + '/socialTracker/googlePlus/posts');
+                                                    reference.once('value').then(function (snapshot) {
+
+                                                        // Upload Twitter items
+                                                        for (var i in gPosts) { reference.child(gPosts[i].publicationTime).set(gPosts[i]); }
+
+                                                        // Update timestamp!
+                                                        firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
+                                                            "gpTs": gPosts[0].publicationTime
+                                                        });
+
+                                                        console.log("GP Data collection - COMPLETE");
+
+                                                        // Fire callback
+                                                        refreshDataCallback.requestComplete(true);
+                                                    });
+
+                                                } else { refreshDataCallback.requestComplete(true); }
+
+
+                                            }, error:function() { alert("Error, Could not get G+ items");
+                                                // Fire callback
+                                                refreshDataCallback.requestComplete(true);
+                                            }
+                                        });
+
+                                        // Fire callback
+                                        refreshDataCallback.requestComplete(true);
+
+                                        break;
+                                    default:
+
+                                }
+                            }
+                        }
+
+
+
+                    }, error:function() { alert("Error, Could not load Social Tracker API"); }
+                });
+
+            }
+        });
+
+
+        // 1. Authenticate with Firebase
+        firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function() {
+
+            currentUser = firebase.auth().currentUser;
+
+            if (currentUser !== null) {
+
+                // TODO add username when available
+                $("#interfaceUsername").text('>>> User Signed in to FRB');
+
+
+                return firebase.database().ref('/users/' + currentUser.uid ).once('value').then(function(snapshot) {
+
+                    // TODO GET + '/user-details'
+                    /*user.nickname = snapshot.val().userDetails.nickname;
+                  user.gender = snapshot.val().userDetails.gender;
+                  user.age = snapshot.val().userDetails.age;*/
+
+                    // Check if there is ST data saved in Firebase
+                    if (!snapshot.val().socialTracker) {
+                        user.hasST = false;
+                    } else {
+                        user.hasST = true;
+                        user.socialTracker.lastUpdated = snapshot.val().socialTracker.lastUpdated;
+
+                        if (!user.socialTracker.lastUpdated.fbTs && !user.hasFB) {
+                            user.socialTracker.lastUpdated.fbTs = snapshot.val().general.starts[0].date;
+                        }
+
+                    }
+
+                    if (user.hasFB) {
+
+                        // 1a. Get FB user data
+                        FB.api('/me', {
+                            access_token: token,
+                            fields: 'id, name, locale, email, picture, link, friends'
+
+                        }, function(response) {
+
+                            user.FB.userDetails = {
+                                email: response.email,
+                                name: response.name,
+                                avatar: response.picture.data.url,
+                                friends: response.friends.summary.total_count,
+                                id: response.id,
+                                profile: response.link,
+                                locale: response.locale
+                            };
+
+                            console.log("Got FB user information");
+
+                            // 1b. Get FB user posts
+                            FB.api('/me/feed', {
+                                access_token: token,
+                                since: user.socialTracker.lastUpdated.fbTs,
+                                fields: 'name, message, link, likes, shares, comments, created_time, permalink_url, status_type, type, source, picture' // Unused: message_tags
+                            }, function(response) { getAllFBPostsRecursive(response); });
+                        });
+
+                        function getAllFBPostsRecursive(response) {
+
+                            if (typeof response.paging === "undefined" || typeof response.paging.next === "undefined") {
+
+
+                                if (user.FB.data.length !== 0) {
+
+                                    // Flatten results to single array
+                                    user.FB.data = [].concat.apply([], user.FB.data);
+                                    console.log("FB DATA FLAT: ", user.FB.data);
+
+                                    var fbPosts = createFBItems(user.FB.data);
+
+                                    console.log("FB Posts to upload: ", fbPosts);
+
+                                    var reference = firebase.database().ref('users/' + currentUser.uid + '/socialTracker/facebook/posts');
+                                    reference.once('value').then(function (snapshot) {
+
+                                        // Upload FB items
+                                        for (var i in fbPosts) {
+                                            reference.child(fbPosts[i].publicationTime).set(fbPosts[i]);
+                                        }
+
+                                        // Update timestamp!
+                                        firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
+                                            "fbTs": fbPosts[0].publicationTime
+                                        });
+
+                                        console.log("FB data collection - COMPLETE");
+
+                                        // Fire callback
+                                        initializationCallback.requestComplete(true);
+                                    });
+                                } else {
+                                    // Fire callback
+                                    initializationCallback.requestComplete(true);
+                                }
+
+                            } else {
+                                // Read all data
+                                user.FB.data.push(response.data);
+                                FB.api(response.paging.next, getAllFBPostsRecursive);
+
+                            }
+                        }
+
+                    } else {
+
+                        console.log("Νot FB logged in");
+
+                        // Fire callback - Facebook OFF
+                        initializationCallback.requestComplete(true);
+                    }
+
+                });
+
+            } else {
+                alert("Firebase: Not signed in. Please try again later!");
+                return 0;
+            }
+        });
+
+        // 2. Check ST
+        $.ajax({
+            method: "GET",
+            url: "http://augreal.mklab.iti.gr:81/api/collection/"+ownerId,
+            success: function(data) {
+
+                user.ST.sources = data.collections[0].accounts.length;
+
+                // Fire callback 2 - Firebase logged-in
+                initializationCallback.requestComplete(true);
+
+            }, error:function() { alert("Error, Could not load Social Tracker API"); }
+        });
+
+
+    }
+
+    function createFBItems(arr) {
+
+        var posts = [];
+
+        for (var i=0; i < arr.length; i++) {
+
+            // Remove new line chars from title
+            var post_title = !!arr[i].message ? arr[i].message.replace(/\n/g, " ") : "Shared post: "+ arr[i].link;
+
+            var shared_post = arr[i].status_type === "shared_story";
+            var has_image = arr[i].type === "photo";
+            var has_video = arr[i].type === "video";
+
+            var media_post = (has_image | has_video);
+
+            var pub_time = String(Date.parse(arr[i].created_time));
+            pub_time = parseInt(pub_time.slice(0, -3), 10);
+
+            posts.push({
+                title: post_title,
+                id: arr[i].id,
+                pageUrl: arr[i].permalink_url,
+                publicationTime: pub_time,
+                original: !shared_post,
+                likes: arr[i].likes ? arr[i].likes : 0,
+                shares: arr[i].shares ? arr[i].shares : 0,
+                comments: arr[i].comments ? arr[i].comments : 0
+            });
+
+            posts[posts.length-1].type = media_post ? 'mediaItem' : 'item' ;
+
+            if (media_post) {
+                posts[posts.length-1].mediaType = has_image ? 'image' : 'video';
+                posts[posts.length-1].mediaUrl = has_image ?  arr[i].picture :  arr[i].source;
+                posts[posts.length-1].thumbnail = arr[i].picture;
+            }
+        }
+
+        return posts;
+    }
+
+    function createTwitterItems(arr) {
+
+        var items = [], retweet;
+
+        for (var i=0; i < arr.length; i++) {
+
+            // Remove new line chars from title
+            retweet = !arr[i].original;
+
+            var pub_time = String(arr[i].publicationTime);
+            pub_time = parseInt(pub_time.slice(0, -3), 10);
+
+            items.push({
+                title: arr[i].cleanTitle,
+                id: arr[i].id,
+                pageUrl: arr[i].pageUrl,
+                publicationTime: pub_time,
+                original: !retweet,
+                rt: retweet,
+                mentions: arr[i].mentions,
+                tags: arr[i].tags,
+                likes: arr[i].likes ? arr[i].likes : 0,
+                shares: arr[i].shares ? arr[i].shares : 0,
+                comments: arr[i].comments ? arr[i].comments : 0,
+                type: arr[i].type
+            });
+
+            if (items[items.length-1].type === 'mediaItem') {
+                items[items.length-1].mediaType = arr[i].mediaType;
+                items[items.length-1].mediaUrl = arr[i].mediaUrl;
+                items[items.length-1].thumbnail = arr[i].thumbnail;
+            }
+
+            if (retweet) {
+                items[items.length-1].reference = arr[i].reference;
+                items[items.length-1].referencedUserId = arr[i].referencedUserId;
+            }
+        }
+
+        return items;
+    }
+
+    function createGooglePlusItems(arr) {
+
+        var items = [], original;
+
+        for (var i=0; i < arr.length; i++) {
+
+            original = arr[i].original;
+
+            var pub_time = String(arr[i].publicationTime);
+            pub_time = parseInt(pub_time.slice(0, -3), 10);
+
+            items.push({
+                title: arr[i].cleanTitle,
+                id: arr[i].id,
+                pageUrl: arr[i].pageUrl,
+                publicationTime: pub_time,
+                original: original,
+                tags: arr[i].tags,
+                likes: arr[i].likes ? arr[i].likes : 0,
+                shares: arr[i].shares ? arr[i].shares : 0,
+                comments: arr[i].comments ? arr[i].comments : 0,
+                type: arr[i].type
+            });
+
+            if (items[items.length-1].type === 'mediaItem') {
+                items[items.length-1].mediaType = arr[i].mediaType;
+                items[items.length-1].mediaUrl = arr[i].mediaUrl;
+                items[items.length-1].thumbnail = arr[i].thumbnail;
+            }
+
+            if (!original) {
+                items[items.length-1].reference = arr[i].reference;
+                items[items.length-1].referencedUserId = arr[i].referencedUserId;
+            }
+        }
+        return items;
+    }
+
+
+</script>
+<script type="text/javascript" src="js/scripts.js"></script>
+</body>
+</html>

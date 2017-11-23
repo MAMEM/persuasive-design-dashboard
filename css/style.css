@@ -1,0 +1,140 @@
+p {
+    margin-bottom: 4px;
+}
+
+.button {
+    border-radius: 100px;
+}
+.whitespace-separator {
+    margin: 48px 0 48px 0;
+}
+
+.section {
+    padding: 8rem 0 7rem;
+    text-align: center;
+}
+.section-heading,
+.section-description {
+    margin-bottom: 1.2rem;
+}
+
+.section-heading {
+    font-weight: 500;
+    font-style: italic;
+    color: white;
+    letter-spacing: normal;
+}
+
+.thin-separator {
+    border-top: 1px solid #E1E1E1;
+}
+
+/* Values
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.value-multiplier {
+    margin-bottom: .5rem;
+    color: #11DFC7;
+}
+.value-heading {
+    margin-bottom: .3rem;
+}
+.value-description {
+    opacity: .8;
+    font-weight: 300;
+}
+
+.text-white {
+    color: white;
+}
+
+.text-XL {
+    font-size: 48px;
+}
+
+.text-LG {
+    font-size: 32px;
+    font-weight: 500;
+}
+
+.text-MD {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.text-SM {
+    font-size: 14px;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 120%;
+}
+
+.text-caption {
+    font-size: 14px;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 120%;
+    color: rgba(0,0,0,0.54);
+}
+
+.align-text-center {
+    text-align: center;
+    display: block;
+}
+
+.interface-btn {
+    background-color:rgb(80,186,166);
+    padding: 8px;
+    border: none;
+    color: white;
+    width: 100%;
+    height: 120px;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.23);
+}
+.interface-btn i {
+    display: block;
+}
+
+.interface-btn:hover, .interface-btn:active, .interface-btn:enabled,
+.tab-btn:hover, .tab-btn:active, .tab-btn:enabled {
+    color: white;
+}
+
+.tab-btn {
+    border: none;
+    border-radius: 0;
+    width: 100%;
+    height: 90px;
+}
+.tab-btn-active {
+    background-color:rgb(80,186,166);
+
+}
+.tab-btn-active span {
+    color: white;
+}
+
+.tab-btn-inactive {
+    background-color: #BDBDBD;
+}
+
+.tab-btn-inactive:hover {
+    background-color:rgb(80,186,166);
+}
+
+.tab-btn-inactive span {
+    color: #757575;
+}
+
+.tab-btn-inactive:hover span {
+    color: white;
+}
+
+.content-style {
+    background-color: #607D8B;
+    box-shadow: 0 2px 2px rgba(0,0,0,0.23);
+}
+
+.details-panel-style {
+    padding: 24px;
+}
