@@ -30,38 +30,9 @@
                 if (response.status === 'connected') {
 
                     var token = response.authResponse.accessToken;
-
-
-                    // TODO Reminder: This is a code for recursive parse of paging
-                    /*var temp = [];
-                    var count = 0;
-                    function doSomething(response) {
-
-                        count++;
-
-                        if (typeof response.paging === "undefined" || typeof response.paging.next === "undefined" || count===5) {
-                            console.log("data collected");
-                            console.log("TEST FEED: ", temp);
-                        }else{
-
-                            temp.push(response.data);
-
-                            FB.api(response.paging.next, doSomething);
-
-                        }
-                    }
-                    FB.api('/me/feed', {
-                        access_token: token,
-                        fields: 'name, message, link, likes, shares, comments, created_time, permalink_url, status_type, type, source, picture'
-                    }, function(response) {
-                        console.log("TEST TOKEN (FEED): ", response);
-                        doSomething(response)
-                    });*/
-
                     loadHomepage(true, token);
-                } else {
-                    loadHomepage(false);
-                }
+
+                } else { loadHomepage(false); }
             });
         });
     };
@@ -289,8 +260,6 @@
 
                                 console.log("CALLBACK 2");
 
-                                console.log(user.ST.sources);
-
                                 // 4. Upload info to FIREBASE.
 
                                 // 5. Load new information from FIREBASE.
@@ -327,7 +296,7 @@
                                     case 'Twitter':
 
                                         since = String(user.socialTracker.lastUpdated.twTs);
-                                        console.log("ST TWITTER Last saved datein ST - now: ", since, until);
+                                        console.log("ST TWITTER Last saved date - now: ", since, until);
 
                                         $.ajax({
                                             method: "GET",
@@ -385,7 +354,7 @@
                                         break;
                                     case 'Youtube':
                                         since = String(user.socialTracker.lastUpdated.ytTs);
-                                        console.log("YT GP Last saved datein ST - now: ", since, until);
+                                        console.log("ST YOUTUBE Last saved date - now: ", since, until);
 
                                         $.ajax({
                                             method: "GET",
@@ -424,7 +393,7 @@
                                     case 'GooglePlus':
 
                                         since = String(user.socialTracker.lastUpdated.gpTs);
-                                        console.log("ST GP Last saved datein ST - now: ", since, until);
+                                        console.log("ST GPLUS Last saved date - now: ", since, until);
 
                                         $.ajax({
                                             method: "GET",
@@ -483,16 +452,11 @@
 
                                         break;
                                     default:
-
                                 }
                             }
                         }
-
-
-
                     }, error:function() { alert("Error, Could not load Social Tracker API"); }
                 });
-
             }
         });
 
@@ -635,128 +599,6 @@
 
 
     }
-
-    function createFBItems(arr) {
-
-        var posts = [];
-
-        for (var i=0; i < arr.length; i++) {
-
-            // Remove new line chars from title
-            var post_title = !!arr[i].message ? arr[i].message.replace(/\n/g, " ") : "Shared post: "+ arr[i].link;
-
-            var shared_post = arr[i].status_type === "shared_story";
-            var has_image = arr[i].type === "photo";
-            var has_video = arr[i].type === "video";
-
-            var media_post = (has_image | has_video);
-
-            var pub_time = String(Date.parse(arr[i].created_time));
-            pub_time = parseInt(pub_time.slice(0, -3), 10);
-
-            posts.push({
-                title: post_title,
-                id: arr[i].id,
-                pageUrl: arr[i].permalink_url,
-                publicationTime: pub_time,
-                original: !shared_post,
-                likes: arr[i].likes ? arr[i].likes : 0,
-                shares: arr[i].shares ? arr[i].shares : 0,
-                comments: arr[i].comments ? arr[i].comments : 0
-            });
-
-            posts[posts.length-1].type = media_post ? 'mediaItem' : 'item' ;
-
-            if (media_post) {
-                posts[posts.length-1].mediaType = has_image ? 'image' : 'video';
-                posts[posts.length-1].mediaUrl = has_image ?  arr[i].picture :  arr[i].source;
-                posts[posts.length-1].thumbnail = arr[i].picture;
-            }
-        }
-
-        return posts;
-    }
-
-    function createTwitterItems(arr) {
-
-        var items = [], retweet;
-
-        for (var i=0; i < arr.length; i++) {
-
-            // Remove new line chars from title
-            retweet = !arr[i].original;
-
-            var pub_time = String(arr[i].publicationTime);
-            pub_time = parseInt(pub_time.slice(0, -3), 10);
-
-            items.push({
-                title: arr[i].cleanTitle,
-                id: arr[i].id,
-                pageUrl: arr[i].pageUrl,
-                publicationTime: pub_time,
-                original: !retweet,
-                rt: retweet,
-                mentions: arr[i].mentions,
-                tags: arr[i].tags,
-                likes: arr[i].likes ? arr[i].likes : 0,
-                shares: arr[i].shares ? arr[i].shares : 0,
-                comments: arr[i].comments ? arr[i].comments : 0,
-                type: arr[i].type
-            });
-
-            if (items[items.length-1].type === 'mediaItem') {
-                items[items.length-1].mediaType = arr[i].mediaType;
-                items[items.length-1].mediaUrl = arr[i].mediaUrl;
-                items[items.length-1].thumbnail = arr[i].thumbnail;
-            }
-
-            if (retweet) {
-                items[items.length-1].reference = arr[i].reference;
-                items[items.length-1].referencedUserId = arr[i].referencedUserId;
-            }
-        }
-
-        return items;
-    }
-
-    function createGooglePlusItems(arr) {
-
-        var items = [], original;
-
-        for (var i=0; i < arr.length; i++) {
-
-            original = arr[i].original;
-
-            var pub_time = String(arr[i].publicationTime);
-            pub_time = parseInt(pub_time.slice(0, -3), 10);
-
-            items.push({
-                title: arr[i].cleanTitle,
-                id: arr[i].id,
-                pageUrl: arr[i].pageUrl,
-                publicationTime: pub_time,
-                original: original,
-                tags: arr[i].tags,
-                likes: arr[i].likes ? arr[i].likes : 0,
-                shares: arr[i].shares ? arr[i].shares : 0,
-                comments: arr[i].comments ? arr[i].comments : 0,
-                type: arr[i].type
-            });
-
-            if (items[items.length-1].type === 'mediaItem') {
-                items[items.length-1].mediaType = arr[i].mediaType;
-                items[items.length-1].mediaUrl = arr[i].mediaUrl;
-                items[items.length-1].thumbnail = arr[i].thumbnail;
-            }
-
-            if (!original) {
-                items[items.length-1].reference = arr[i].reference;
-                items[items.length-1].referencedUserId = arr[i].referencedUserId;
-            }
-        }
-        return items;
-    }
-
 
 </script>
 <script type="text/javascript" src="js/scripts.js"></script>
