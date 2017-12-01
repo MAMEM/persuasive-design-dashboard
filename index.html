@@ -250,12 +250,12 @@
                             numRequest: user.ST.sources,
                             singleCallback: function() {
 
-                                var reference = firebase.database().ref('users/' + currentUser.uid + '/general');
-                                reference.once('value').then(function (snapshot) {
+                                var reference = firebase.database().ref('users/' + currentUser.uid + '/general/dashboardVisits');
+                                var ts = Math.floor(Date.now()/1000);
+                                var date = String(new Date(ts));
 
-                                    var visits = snapshot.val().dashboardVisits ? parseInt(snapshot.val().dashboardVisits, 10) + 1 : 1;
-                                    reference.update({ "dashboardVisits": visits });
-
+                                reference.child(ts).set({
+                                    "date": date
                                 });
 
 
