@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Home</title>
+    <title>Dashboard</title>
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,500i,700&amp;subset=cyrillic,greek" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -79,13 +79,6 @@
                     <span class="text-MD">TRAINING</span>
                 </button>
                 <p class="align-text-center text-caption">Replay the training app to score better</p>
-            </div>
-            <div class="two columns">
-                <button class="interface-btn">
-                    <i class="material-icons text-XL">insert_chart</i>
-                    <span class="text-MD">SOCIAL&nbsp;TRACKER</span>
-                </button>
-                <p class="align-text-center text-caption">Access usage graphs</p>
             </div>
             <div class="six columns">
                 <span id="interfaceUsername" class="u-pull-right">Put username here</span>
@@ -196,7 +189,9 @@
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
-<script>
+<script type="text/javascript" src="js/init.js"></script>
+<script type="text/javascript">
+
     // Initialize Firebase
     // TODO get apiKey & projectId information from GTW (along with email & password)
     var config = {
@@ -208,9 +203,6 @@
     config.storageBucket = config.projectId + ".appspot.com";
 
     firebase.initializeApp(config);
-</script>
-<script type="text/javascript" src="js/init.js"></script>
-<script type="text/javascript">
 
     // Set global vars
     var initializationCallback;
@@ -258,7 +250,14 @@
                             numRequest: user.ST.sources,
                             singleCallback: function() {
 
-                                console.log("CALLBACK 2");
+                                var reference = firebase.database().ref('users/' + currentUser.uid + '/general');
+                                reference.once('value').then(function (snapshot) {
+
+                                    var visits = snapshot.val().dashboardVisits ? parseInt(snapshot.val().dashboardVisits, 10) + 1 : 1;
+                                    reference.update({ "dashboardVisits": visits });
+
+                                });
+
 
                                 // 4. Upload info to FIREBASE.
 
@@ -486,9 +485,7 @@
                         user.hasST = true;
                         user.socialTracker.lastUpdated = snapshot.val().socialTracker.lastUpdated;
 
-                        if (!user.socialTracker.lastUpdated.fbTs && !user.hasFB) {
-                            user.socialTracker.lastUpdated.fbTs = snapshot.val().general.starts[0].date;
-                        }
+                        if (!user.socialTracker.lastUpdated.fbTs && !user.hasFB) { user.socialTracker.lastUpdated.fbTs = snapshot.val().general.starts[0].date; }
 
                     }
 
@@ -596,8 +593,6 @@
 
             }, error:function() { alert("Error, Could not load Social Tracker API"); }
         });
-
-
     }
 
 </script>
