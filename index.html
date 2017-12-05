@@ -68,17 +68,24 @@
         <div class="row">
             <div class="two columns">
                 <button class="interface-btn">
-                    <i class="material-icons text-XL">help</i>
-                    <span class="text-MD">HELP</span>
-                </button>
-                <p class="align-text-center text-caption">Contact us if you need help</p>
-            </div>
-            <div class="two columns">
-                <button class="interface-btn">
                     <i class="material-icons text-XL">desktop_windows</i>
                     <span class="text-MD">TRAINING</span>
                 </button>
                 <p class="align-text-center text-caption">Replay the training app to score better</p>
+            </div>
+            <div class="two columns">
+                <button class="interface-btn">
+                    <i class="material-icons text-XL">person</i>
+                    <span class="text-MD">PROFILE</span>
+                </button>
+                <p class="align-text-center text-caption">Edit your information</p>
+            </div>
+            <div class="two columns">
+                <button class="interface-btn">
+                    <i class="material-icons text-XL">help</i>
+                    <span class="text-MD">HELP</span>
+                </button>
+                <p class="align-text-center text-caption">Contact us if you need help</p>
             </div>
             <div class="six columns">
                 <span id="interfaceUsername" class="u-pull-right">Put username here</span>
@@ -119,7 +126,6 @@
                         <h5 class="section-heading">Score summary</h5>
 
                         <div class="row align-text-center text-white">
-                            <div class="three columns"><span>Weeks</span></div>
                             <div class="three columns"><i class="material-icons">people</i></div>
                             <div class="three columns"><i class="material-icons">mood</i></div>
                             <div class="three columns"><i class="material-icons">school</i></div>
@@ -129,7 +135,6 @@
 
                         <div id="table-content">
                             <div class="row align-text-center text-white">
-                                <div class="three columns"><span>1</span></div>
                                 <div class="three columns"><span>8.2</span></div>
                                 <div class="three columns"><span>6.6</span></div>
                                 <div class="three columns"><span>7</span></div>
@@ -137,7 +142,6 @@
 
                             <hr class="thin-separator">
                             <div class="row align-text-center text-white">
-                                <div class="three columns"><span>2</span></div>
                                 <div class="three columns"><span>8.2</span></div>
                                 <div class="three columns"><span>6.6</span></div>
                                 <div class="three columns"><span>7</span></div>
@@ -266,8 +270,6 @@
                                     console.log(snapshot.val().pageActivity);
 
                                 });
-
-
 
                                 $("#homepage-section").show();
 
@@ -471,16 +473,11 @@
 
             if (currentUser !== null) {
 
-                // TODO add username when available
-                $("#interfaceUsername").text('>>> User Signed in to FRB');
-
-
                 return firebase.database().ref('/users/' + currentUser.uid ).once('value').then(function(snapshot) {
 
-                    // TODO GET + '/user-details'
-                    /*user.nickname = snapshot.val().userDetails.nickname;
-                  user.gender = snapshot.val().userDetails.gender;
-                  user.age = snapshot.val().userDetails.age;*/
+                    user.details = snapshot.val().userDetails;
+
+                    $("#interfaceUsername").text(user.details.nickname);
 
                     // Check if there is ST data saved in Firebase
                     if (!snapshot.val().socialTracker) {

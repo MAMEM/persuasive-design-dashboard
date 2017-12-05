@@ -65,9 +65,7 @@
                         </div>
                     </div>
                 </div>
-
             </form>
-
         </div>
 
         <div class="six columns">
@@ -173,20 +171,12 @@
                 document.getElementById("registerButton").disabled = true;
                 document.getElementById("registerButton").className += " button-disabled";
 
-
-
-            } else {
-
-                alert('Null user');
-            }
+            } else { alert('Null user'); }
 
         }, function(error) {
             alert(error.code);
-            window.location.href = currentUrl;
             return error.code;
         });
-
-        // Do loading to next page after data are saved in FIREBASE
     };
 
 </script>

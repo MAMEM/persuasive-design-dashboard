@@ -5,6 +5,7 @@ var ownerId = 'tasos';
 
 // TODO load email and pass automatically from GTW.
 var user = [];
+user.details = [];
 user.socialTracker = [];
 user.FB = [];
 user.FB.data = [];
