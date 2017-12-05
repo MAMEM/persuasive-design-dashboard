@@ -259,13 +259,17 @@
                                 });
 
 
-                                // 4. Upload info to FIREBASE.
+                                // 1. Mail Activity
+                                reference = firebase.database().ref('users/' + currentUser.uid);
+                                reference.once('value').then(function (snapshot) {
 
-                                // 5. Load new information from FIREBASE.
+                                    console.log(snapshot.val().pageActivity);
 
-                                // 6. Render Dashboard.
+                                });
+
+
+
                                 $("#homepage-section").show();
-
 
                             }
                         });

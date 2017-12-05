@@ -5,6 +5,17 @@ p {
 .button {
     border-radius: 100px;
 }
+
+.button-block {
+    width: 100%;
+    height: 48px;
+    margin-top: 24px;
+}
+
+.button-primary {
+    font-size: 18px;
+}
+
 .whitespace-separator {
     margin: 48px 0 48px 0;
 }
