@@ -16,6 +16,11 @@ p {
     font-size: 18px;
 }
 
+.button-disabled {
+    pointer-events: none;
+    opacity: .54;
+}
+
 .whitespace-separator {
     margin: 48px 0 48px 0;
 }
