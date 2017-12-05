@@ -14,7 +14,7 @@
 
     <div class="whitespace-separator"></div>
 
-    <h1>Enter participants information</h1>
+    <h1>Enter participants Information</h1>
 
     <br>
 
@@ -73,7 +73,7 @@
 
                 <div class="twelve columns">
 
-                    <h5>Language - Localization Settings</h5>
+                    <h5>Language & Localization</h5>
 
                     <div class="two columns">
                         <label for="englishRadioBtn">English</label>
@@ -134,7 +134,6 @@
 <script>
 
     // Initialize Firebase
-    // TODO get apiKey & projectId information from GTW (along with email & password)
     var config = {
         apiKey: "AIzaSyBMa9gSXsoDo27S7P959QZYf3rJBGDGEIA",
         projectId: "mamem-phase2-fall17"
@@ -142,7 +141,6 @@
     config.authDomain = config.projectId + ".firebaseapp.com";
     config.databaseURL = "https://" + config.projectId + ".firebaseio.com";
     config.storageBucket = config.projectId + ".appspot.com";
-
     firebase.initializeApp(config);
 
     var info = [];
@@ -190,18 +188,13 @@
                     "quizTranslation": info.translation
 
                 }, function (error) {
-                    // Account created
-                    if (!error) {
 
+                    // Account created safely, now hide irrelevant information.
+                    if (!error) {
                         document.getElementById("emailReadOnly").value = info.email;
                         document.getElementById("passReadOnly").value = info.password;
-
-                        // Redirect to new page.
                         document.getElementById("startingInfoArea").style.display = "none";
                         document.getElementById("endArea").style.display = "block";
-
-
-
                     }
                 });
 
