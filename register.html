@@ -104,6 +104,31 @@
 </div>
 
 
+<div id="endArea" class="container" style="display: none;">
+
+    <div class="whitespace-separator"></div>
+
+    <h1>Account created!</h1>
+    <br>
+
+    <h3>Please copy your e-mail & password</h3>
+    <div class="twelve columns">
+
+        <div class="row">
+            <div class="six columns">
+                <label for="emailReadOnly">Your email</label>
+                <input class="u-full-width" type="email" id="emailReadOnly" readonly>
+            </div>
+            <div class="six columns">
+                <label for="passReadOnly">Your password</label>
+                <input class="u-full-width" type="text" id="passReadOnly" readonly>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
 
 <script type="text/javascript" src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
 <script>
@@ -149,8 +174,6 @@
         info.language = document.querySelector('input[name="lang"]:checked').value;
         info.translation = document.getElementById("quizCheckbox").checked;
 
-        console.log(info);
-
         firebase.auth().createUserWithEmailAndPassword(info.email, info.password).then(function() {
 
             var currentUser =  firebase.auth().currentUser;
@@ -166,6 +189,20 @@
                     "lang": info.language,
                     "quizTranslation": info.translation
 
+                }, function (error) {
+                    // Account created
+                    if (!error) {
+
+                        document.getElementById("emailReadOnly").value = info.email;
+                        document.getElementById("passReadOnly").value = info.password;
+
+                        // Redirect to new page.
+                        document.getElementById("startingInfoArea").style.display = "none";
+                        document.getElementById("endArea").style.display = "block";
+
+
+
+                    }
                 });
 
                 document.getElementById("registerButton").disabled = true;
