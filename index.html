@@ -14,6 +14,9 @@
 
     <script src="js/jquery-3.2.1.min.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.3/moment.min.js"></script>
+
+
 </head>
 <body>
 <script>
@@ -219,7 +222,7 @@
 
     $( "#trainingBtn" ).click(function() {
 
-        var paramUser = '&usr='+user.email;
+        var paramUser = '&email='+user.email;
         var paramPass = '&pass='+user.password;
 
         window.location.href = 'http://160.40.50.238/gtw-game/index.html?'+paramUser+''+paramPass;
@@ -281,6 +284,31 @@
 
                                     console.log(snapshot.val().pageActivity);
                                     console.log(snapshot.val().social);
+
+                                    var emailSessions = snapshot.val().pageActivity.email.sessions;
+                                    var gtwStartDate = moment.unix(snapshot.val().general.start[0].timestamp);
+                                    var today = moment.utc();
+
+                                    console.log(gtwStartDate, today);
+
+                                    var weekDiff = today.diff(gtwStartDate, 'weeks');
+
+                                    if (weekDiff === 0) {
+                                        var daysDiff = today.diff(gtwStartDate, 'days');
+                                    }
+                                    else {
+
+                                        for (i=0; i<weekDiff; i++) {
+
+                                        }
+
+                                    }
+
+                                    console.log(weekDiff, daysDiff);
+
+                                    for (var i in emailSessions ) {
+                                        console.log(emailSessions[i].startTimestamp);
+                                    }
 
                                 });
 
