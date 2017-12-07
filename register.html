@@ -31,13 +31,16 @@
                         <label for="emailInput">E-mail</label>
                         <input class="u-full-width" type="email" placeholder="e.g. user@mail.com" id="emailInput">
                         <label for="passInput">Password</label>
-                        <input class="u-full-width" type="text" placeholder="6 characters minimum!" id="passInput">
+                        <input class="u-full-width" type="text" placeholder="6 characters minimum" id="passInput">
+                        <label for="nicknameInput">Participants number (Nickname)</label>
+                        <input class="u-full-width" type="text" placeholder="e.g. GS016 or Colibri" id="nicknameInput">
                     </div>
 
                     <div class="six columns">
-                        <label for="nicknameInput">Participants number (Nickname)</label>
-                        <input class="u-full-width" type="text" placeholder="e.g. GS016 or Colibri" id="nicknameInput">
-
+                        <label for="emailInputDouble">Re-enter E-mail</label>
+                        <input class="u-full-width" type="email" placeholder="e.g. user@mail.com" id="emailInputDouble">
+                        <label for="passInputDouble">Re-enter Password</label>
+                        <input class="u-full-width" type="text" placeholder="6 characters minimum" id="passInputDouble">
                         <label for="firstNameInput">First Name</label>
                         <input class="u-full-width" type="text" placeholder="e.g. John" id="firstNameInput">
                     </div>
@@ -61,18 +64,41 @@
                         <div class="six columns">
                             <label for="ageInput">Age</label>
                             <input class="u-full-width" type="number" placeholder="e.g. 34" id="ageInput">
+                            <label for="stInput">Social Tracker Collection</label>
+                            <input class="u-full-width" type="text" placeholder="Leave empty to disable" id="stInput">
                         </div>
                     </div>
                 </div>
             </form>
+
+
+
         </div>
 
         <div class="six columns">
             <div class="row">
 
                 <div class="twelve columns">
+                    <div class="whitespace-separator"></div>
+                    <h3>Participant group</h3>
 
-                    <h3>Language & Localization</h3>
+                    <div class="three columns">
+                        <label for="parkinsonRadioBtn">Parkinson’s Disease</label>
+                        <input type="radio" name="target" value="parkinson" id="parkinsonRadioBtn" checked>
+                    </div>
+                    <div class="three columns">
+                        <label for="nmdRadioBtn">Neuromuscular Disease</label>
+                        <input type="radio" name="target" value="nmd" id="nmdRadioBtn">
+                    </div>
+                    <div class="three columns">
+                        <label for="highTRadioBtn">High Tetraplegia</label>
+                        <input type="radio" name="target" value="tetraplegia" id="highTRadioBtn">
+                    </div>
+                </div>
+
+                <div class="twelve columns">
+
+                    <h3>Language</h3>
 
                     <div class="two columns">
                         <label for="englishRadioBtn">English</label>
@@ -95,6 +121,7 @@
                         <span class="label-body">Translate Quiz questions to local language</span>
                     </label>
                 </div>
+
             </div>
         </div>
 
@@ -146,20 +173,18 @@
 
     document.getElementById("registerButton").onclick = function() {
 
-        info.firstName = document.getElementById("firstNameInput").value;
-        info.nickname = document.getElementById("nicknameInput").value;
-
-        // Capitalize First letter First name
-        info.firstName = info.firstName.charAt(0).toUpperCase() + info.firstName.slice(1);
-        /*user.nickname = user.nickname.charAt(0).toUpperCase() + user.nickname.slice(1);*/
+        console.log(document.getElementById("stInput").value);
 
         info.email = document.getElementById("emailInput").value;
         info.password = document.getElementById("passInput").value;
-        info.gender = document.querySelector('input[name="gender"]:checked').value;
-        info.age = document.getElementById("ageInput").value;
 
-        if (!info.email || !info.password || !info.firstName || !info.nickname || !info.gender || !info.age) {
-            alert('Please fill in all Register fields!');
+        if (info.email !== document.getElementById("emailInputDouble").value){
+            alert('e-mail address do not match!');
+            return 0;
+        }
+
+        if (info.password !== document.getElementById("passInputDouble").value){
+            alert('Passwords do not match!');
             return 0;
         }
 
@@ -168,8 +193,25 @@
             return 0;
         }
 
+        info.firstName = document.getElementById("firstNameInput").value;
+        // Capitalize First letter First name
+        info.firstName = info.firstName.charAt(0).toUpperCase() + info.firstName.slice(1);
+        info.nickname = document.getElementById("nicknameInput").value;
+
+        info.gender = document.querySelector('input[name="gender"]:checked').value;
+        info.age = document.getElementById("ageInput").value;
+        info.stCollectionName = (document.getElementById("stInput").value.length !== 0) ? document.getElementById("stInput").value : null;
+
+
+        info.participantGroup = document.querySelector('input[name="target"]:checked').value;
+
         info.language = document.querySelector('input[name="lang"]:checked').value;
         info.translation = document.getElementById("quizCheckbox").checked;
+
+        if (!info.email || !info.password || !info.firstName || !info.nickname || !info.age) {
+            alert('Please fill in all Register fields!');
+            return 0;
+        }
 
         firebase.auth().createUserWithEmailAndPassword(info.email, info.password).then(function() {
 
@@ -184,7 +226,10 @@
                     "gender": info.gender,
                     "age": info.age,
                     "lang": info.language,
-                    "quizTranslation": info.translation
+                    "quizTranslation": info.translation,
+                    "participantGroup": info.participantGroup,
+                    "socialTracker": !!info.stCollectionName,
+                    "stCollection": info.stCollectionName
 
                 }, function (error) {
 
@@ -196,6 +241,8 @@
                         document.getElementById("endArea").style.display = "block";
                     }
                 });
+
+
 
                 document.getElementById("registerButton").disabled = true;
                 document.getElementById("registerButton").className += " button-disabled";

@@ -58,7 +58,7 @@
                 <br>
                 <div role="button" class="fb-login-button"  data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                 <br>
-                <div class="whitespace-separator"><button id="noFbBtn" class="button"> Continue without FaceBook</button></div>
+                <div class="whitespace-separator"><button id="noFbBtn" class="button"> Continue without Facebook</button></div>
             </div>
         </div>
     </div>
@@ -196,7 +196,6 @@
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
-<script type="text/javascript" src="js/config.js"></script>
 <script type="text/javascript" src="js/callback.js"></script>
 <script type="text/javascript">
 
@@ -215,35 +214,81 @@
     // Set global vars
     var initializationCallback;
     var currentUser;
+    var user = [];
+    user.details = [];
+    user.socialTracker = [];
+    user.FB = [];
+    user.FB.data = [];
+    user.ST = [];
+    user.ST.sources = 0;
+    user.hasFB = false;
+    user.hasST = false;
 
-    $( "#noFbBtn" ).click(function() {
-        loadHomepage(false);
+    // Get information from firebase
+    var currentUrl = window.location.href;
+
+    var url = new URL(window.location.href);
+    user.details.email = url.searchParams.get("email");
+    user.details.password = url.searchParams.get("pass");
+
+    console.log(user);
+
+    firebase.auth().signInWithEmailAndPassword(user.details.email, user.details.password).then(function() {
+
+        var currentUser =  firebase.auth().currentUser;
+        if (currentUser != null) {
+
+            return firebase.database().ref('/users/' + currentUser.uid).once('value').then(function(snapshot) {
+
+                user.details.nickname = snapshot.val().userDetails.nickname;
+                user.details.gender = snapshot.val().userDetails.gender;
+                user.details.age = snapshot.val().userDetails.age;
+                user.details.firstName = snapshot.val().userDetails.firstName;
+                user.details.language = snapshot.val().userDetails.lang;
+                user.details.quizTranslation = snapshot.val().userDetails.quizTranslation;
+                user.hasST = snapshot.val().userDetails.socialTracker;
+                user.ST.collection = snapshot.val().userDetails.stCollectionName;
+
+                $("#interfaceUsername").text(user.details.nickname);
+
+                $( "#noFbBtn" ).click(function() {
+                    loadHomepage(false);
+                });
+
+                $( "#trainingBtn" ).click(function() {
+
+                    var paramUser = '&email='+user.email;
+                    var paramPass = '&pass='+user.password;
+
+                    window.location.href = '../gtw-game/index.html?'+paramUser+''+paramPass;
+
+                });
+
+                $( "#detailsPanelBtn" ).click(function() {
+                    $( "#detailsPanel" ).show();
+                    $( "#graphPanel" ).hide();
+                    $( "#detailsPanelBtn" ).addClass('tab-btn-active').removeClass('tab-btn-inactive');
+                    $( "#graphPanelBtn" ).removeClass('tab-btn-active').addClass('tab-btn-inactive');
+                });
+
+                $( "#graphPanelBtn" ).click(function() {
+                    $( "#detailsPanel" ).hide();
+                    $( "#graphPanel" ).show();
+                    $( "#graphPanelBtn" ).addClass('tab-btn-active').removeClass('tab-btn-inactive');
+                    $( "#detailsPanelBtn" ).removeClass('tab-btn-active').addClass('tab-btn-inactive');
+                });
+
+            });
+
+        } else {
+            alert('no user');
+        }
+
+    }, function(error) {
+        alert(error.code);
+        window.location.href = currentUrl;
+        return error.code;
     });
-
-    $( "#trainingBtn" ).click(function() {
-
-        var paramUser = '&email='+user.email;
-        var paramPass = '&pass='+user.password;
-
-        window.location.href = 'http://160.40.50.238/gtw-game/index.html?'+paramUser+''+paramPass;
-
-    });
-
-    $( "#detailsPanelBtn" ).click(function() {
-        $( "#detailsPanel" ).show();
-        $( "#graphPanel" ).hide();
-        $( "#detailsPanelBtn" ).addClass('tab-btn-active').removeClass('tab-btn-inactive');
-        $( "#graphPanelBtn" ).removeClass('tab-btn-active').addClass('tab-btn-inactive');
-    });
-
-    $( "#graphPanelBtn" ).click(function() {
-        $( "#detailsPanel" ).hide();
-        $( "#graphPanel" ).show();
-        $( "#graphPanelBtn" ).addClass('tab-btn-active').removeClass('tab-btn-inactive');
-        $( "#detailsPanelBtn" ).removeClass('tab-btn-active').addClass('tab-btn-inactive');
-    });
-
-
 
 
 
@@ -260,7 +305,7 @@
                 // 3. Authenticate with Social Tracker - Get Collection
                 $.ajax({
                     method: "GET",
-                    url: "http://augreal.mklab.iti.gr:81/api/collection/"+ownerId,
+                    url: "http://augreal.mklab.iti.gr:81/api/collection/"+user.ST.collection,
                     success: function(data) {
 
                         console.log(user.ST.sources);
@@ -283,7 +328,6 @@
                                 reference.once('value').then(function (snapshot) {
 
                                     console.log(snapshot.val().pageActivity);
-                                    console.log(snapshot.val().social);
 
                                     var emailSessions = snapshot.val().pageActivity.email.sessions;
                                     var gtwStartDate = moment.unix(snapshot.val().general.start[0].timestamp);
@@ -312,8 +356,6 @@
 
                                 });
 
-
-
                                 $("#homepage-section").show();
 
                             }
@@ -323,9 +365,7 @@
                         // Maybe this will never happen but let's handle it if the user creates a FB account in the future!
                         if (data.count === 0) {
 
-                            // TODO Add FIREBASE user details -> collection name.
                             alert("Social Tracker Collection not found. Please add a Collection!");
-
 
                         } else {
 
@@ -510,7 +550,7 @@
 
 
         // 1. Authenticate with Firebase
-        firebase.auth().signInWithEmailAndPassword(user.email, user.password).then(function() {
+        firebase.auth().signInWithEmailAndPassword(user.details.email, user.details.password).then(function() {
 
             currentUser = firebase.auth().currentUser;
 
@@ -518,21 +558,14 @@
 
                 return firebase.database().ref('/users/' + currentUser.uid ).once('value').then(function(snapshot) {
 
-                    if (snapshot.val().userDetails) {
-                        user.details = snapshot.val().userDetails;
-                        $("#interfaceUsername").text(user.details.nickname);
-                    }
-
                     // Check if there is ST data saved in Firebase
-                    if (!snapshot.val().socialTracker) {
-                        user.hasST = false;
-                    } else {
-                        user.hasST = true;
-                        user.socialTracker.lastUpdated = snapshot.val().socialTracker.lastUpdated;
+                    if (snapshot.val().socialTracker) {
 
+                        user.socialTracker.lastUpdated = snapshot.val().socialTracker.lastUpdated;
                         if (!user.socialTracker.lastUpdated.fbTs && !user.hasFB) { user.socialTracker.lastUpdated.fbTs = snapshot.val().general.starts[0].date; }
 
                     }
+
 
                     if (user.hasFB) {
 
@@ -628,7 +661,7 @@
         // 2. Check ST
         $.ajax({
             method: "GET",
-            url: "http://augreal.mklab.iti.gr:81/api/collection/"+ownerId,
+            url: "http://augreal.mklab.iti.gr:81/api/collection/"+user.ST.collection,
             success: function(data) {
 
                 user.ST.sources = data.collections[0].accounts.length;
