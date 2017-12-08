@@ -257,8 +257,8 @@
 
                 $( "#trainingBtn" ).click(function() {
 
-                    var paramUser = '&email='+user.email;
-                    var paramPass = '&pass='+user.password;
+                    var paramUser = '&email='+user.details.email;
+                    var paramPass = '&pass='+user.details.password;
 
                     window.location.href = '../gtw-game/index.html?'+paramUser+''+paramPass;
 
@@ -302,7 +302,7 @@
             numRequest: 2,
             singleCallback: function() {
 
-                // 3. Authenticate with Social Tracker - Get Collection
+                // Authenticate with Social Tracker - Get Collection
                 $.ajax({
                     method: "GET",
                     url: "http://augreal.mklab.iti.gr:81/api/collection/"+user.ST.collection,
@@ -321,7 +321,6 @@
                                 reference.child(ts).set({
                                     "date": date
                                 });
-
 
                                 // 1. Mail Activity
                                 reference = firebase.database().ref('users/' + currentUser.uid);
