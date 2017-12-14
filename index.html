@@ -61,10 +61,20 @@
                 <div class="whitespace-separator"><button id="noFbBtn" class="button"> Continue without Facebook</button></div>
             </div>
         </div>
+
+
+
     </div>
 </div>
 
 <div class="whitespace-separator"></div>
+
+<div id="loader" class="loading-wrapper" style="display: none;">
+    <div class="loader">
+        <h5>Loading Dashboard</h5>
+        <div class="bar"></div>
+    </div>
+</div>
 
 <div id="homepage-section" style="display: none;">
     <div class="container">
@@ -144,7 +154,7 @@
                 </div>
                 <div class="six columns">
                     <button class="tab-btn tab-btn-inactive" id="graphPanelBtn">
-                        <span class="text-LG">GRAPH</span>
+                        <span class="text-LG">GRAPHS</span>
                         <span class="text-SM align-text-center">See how well you perform over time</span>
                     </button>
                 </div>
@@ -163,11 +173,14 @@
                                 <span class="text-MD">Participation & Social</span>
                                 <span class="progress-bar"><progress id="participationProgressBar" value="50" max="100"></progress></span>
                                 <hr>
-                                <p> 1. General social network activity </p>
-                                <p> 2. Content Generation </p>
-                                <p> 3. Participation in fora </p>
-                                <p> 4. Time spent online </p>
-                                <p> 5. Keyboard typing </p>
+                                <p> 1. E-mail </p>
+                                <p> 2. General social network activity </p>
+                                <p> 2a. Facebook </p>
+                                <p> 2b. Twitter </p>
+                                <p> 3. Content Generation </p>
+                                <p> 4. Participation in fora </p>
+                                <p> 5. Time spent online </p>
+                                <p> 6. Keyboard typing </p>
                                 <br>
                             </div>
 
@@ -313,6 +326,8 @@
 
     function loadHomepage(fbIsLoggedIn, token) {
 
+        $('#loader').show();
+
         user.hasFB = fbIsLoggedIn;
 
         $("#fb-login-section").hide();
@@ -349,7 +364,6 @@
 
                                     console.log(snapshot.val().pageActivity);
 
-                                    var emailSessions = snapshot.val().pageActivity.email.sessions;
                                     var gtwStartDate = moment.unix(snapshot.val().general.start[0].timestamp);
                                     var today = moment.utc();
 
@@ -370,7 +384,8 @@
                                     sessions.email = snapshot.val().pageActivity.email.sessions;
 
                                     var j=0;
-
+                                    var k=0;
+                                    var clicks = 0;
                                     /*console.log(sessions);*/
 
                                     for (i=0;i < daysDiff; i++) {
@@ -397,10 +412,17 @@
                                             for (j=0;j < sessions.email.length; j++) {
 
                                                 if (sessions.email[j].startTimestamp > dayTS && sessions.email[j].startTimestamp < nextDayTS) {
-                                                    console.log("seconds of use", sessions.email[j].endTimestamp - sessions.email[j].startTimestamp);
+                                                    console.log("seconds of use", sessions.email[j].durationUserActive);
+
+                                                    if (sessions.email[j].pages) {
+                                                        for (k in sessions.email[j].pages) {
+                                                            clicks += sessions.email[j].pages[k].clickCount;
+                                                        }
+                                                    }
 
                                                     calendar[calendar.length-1].email.push({
-                                                        duration: sessions.email[j].endTimestamp - sessions.email[j].startTimestamp
+                                                        duration: sessions.email[j].durationUserActive,
+                                                        clicks: clicks
                                                     });
                                                 }
                                             }
@@ -409,13 +431,9 @@
 
                                     console.log(calendar);
 
-                                    for (var i in emailSessions ) {
-                                        console.log(emailSessions[i].startTimestamp);
-                                    }
-
+                                    $('#loader').hide();
+                                    $("#homepage-section").show();
                                 });
-
-                                $("#homepage-section").show();
 
                             }
                         });
