@@ -69,6 +69,23 @@
 <div id="homepage-section" style="display: none;">
     <div class="container">
         <div class="row">
+
+            <div class="two columns">
+                <button class="interface-btn">
+                    <i class="material-icons text-XL">help</i>
+                    <span class="text-MD">HELP</span>
+                </button>
+                <p class="align-text-center text-caption">Contact us if you need help</p>
+            </div>
+
+            <div class="two columns">
+                <button class="interface-btn">
+                    <i class="material-icons text-XL">person</i>
+                    <span class="text-MD">PROFILE</span>
+                </button>
+                <p class="align-text-center text-caption">Edit your information</p>
+            </div>
+
             <div class="two columns">
                 <button class="interface-btn" id="trainingBtn">
                     <i class="material-icons text-XL">desktop_windows</i>
@@ -77,20 +94,32 @@
                 <p class="align-text-center text-caption">Replay the training app to score better</p>
             </div>
             <div class="two columns">
-                <button class="interface-btn">
-                    <i class="material-icons text-XL">person</i>
-                    <span class="text-MD">PROFILE</span>
+                <button class="interface-btn" >
+                    <i class="material-icons text-XL">desktop_windows</i>
+                    <span class="text-MD">The training score will be here</span>
                 </button>
-                <p class="align-text-center text-caption">Edit your information</p>
+
             </div>
+
             <div class="two columns">
-                <button class="interface-btn">
-                    <i class="material-icons text-XL">help</i>
-                    <span class="text-MD">HELP</span>
-                </button>
-                <p class="align-text-center text-caption">Contact us if you need help</p>
+                <p class="align-text-center text-caption">Daily score summary</p>
+                <br>
+                <div class="row align-text-center">
+                    <div class="four columns"><i class="material-icons">people</i></div>
+                    <div class="four columns"><i class="material-icons">mood</i></div>
+                    <div class="four columns"><i class="material-icons">school</i></div>
+                </div>
+                <hr>
+                <div id="table-content">
+                    <div class="row align-text-center">
+                        <div class="four columns"><span>8.2</span></div>
+                        <div class="four columns"><span>6.6</span></div>
+                        <div class="four columns"><span>7</span></div>
+                    </div>
+                </div>
             </div>
-            <div class="six columns">
+
+            <div class="two columns">
                 <span id="interfaceUsername" class="u-pull-right">Put username here</span>
                 <br>
                 <span class="u-pull-right">Total score</span>
@@ -110,7 +139,7 @@
                 <div class="six columns">
                     <button class="tab-btn tab-btn-active" id="detailsPanelBtn">
                         <span class="text-LG">DETAILS</span>
-                        <span class="text-SM align-text-center">See an overview of your score</span>
+                        <span class="text-SM align-text-center">See how you can improve</span>
                     </button>
                 </div>
                 <div class="six columns">
@@ -125,56 +154,46 @@
 
                 <div id="detailsPanel">
 
-                    <div class="three columns">
-                        <h5 class="section-heading">Score summary</h5>
-
-                        <div class="row align-text-center text-white">
-                            <div class="three columns"><i class="material-icons">people</i></div>
-                            <div class="three columns"><i class="material-icons">mood</i></div>
-                            <div class="three columns"><i class="material-icons">school</i></div>
-                        </div>
-
-                        <hr>
-
-                        <div id="table-content">
-                            <div class="row align-text-center text-white">
-                                <div class="three columns"><span>8.2</span></div>
-                                <div class="three columns"><span>6.6</span></div>
-                                <div class="three columns"><span>7</span></div>
-                            </div>
-
-                            <hr class="thin-separator">
-                            <div class="row align-text-center text-white">
-                                <div class="three columns"><span>8.2</span></div>
-                                <div class="three columns"><span>6.6</span></div>
-                                <div class="three columns"><span>7</span></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                    <div class="nine columns">
+                    <div class="twelve columns">
                         <h5 class="section-heading">How to get better</h5>
 
                         <div class="row">
-                            <div class="twelve columns text-white">
+                            <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">people</i>
                                 <span class="text-MD">Participation & Social</span>
+                                <span class="progress-bar"><progress id="participationProgressBar" value="50" max="100"></progress></span>
                                 <hr>
-                                <p> sdjfhdskjfhdsjhds </p>
-                                <p> sadfw39423rdews </p>
-
+                                <p> 1. General social network activity </p>
+                                <p> 2. Content Generation </p>
+                                <p> 3. Participation in fora </p>
+                                <p> 4. Time spent online </p>
+                                <p> 5. Keyboard typing </p>
                                 <br>
+                            </div>
 
+                            <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">mood</i>
                                 <span class="text-MD">Empowerment & Wellbeing</span>
+                                <span class="progress-bar"><progress id="empowermentProgressBar" value="25" max="100"></progress></span>
                                 <hr>
+                                <p> 1. Gaming (?) </p>
+                                <p> 2. Entertainment (YouTube) </p>
+                                <p> 3. Health-related resources </p>
+                                <p> 4. Reading news </p>
+                                <p> 5. Time spent online </p>
                                 <br>
+                            </div>
 
+                            <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">school</i>
                                 <span class="text-MD">Education & Employment</span>
+                                <span class="progress-bar"><progress id="educationProgressBar" value="80" max="100"></progress></span>
                                 <hr>
+                                <p> 1. E-learning resources </p>
+                                <p> 2. Professional networks </p>
+                                <p> 3. Personal business website </p>
+                                <p> 4. Client & job search </p>
+                                <p> 5. Online work tools </p>
                                 <br>
 
                             </div>
@@ -326,28 +345,69 @@
                                 reference = firebase.database().ref('users/' + currentUser.uid);
                                 reference.once('value').then(function (snapshot) {
 
+                                    // Check if there are saved data, to establish boundaries first
+
                                     console.log(snapshot.val().pageActivity);
 
                                     var emailSessions = snapshot.val().pageActivity.email.sessions;
                                     var gtwStartDate = moment.unix(snapshot.val().general.start[0].timestamp);
                                     var today = moment.utc();
 
-                                    console.log(gtwStartDate, today);
+                                    gtwStartDate = gtwStartDate.startOf('day');
+                                    today = today.startOf('day');
 
+                                    var calendar = [];
+
+                                    var yearDiff = today.diff(gtwStartDate, 'years');
                                     var weekDiff = today.diff(gtwStartDate, 'weeks');
+                                    var daysDiff = today.diff(gtwStartDate, 'days');
 
-                                    if (weekDiff === 0) {
-                                        var daysDiff = today.diff(gtwStartDate, 'days');
-                                    }
-                                    else {
+                                    console.log(yearDiff, weekDiff, daysDiff);
 
-                                        for (i=0; i<weekDiff; i++) {
+                                    var dayTS;
+                                    var nextDayTS;
+                                    var sessions = [];
+                                    sessions.email = snapshot.val().pageActivity.email.sessions;
 
+                                    var j=0;
+
+                                    /*console.log(sessions);*/
+
+                                    for (i=0;i < daysDiff; i++) {
+
+                                        dayTS = gtwStartDate.unix();
+
+                                        calendar.push({
+                                            year: gtwStartDate.year(),
+                                            month: gtwStartDate.month(),
+                                            monthString: gtwStartDate.format("MMMM"),
+                                            week: gtwStartDate.week(),
+                                            day: gtwStartDate.date(),
+                                            weekDay: gtwStartDate.isoWeekday(),
+                                            weekDayString: gtwStartDate.format('dddd'),
+                                            ts: dayTS,
+                                            email: []
+                                        });
+                                        gtwStartDate.add(1, 'days');
+
+                                        nextDayTS = gtwStartDate.unix();
+
+                                        // E-mail
+                                        if (sessions.email) {
+                                            for (j=0;j < sessions.email.length; j++) {
+
+                                                if (sessions.email[j].startTimestamp > dayTS && sessions.email[j].startTimestamp < nextDayTS) {
+                                                    console.log("seconds of use", sessions.email[j].endTimestamp - sessions.email[j].startTimestamp);
+
+                                                    calendar[calendar.length-1].email.push({
+                                                        duration: sessions.email[j].endTimestamp - sessions.email[j].startTimestamp
+                                                    });
+                                                }
+                                            }
                                         }
-
                                     }
 
-                                    console.log(weekDiff, daysDiff);
+                                    console.log(calendar);
 
                                     for (var i in emailSessions ) {
                                         console.log(emailSessions[i].startTimestamp);

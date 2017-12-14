@@ -45,6 +45,42 @@ p {
     border-top: 1px solid #E1E1E1;
 }
 
+.progress-bar progress {
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    float: right;
+
+    width: 120px;
+    height: 18px;
+
+
+    /* Firefox */
+    border: none;
+    background: #EEE;
+    border-radius: 1px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.progress-bar progress::-webkit-progress-bar {
+    background: #EEE;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+    border-radius: 1px;
+}
+
+.progress-bar progress::-webkit-progress-value {
+    background-color: rgb(80,186,166);
+    border-radius: 1px;
+}
+
+.progress-bar progress::-moz-progress-bar {
+    background-color: rgb(80,186,166);
+    border-radius: 1px;
+}
+
+
 /* Values
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
