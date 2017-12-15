@@ -418,3 +418,21 @@ there.
 
 /* Larger than Desktop HD */
 @media (min-width: 1200px) {}
+
+
+@media (min-width: 1404px) {
+  .progress-bar progress {
+    float: right;
+
+    width: 15%;
+  }
+}
+
+@media (max-width: 1403px) {
+  .progress-bar progress {
+    float: left;
+
+
+    width: 100%;
+  }
+}

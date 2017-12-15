@@ -51,11 +51,7 @@ p {
     -moz-appearance: none;
     appearance: none;
 
-    float: right;
-
-    width: 120px;
-    height: 18px;
-
+    height: 15px;
 
     /* Firefox */
     border: none;
