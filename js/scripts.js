@@ -120,3 +120,89 @@ function createGooglePlusItems(arr) {
     }
     return items;
 }
+
+function initFirebaseData(sessions, snapshot) {
+
+    // Initialize Firebase Data
+    sessions.email = snapshot.val().pageActivity.email ? snapshot.val().pageActivity.email.sessions : false;
+
+    sessions.social = [];
+    sessions.social.facebook = snapshot.val().pageActivity.facebook ? snapshot.val().pageActivity.facebook.sessions : false;
+    sessions.social.twitter = snapshot.val().pageActivity.twitter ? snapshot.val().pageActivity.twitter.sessions : false;
+    sessions.social.instagram = snapshot.val().pageActivity.instagram ? snapshot.val().pageActivity.instagram.sessions : false;
+
+    sessions.forum = snapshot.val().pageActivity.forum ? snapshot.val().pageActivity.forum.sessions : false;
+
+    sessions.youtube = snapshot.val().pageActivity.youtube ? snapshot.val().pageActivity.youtube.sessions : false;
+
+    sessions.news = snapshot.val().pageActivity.news ? snapshot.val().pageActivity.news.sessions : false;
+
+    sessions.entertainment = snapshot.val().pageActivity.entertainment ? snapshot.val().pageActivity.entertainment.sessions : false;
+
+    sessions.health = snapshot.val().pageActivity.health ? snapshot.val().pageActivity.health.sessions : false;
+
+    sessions.elearning = snapshot.val().pageActivity.elearning ? snapshot.val().pageActivity.elearning.sessions : false;
+
+    sessions.linkedin = snapshot.val().pageActivity.linkedin ? snapshot.val().pageActivity.linkedin.sessions : false;
+
+    sessions.job = snapshot.val().pageActivity.job ? snapshot.val().pageActivity.job.sessions : false;
+
+    sessions.socialTracker = snapshot.val().socialTracker ? snapshot.val().socialTracker : false;
+
+    return sessions;
+}
+
+
+function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendar,) {
+
+    var j = 0;
+    var k = 0;
+    var clicks = 0;
+
+    if (sessions) {
+        for (j=0;j < sessions.length; j++) {
+
+            if (sessions[j].startTimestamp > dayTS && sessions[j].startTimestamp < nextDayTS) {
+                console.log("seconds of use", sessions[j].durationUserActive);
+
+                if (sessions[j].pages) {
+                    for (k in sessions[j].pages) {
+                        clicks += sessions[j].pages[k].clickCount;
+                    }
+                }
+
+                switch(sessionType) {
+                    case 'email':
+                        calendar[calendar.length-1].email.push({
+                            duration: sessions[j].durationUserActive,
+                            clicks: clicks
+                        });
+
+                        break;
+                    case 'facebook':
+                        calendar[calendar.length-1].socialNetworks.facebook.push({
+                            duration: sessions[j].durationUserActive,
+                            clicks: clicks
+                        });
+                        break;
+                    case 'twitter':
+                        calendar[calendar.length-1].socialNetworks.twitter.push({
+                            duration: sessions[j].durationUserActive,
+                            clicks: clicks
+                        });
+                        break;
+                    case 'youtube':
+                        calendar[calendar.length-1].youtube.push({
+                            duration: sessions[j].durationUserActive,
+                            clicks: clicks
+                        });
+                        break;
+
+                    default:
+
+                }
+            }
+        }
+    }
+    return calendar;
+}

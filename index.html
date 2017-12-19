@@ -177,10 +177,9 @@
                                 <p> 2. General social network activity </p>
                                 <p>&nbsp; 2a. Facebook </p>
                                 <p>&nbsp; 2b. Twitter </p>
-                                <p> 3. Content Generation </p>
-                                <p> 4. Participation in fora </p>
-                                <p> 5. Time spent online </p>
-                                <p> 6. Keyboard typing </p>
+                                <p> 3. Participation in fora </p>
+                                <p> 4. Time spent online </p>
+                                <p> 5. Keyboard typing </p>
                                 <br>
                             </div>
 
@@ -189,7 +188,7 @@
                                 <span class="text-MD">Empowerment & Wellbeing</span>
                                 <span class="progress-bar"><progress id="empowermentProgressBar" value="25" max="100"></progress></span>
                                 <hr>
-                                <p> 1. Gaming (?) </p>
+                                <p> 1. Gaming (X) </p>
                                 <p> 2. Entertainment (YouTube) </p>
                                 <p> 3. Health-related resources </p>
                                 <p> 4. Reading news </p>
@@ -206,7 +205,7 @@
                                 <p> 2. Professional networks </p>
                                 <p> 3. Personal business website </p>
                                 <p> 4. Client & job search </p>
-                                <p> 5. Online work tools </p>
+                                <p> 5. Online work tools (X) </p>
                                 <br>
 
                             </div>
@@ -362,7 +361,7 @@
 
                                     // Check if there are saved data, to establish boundaries first
 
-                                    console.log(snapshot.val().pageActivity);
+                                    console.log("page activity:", snapshot.val().pageActivity);
 
                                     var gtwStartDate = moment.unix(snapshot.val().general.start[0].timestamp);
                                     var today = moment.utc();
@@ -381,12 +380,10 @@
                                     var dayTS;
                                     var nextDayTS;
                                     var sessions = [];
-                                    sessions.email = snapshot.val().pageActivity.email.sessions;
 
-                                    var j=0;
-                                    var k=0;
-                                    var clicks = 0;
-                                    /*console.log(sessions);*/
+                                    sessions = initFirebaseData(sessions, snapshot);
+
+                                    var socialNetworkActivity = !!(snapshot.val().pageActivity.facebook || snapshot.val().pageActivity.twitter || snapshot.val().socialTracker);
 
                                     for (i=0;i < daysDiff; i++) {
 
@@ -401,33 +398,55 @@
                                             weekDay: gtwStartDate.isoWeekday(),
                                             weekDayString: gtwStartDate.format('dddd'),
                                             ts: dayTS,
-                                            email: []
-                                        });
-                                        gtwStartDate.add(1, 'days');
+                                            email: [], // 1.1
+                                            socialNetworks: { // 1.2
+                                                facebook: [],
+                                                twitter: [],
+                                                instagram: []
+                                            },
+                                            forum: [], // 1.3
+                                            youtube: [], // 1.6 & 2.1
+                                            news: [], // 1.7 & 2.4
+                                            entertainment: [], // 2.1
+                                            health: [], // 2.2
+                                            elearning: [], // 3.1
+                                            linkedin: [], // 3.2
+                                            /*work: [], // 3.4*/
+                                            job: [] // 3.5
 
+                                        });
+
+                                        gtwStartDate.add(1, 'days');
                                         nextDayTS = gtwStartDate.unix();
 
-                                        // E-mail
-                                        if (sessions.email) {
-                                            for (j=0;j < sessions.email.length; j++) {
+                                        // 1.1 E-mail
+                                        if (sessions.email) { calendar = calculateScores('email', sessions.email, dayTS, nextDayTS, calendar); }
 
-                                                if (sessions.email[j].startTimestamp > dayTS && sessions.email[j].startTimestamp < nextDayTS) {
-                                                    console.log("seconds of use", sessions.email[j].durationUserActive);
+                                        // 1.2 General Social Network activity
+                                        // Calculate social networks first
+                                        if (sessions.social.facebook) { calendar = calculateScores('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar); }
+                                        if (sessions.social.twitter) { calendar = calculateScores('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar); }
+                                        if (sessions.social.instagram) { calendar = calculateScores('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar); }
 
-                                                    if (sessions.email[j].pages) {
-                                                        for (k in sessions.email[j].pages) {
-                                                            clicks += sessions.email[j].pages[k].clickCount;
-                                                        }
-                                                    }
 
-                                                    calendar[calendar.length-1].email.push({
-                                                        duration: sessions.email[j].durationUserActive,
-                                                        clicks: clicks
-                                                    });
-                                                }
-                                            }
-                                        }
+
+
+                                        /*if (sessions.youtube) { calendar = calculateScores('youtube', sessions.social.youtube, dayTS, nextDayTS, calendar); }*/
+
+                                        // Now calculate data from social Tracker
+
+
+                                        // Fora
+
+                                        // Time spent online
+
+                                        // Keystrokes
+
+
+
                                     }
+
+                                    // Save to Firebase, last date that the information was calculated
 
                                     console.log(calendar);
 
