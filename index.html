@@ -369,12 +369,9 @@
                                     gtwStartDate = gtwStartDate.startOf('day');
                                     today = today.startOf('day');
 
-                                    var calendar = [];
-
                                     var yearDiff = today.diff(gtwStartDate, 'years');
                                     var weekDiff = today.diff(gtwStartDate, 'weeks');
                                     var daysDiff = today.diff(gtwStartDate, 'days');
-
                                     console.log(yearDiff, weekDiff, daysDiff);
 
                                     var dayTS;
@@ -384,6 +381,8 @@
                                     sessions = initFirebaseData(sessions, snapshot);
 
                                     var socialNetworkActivity = !!(snapshot.val().pageActivity.facebook || snapshot.val().pageActivity.twitter || snapshot.val().socialTracker);
+
+                                    var calendar = [];
 
                                     for (i=0;i < daysDiff; i++) {
 
@@ -420,29 +419,31 @@
                                         nextDayTS = gtwStartDate.unix();
 
                                         // 1.1 E-mail
-                                        if (sessions.email) { calendar = calculateScores('email', sessions.email, dayTS, nextDayTS, calendar); }
+                                        if (sessions.email) { calendar[calendar.length-1].email = calculateScores('email', sessions.email, dayTS, nextDayTS, calendar[calendar.length-1].email); }
 
                                         // 1.2 General Social Network activity
                                         // Calculate social networks first
-                                        if (sessions.social.facebook) { calendar = calculateScores('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar); }
-                                        if (sessions.social.twitter) { calendar = calculateScores('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar); }
-                                        if (sessions.social.instagram) { calendar = calculateScores('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar); }
-
-
-
-
-                                        /*if (sessions.youtube) { calendar = calculateScores('youtube', sessions.social.youtube, dayTS, nextDayTS, calendar); }*/
+                                        if (sessions.social.facebook) {calendar[calendar.length-1].socialNetworks.facebook = calculateScores('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].socialNetworks.facebook); }
+                                        if (sessions.social.twitter) { calendar[calendar.length-1].socialNetworks.twitter = calculateScores('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].socialNetworks.twitter); }
+                                        if (sessions.social.instagram) { calendar[calendar.length-1].socialNetworks.instagram = calculateScores('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].socialNetworks.instagram); }
 
                                         // Now calculate data from social Tracker
+                                        if (sessions.social.facebook) {  }
+                                        if (sessions.social.twitter) {  }
+                                        if (sessions.social.instagram) {  }
 
-
-                                        // Fora
+                                        if (sessions.forum) { calendar[calendar.length-1].forum = calculateScores('forum', sessions.forum, dayTS, nextDayTS, calendar[calendar.length-1].forum); }
+                                        if (sessions.youtube) { calendar[calendar.length-1].youtube = calculateScores('youtube', sessions.youtube, dayTS, nextDayTS, calendar[calendar.length-1].youtube); }
+                                        if (sessions.news) { calendar[calendar.length-1].news = calculateScores('news', sessions.news, dayTS, nextDayTS, calendar[calendar.length-1].news); }
+                                        if (sessions.entertainment) { calendar[calendar.length-1].entertainment = calculateScores('entertainment', sessions.entertainment, dayTS, nextDayTS, calendar[calendar.length-1].entertainment); }
+                                        if (sessions.health) { calendar[calendar.length-1].health = calculateScores('health', sessions.health, dayTS, nextDayTS, calendar[calendar.length-1].health); }
+                                        if (sessions.elearning) { calendar[calendar.length-1].elearning = calculateScores('elearning', sessions.elearning, dayTS, nextDayTS, calendar[calendar.length-1].elearning); }
+                                        if (sessions.linkedin) { calendar[calendar.length-1].linkedin = calculateScores('linkedin', sessions.linkedin, dayTS, nextDayTS, calendar[calendar.length-1].linkedin); }
+                                        if (sessions.job) { calendar[calendar.length-1].job = calculateScores('job', sessions.job, dayTS, nextDayTS, calendar[calendar.length-1].job); }
 
                                         // Time spent online
 
                                         // Keystrokes
-
-
 
                                     }
 

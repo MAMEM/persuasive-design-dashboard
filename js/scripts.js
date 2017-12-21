@@ -153,7 +153,7 @@ function initFirebaseData(sessions, snapshot) {
 }
 
 
-function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendar,) {
+function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendarEntry) {
 
     var j = 0;
     var k = 0;
@@ -171,38 +171,14 @@ function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendar,) {
                     }
                 }
 
-                switch(sessionType) {
-                    case 'email':
-                        calendar[calendar.length-1].email.push({
-                            duration: sessions[j].durationUserActive,
-                            clicks: clicks
-                        });
+                console.log(calendarEntry);
 
-                        break;
-                    case 'facebook':
-                        calendar[calendar.length-1].socialNetworks.facebook.push({
-                            duration: sessions[j].durationUserActive,
-                            clicks: clicks
-                        });
-                        break;
-                    case 'twitter':
-                        calendar[calendar.length-1].socialNetworks.twitter.push({
-                            duration: sessions[j].durationUserActive,
-                            clicks: clicks
-                        });
-                        break;
-                    case 'youtube':
-                        calendar[calendar.length-1].youtube.push({
-                            duration: sessions[j].durationUserActive,
-                            clicks: clicks
-                        });
-                        break;
-
-                    default:
-
-                }
+                calendarEntry.push({
+                    duration: sessions[j].durationUserActive,
+                    clicks: clicks
+                });
             }
         }
     }
-    return calendar;
+    return calendarEntry;
 }
