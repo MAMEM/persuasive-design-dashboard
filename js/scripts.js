@@ -1,5 +1,7 @@
 "use strict";
 
+var sessionType = ['email', 'facebook', 'twitter', 'instagram', 'forum', 'youtube', 'news', 'entertainment', 'health', 'elearning', 'linkedin', 'job' ];
+
 function createFBItems(arr) {
 
     var posts = [];
@@ -153,17 +155,23 @@ function initFirebaseData(sessions, snapshot) {
 }
 
 
-function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendarEntry) {
+function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendarEntry, prevCalendarEntry) {
 
     var j = 0;
     var k = 0;
     var clicks = 0;
+    var totalClicks = 0;
+    var duration = 0;
+    var score = 0;
+
 
     if (sessions) {
+
+        /*console.log(sessions);*/
+
         for (j=0;j < sessions.length; j++) {
 
             if (sessions[j].startTimestamp > dayTS && sessions[j].startTimestamp < nextDayTS) {
-                console.log("seconds of use", sessions[j].durationUserActive);
 
                 if (sessions[j].pages) {
                     for (k in sessions[j].pages) {
@@ -171,14 +179,47 @@ function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendarEntry)
                     }
                 }
 
-                console.log(calendarEntry);
+                duration += sessions[j].durationUserActive;
+                totalClicks += clicks;
 
-                calendarEntry.push({
-                    duration: sessions[j].durationUserActive,
-                    clicks: clicks
-                });
             }
         }
+
+        // Calculate score (Jaap formula)
+        if (prevCalendarEntry) {
+            score = prevCalendarEntry[0].duration ? duration / prevCalendarEntry[0].duration : 0 ;
+        }
+
+
+        // Calc score
+        /*console.log("=========================");
+        console.log("duration: ", duration);
+        console.log("score: ", score);
+        console.log(sessionType);
+        console.log("all sessions:", sessions);
+        console.log("prev cal entry:", prevCalendarEntry);*/
+
+        calendarEntry.push({
+            duration: duration,
+            clicks: clicks,
+            score: score
+        });
+
     }
     return calendarEntry;
+}
+
+
+
+function calculateScoreAverage(calendar, sessionType) {
+
+    var i = 0;
+    var sum = 0;
+
+    for (i=0;i<calendar.length;i++) {
+
+        sum = sum + calendar[i][sessionType][0].score;
+    }
+
+    return sum / calendar.length;
 }

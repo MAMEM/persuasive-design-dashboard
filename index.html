@@ -112,7 +112,7 @@
             </div>
 
             <div class="two columns">
-                <p class="align-text-center text-caption">Daily score summary</p>
+                <p class="align-text-center text-caption">Score summary</p>
                 <br>
                 <div class="row align-text-center">
                     <div class="four columns"><i class="material-icons">people</i></div>
@@ -122,9 +122,9 @@
                 <hr>
                 <div id="table-content">
                     <div class="row align-text-center">
-                        <div class="four columns"><span>8.2</span></div>
-                        <div class="four columns"><span>6.6</span></div>
-                        <div class="four columns"><span>7</span></div>
+                        <div class="four columns"><span id="scoreAverageParticipationIndicator">0.0</span></div>
+                        <div class="four columns"><span id="scoreAverageEmpowermentIndicator">0.0</span></div>
+                        <div class="four columns"><span id="scoreAverageEducationIndicator">0.0</span></div>
                     </div>
                 </div>
             </div>
@@ -134,7 +134,7 @@
                 <br>
                 <span class="u-pull-right">Total score</span>
                 <br>
-                <span class="u-pull-right"><b>6.0</b></span>
+                <span class="u-pull-right"><b id="scoreTotalIndicator">6.0</b></span>
             </div>
         </div>
     </div>
@@ -398,11 +398,9 @@
                                             weekDayString: gtwStartDate.format('dddd'),
                                             ts: dayTS,
                                             email: [], // 1.1
-                                            socialNetworks: { // 1.2
-                                                facebook: [],
-                                                twitter: [],
-                                                instagram: []
-                                            },
+                                            facebook: [], // 1.2
+                                            twitter: [], // 1.2
+                                            instagram: [], // 1.2
                                             forum: [], // 1.3
                                             youtube: [], // 1.6 & 2.1
                                             news: [], // 1.7 & 2.4
@@ -419,27 +417,27 @@
                                         nextDayTS = gtwStartDate.unix();
 
                                         // 1.1 E-mail
-                                        if (sessions.email) { calendar[calendar.length-1].email = calculateScores('email', sessions.email, dayTS, nextDayTS, calendar[calendar.length-1].email); }
+                                        if (sessions.email) { calendar[calendar.length-1].email = calculateScores('email', sessions.email, dayTS, nextDayTS, calendar[calendar.length-1].email, calendar[calendar.length-2] ? calendar[calendar.length-2].email : null); }
 
                                         // 1.2 General Social Network activity
                                         // Calculate social networks first
-                                        if (sessions.social.facebook) {calendar[calendar.length-1].socialNetworks.facebook = calculateScores('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].socialNetworks.facebook); }
-                                        if (sessions.social.twitter) { calendar[calendar.length-1].socialNetworks.twitter = calculateScores('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].socialNetworks.twitter); }
-                                        if (sessions.social.instagram) { calendar[calendar.length-1].socialNetworks.instagram = calculateScores('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].socialNetworks.instagram); }
+                                        if (sessions.social.facebook) { calendar[calendar.length-1].facebook = calculateScores('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].facebook, calendar[calendar.length-2] ? calendar[calendar.length-2].facebook: null); }
+                                        if (sessions.social.twitter) { calendar[calendar.length-1].twitter = calculateScores('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].twitter, calendar[calendar.length-2] ? calendar[calendar.length-2].twitter : null); }
+                                        if (sessions.social.instagram) { calendar[calendar.length-1].instagram = calculateScores('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].instagram, calendar[calendar.length-2] ? calendar[calendar.length-2].instagram : null); }
 
                                         // Now calculate data from social Tracker
                                         if (sessions.social.facebook) {  }
                                         if (sessions.social.twitter) {  }
                                         if (sessions.social.instagram) {  }
 
-                                        if (sessions.forum) { calendar[calendar.length-1].forum = calculateScores('forum', sessions.forum, dayTS, nextDayTS, calendar[calendar.length-1].forum); }
-                                        if (sessions.youtube) { calendar[calendar.length-1].youtube = calculateScores('youtube', sessions.youtube, dayTS, nextDayTS, calendar[calendar.length-1].youtube); }
-                                        if (sessions.news) { calendar[calendar.length-1].news = calculateScores('news', sessions.news, dayTS, nextDayTS, calendar[calendar.length-1].news); }
-                                        if (sessions.entertainment) { calendar[calendar.length-1].entertainment = calculateScores('entertainment', sessions.entertainment, dayTS, nextDayTS, calendar[calendar.length-1].entertainment); }
-                                        if (sessions.health) { calendar[calendar.length-1].health = calculateScores('health', sessions.health, dayTS, nextDayTS, calendar[calendar.length-1].health); }
-                                        if (sessions.elearning) { calendar[calendar.length-1].elearning = calculateScores('elearning', sessions.elearning, dayTS, nextDayTS, calendar[calendar.length-1].elearning); }
-                                        if (sessions.linkedin) { calendar[calendar.length-1].linkedin = calculateScores('linkedin', sessions.linkedin, dayTS, nextDayTS, calendar[calendar.length-1].linkedin); }
-                                        if (sessions.job) { calendar[calendar.length-1].job = calculateScores('job', sessions.job, dayTS, nextDayTS, calendar[calendar.length-1].job); }
+                                        if (sessions.forum) { calendar[calendar.length-1].forum = calculateScores('forum', sessions.forum, dayTS, nextDayTS, calendar[calendar.length-1].forum, calendar[calendar.length-2] ? calendar[calendar.length-2].forum : null); }
+                                        if (sessions.youtube) { calendar[calendar.length-1].youtube = calculateScores('youtube', sessions.youtube, dayTS, nextDayTS, calendar[calendar.length-1].youtube, calendar[calendar.length-2] ? calendar[calendar.length-2].youtube : null); }
+                                        if (sessions.news) { calendar[calendar.length-1].news = calculateScores('news', sessions.news, dayTS, nextDayTS, calendar[calendar.length-1].news, calendar[calendar.length-2] ? calendar[calendar.length-2].news : null); }
+                                        if (sessions.entertainment) { calendar[calendar.length-1].entertainment = calculateScores('entertainment', sessions.entertainment, dayTS, nextDayTS, calendar[calendar.length-1].entertainment, calendar[calendar.length-2] ? calendar[calendar.length-2].entertainment : null); }
+                                        if (sessions.health) { calendar[calendar.length-1].health = calculateScores('health', sessions.health, dayTS, nextDayTS, calendar[calendar.length-1].health, calendar[calendar.length-2] ? calendar[calendar.length-2].health : null); }
+                                        if (sessions.elearning) { calendar[calendar.length-1].elearning = calculateScores('elearning', sessions.elearning, dayTS, nextDayTS, calendar[calendar.length-1].elearning, calendar[calendar.length-2] ? calendar[calendar.length-2].elearning : null); }
+                                        if (sessions.linkedin) { calendar[calendar.length-1].linkedin = calculateScores('linkedin', sessions.linkedin, dayTS, nextDayTS, calendar[calendar.length-1].linkedin, calendar[calendar.length-2] ? calendar[calendar.length-2].linkedin : null); }
+                                        if (sessions.job) { calendar[calendar.length-1].job = calculateScores('job', sessions.job, dayTS, nextDayTS, calendar[calendar.length-1].job, calendar[calendar.length-2] ? calendar[calendar.length-2].job : null); }
 
                                         // Time spent online
 
@@ -447,12 +445,50 @@
 
                                     }
 
-                                    // Save to Firebase, last date that the information was calculated
-
+                                    // TODO Save to Firebase, last date that the information was calculated
                                     console.log(calendar);
 
-                                    $('#loader').hide();
-                                    $("#homepage-section").show();
+                                    // Score Averages
+                                    var averages = [];
+
+                                    var scoreAverage = [];
+                                    scoreAverage.participation = 0;
+                                    scoreAverage.empowerment = 0;
+                                    scoreAverage.education = 0;
+
+                                    for (var k in sessionType) {
+                                        if (typeof sessionType[k] !== 'function') {
+                                            averages[sessionType[k]] = calculateScoreAverage(calendar, sessionType[k]);
+                                        }
+                                    }
+
+                                    scoreAverage.participation = (averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7;
+                                    scoreAverage.empowerment = (averages.youtube + averages.entertainment + averages.news + averages.health) / 4;
+                                    scoreAverage.education = (averages.elearning + averages.linkedin + averages.job) / 3;
+
+                                    $("#scoreAverageParticipationIndicator").text(scoreAverage.participation);
+                                    $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment);
+                                    $("#scoreAverageEducationIndicator").text(scoreAverage.education);
+
+
+                                    // Total
+                                    scoreAverage.total = (scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3;
+
+                                    // Update total score!
+                                    var reference = firebase.database().ref('users/' + currentUser.uid);
+                                    reference.once('value').then(function () {
+                                        firebase.database().ref('users/' + currentUser.uid + '/scores').update({
+                                            "total": scoreAverage.total
+                                        });
+
+                                        $("#scoreTotalIndicator").text(scoreAverage.total);
+
+                                        // Show page
+                                        $('#loader').hide();
+                                        $("#homepage-section").show();
+                                    });
+
+
                                 });
 
                             }
