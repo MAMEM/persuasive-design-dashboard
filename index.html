@@ -368,9 +368,8 @@
                                 reference = firebase.database().ref('users/' + currentUser.uid);
                                 reference.once('value').then(function (snapshot) {
 
-
                                     // Calculate training todos
-                                    console.log(snapshot.val().training);
+                                    calculateTrainingIndicators(snapshot.val().training.levels);
 
                                     // Check if there are saved data, to establish boundaries first
                                     console.log("page activity:", snapshot.val().pageActivity);

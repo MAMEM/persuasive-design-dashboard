@@ -273,3 +273,53 @@ function drawChart(calendar) {
 
     chart.draw(data, options);
 }
+
+function calculateTrainingIndicators(levels) {
+
+    if (levels.basic) {
+        if (levels.basic.level1) {
+            if (levels.basic.level1.trophyGained) { $('#basic1Indicator').addClass( 'bg-green' ); }
+            else { $('#basic1Indicator').addClass( 'bg-yellow' ); }
+        }
+
+        if (levels.basic.level2) {
+            if (levels.basic.level2.trophyGained) { $('#basic2Indicator').addClass( 'bg-green' ); }
+            else { $('#basic2Indicator').addClass( 'bg-yellow' ); }
+        }
+    }
+
+    if (levels.int) {
+        if (levels.int.level1) {
+            if (levels.int.level1.trophyGained) { $('#int1Indicator').addClass( 'bg-green' ); }
+            else { $('#int1Indicator').addClass( 'bg-yellow' ); }
+        }
+        if (levels.int.level2) {
+            if (levels.int.level2.trophyGained) { $('#int2Indicator').addClass( 'bg-green' ); }
+            else { $('#int2Indicator').addClass( 'bg-yellow' ); }
+        }
+        if (levels.int.level3) {
+            if (levels.int.level3.trophyGained) { $('#int3Indicator').addClass( 'bg-green' ); }
+            else { $('#int3Indicator').addClass( 'bg-yellow' ); }
+        }
+    }
+
+    if (levels.adv) {
+        if (levels.adv.level1) {
+            if (levels.adv.level1.trophyGained) { $('#adv1Indicator').addClass( 'bg-green' ); }
+            else { $('#adv1Indicator').addClass( 'bg-yellow' ); }
+        }
+        if (levels.adv.level2) {
+            if (levels.adv.level2.trophyGained) { $('#adv2Indicator').addClass( 'bg-green' ); }
+            else { $('#adv2Indicator').addClass( 'bg-yellow' ); }
+        }
+        if (levels.adv.level3) {
+            if (levels.adv.level3.trophyGained) { $('#adv3Indicator').addClass( 'bg-green' ); }
+            else { $('#adv3Indicator').addClass( 'bg-yellow' ); }
+        }
+        if (levels.adv.level4) {
+            if (levels.adv.level4.trophyGained) { $('#adv4Indicator').addClass( 'bg-green' ); }
+            else { $('#adv4Indicator').addClass( 'bg-yellow' ); }
+        }
+    }
+
+}
