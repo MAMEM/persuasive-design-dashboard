@@ -105,6 +105,29 @@ p {
     }
 }
 
+.circle {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    line-height: 22px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    text-align: center;
+    color: white;
+    font-size: 16px;
+    text-transform: uppercase;
+    margin: 4px 2px 0 2px;
+    background-color: #BDBDBD;
+}
+
+.bg-inactive { background-color: #BDBDBD; }
+.bg-green { background-color: #50BAA6; }
+.bg-blue { background-color: #607D8B; }
+.bg-red { background-color: #e74c3c; }
+
+
+
 /* Values
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 

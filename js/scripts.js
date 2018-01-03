@@ -2,6 +2,8 @@
 
 var sessionType = ['email', 'facebook', 'twitter', 'instagram', 'forum', 'youtube', 'news', 'entertainment', 'health', 'elearning', 'linkedin', 'job' ];
 
+var calendar = [];
+
 function createFBItems(arr) {
 
     var posts = [];
@@ -222,4 +224,52 @@ function calculateScoreAverage(calendar, sessionType) {
     }
 
     return sum / calendar.length;
+}
+
+function drawChart(calendar) {
+
+    var data = new google.visualization.DataTable();
+    data.addColumn('string', 'Date');
+
+    // Add calendar cats
+    for ( var i=0; i < sessionType.length; i++ ) {
+        data.addColumn('number', sessionType[i]);
+    }
+
+    // TODO: Change duration with score
+
+    for ( i=0; i < calendar.length; i++ ) {
+
+        data.addRows([[
+            calendar[i].day + '/' + calendar[i].month /*+ '-' + calendar[i].year*/,
+            calendar[i][sessionType[0]][0].duration,
+            calendar[i][sessionType[1]][0].duration,
+            calendar[i][sessionType[2]][0].duration,
+            calendar[i][sessionType[3]][0].duration,
+            calendar[i][sessionType[4]][0].duration,
+            calendar[i][sessionType[5]][0].duration,
+            calendar[i][sessionType[6]][0].duration,
+            calendar[i][sessionType[7]][0].duration,
+            calendar[i][sessionType[8]][0].duration,
+            calendar[i][sessionType[9]][0].duration,
+            calendar[i][sessionType[10]][0].duration,
+            calendar[i][sessionType[11]][0].duration
+        ]]);
+    }
+
+    var options = {
+        title: 'Score',
+        legend: { position: 'right' },
+        height: 500,
+        hAxis: {
+            textStyle: {
+                fontSize: 9
+            }
+        }
+
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('chart'));
+
+    chart.draw(data, options);
 }
