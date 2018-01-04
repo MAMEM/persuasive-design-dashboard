@@ -336,19 +336,19 @@ function calculateTrainingIndicators(levels) {
     if (levels.basic) {
         if (levels.basic.level1) {
             if (levels.basic.level1.trophyGained) {
-                $('#basic1Indicator').addClass( 'bg-green' );
+                $('#basic1Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#basic1Indicator').addClass( 'bg-yellow' );
+                $('#basic1Indicator').addClass( 'bg-blue' );
             }
         }
 
         if (levels.basic.level2) {
             if (levels.basic.level2.trophyGained) {
-                $('#basic2Indicator').addClass( 'bg-green' );
+                $('#basic2Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#basic2Indicator').addClass( 'bg-yellow' );
+                $('#basic2Indicator').addClass( 'bg-blue' );
             }
         }
     }
@@ -356,26 +356,26 @@ function calculateTrainingIndicators(levels) {
     if (levels.int) {
         if (levels.int.level1) {
             if (levels.int.level1.trophyGained) {
-                $('#int1Indicator').addClass( 'bg-green' );
+                $('#int1Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#int1Indicator').addClass( 'bg-yellow' );
+                $('#int1Indicator').addClass( 'bg-blue' );
             }
         }
         if (levels.int.level2) {
             if (levels.int.level2.trophyGained) {
-                $('#int2Indicator').addClass( 'bg-green' );
+                $('#int2Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#int2Indicator').addClass( 'bg-yellow' );
+                $('#int2Indicator').addClass( 'bg-blue' );
             }
         }
         if (levels.int.level3) {
             if (levels.int.level3.trophyGained) {
-                $('#int3Indicator').addClass( 'bg-green' );
+                $('#int3Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#int3Indicator').addClass( 'bg-yellow' );
+                $('#int3Indicator').addClass( 'bg-blue' );
             }
         }
     }
@@ -383,34 +383,34 @@ function calculateTrainingIndicators(levels) {
     if (levels.adv) {
         if (levels.adv.level1) {
             if (levels.adv.level1.trophyGained) {
-                $('#adv1Indicator').addClass( 'bg-green' );
+                $('#adv1Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#adv1Indicator').addClass( 'bg-yellow' );
+                $('#adv1Indicator').addClass( 'bg-blue' );
             }
         }
         if (levels.adv.level2) {
             if (levels.adv.level2.trophyGained) {
-                $('#adv2Indicator').addClass( 'bg-green' );
+                $('#adv2Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#adv2Indicator').addClass( 'bg-yellow' );
+                $('#adv2Indicator').addClass( 'bg-blue' );
             }
         }
         if (levels.adv.level3) {
             if (levels.adv.level3.trophyGained) {
-                $('#adv3Indicator').addClass( 'bg-green' );
+                $('#adv3Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#adv3Indicator').addClass( 'bg-yellow' );
+                $('#adv3Indicator').addClass( 'bg-blue' );
             }
         }
         if (levels.adv.level4) {
             if (levels.adv.level4.trophyGained) {
-                $('#adv4Indicator').addClass( 'bg-green' );
+                $('#adv4Indicator').addClass( 'bg-yellow' );
             }
             else {
-                $('#adv4Indicator').addClass( 'bg-yellow' );
+                $('#adv4Indicator').addClass( 'bg-blue' );
             }
         }
     }
