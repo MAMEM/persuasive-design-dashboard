@@ -438,33 +438,7 @@
                                     }
                                     console.log("calendar: ", calendar);
 
-                                    var week;
-                                    for (i=0; i<calendar.length; i++) {
-
-                                        if (calendar[i-1]) {
-
-                                            if (calendar[i].week !== calendar[i-1].week) {
-                                                // Changed week!
-                                                week++;
-                                                weeklyCalendar[week] = [];
-                                                for (j in sessionType) {
-                                                    weeklyCalendar[week-1][sessionType[j]] = weeklyCalendar[week-1][sessionType[j]]/7;
-                                                    weeklyCalendar[week][sessionType[j]] = 0;
-                                                }
-                                            }
-
-                                        } else {
-                                            week = 0;
-                                            weeklyCalendar[week] = [];
-                                            for (j in sessionType) {
-                                                weeklyCalendar[week][sessionType[j]] = 0;
-                                            }
-                                        }
-
-                                        for (var j in sessionType) {
-                                            weeklyCalendar[week][sessionType[j]] += calendar[i][sessionType[j]][0].duration;
-                                        }
-                                    }
+                                    weeklyCalendar = calculateWeeklyScore(calendar, sessionType);
 
                                     console.log("weekly: ", weeklyCalendar);
 
@@ -473,7 +447,6 @@
 
                                     // Score Averages
                                     var averages = [];
-
                                     var scoreAverage = [];
                                     scoreAverage.participation = 0;
                                     scoreAverage.empowerment = 0;

@@ -236,6 +236,40 @@ function calculateDailyScore(sessionType, sessions, dayTS, nextDayTS, calendarEn
 }
 
 
+function calculateWeeklyScore(calendar, sessionType) {
+
+    var weekly = [];
+    var week;
+
+    for (var i=0; i<calendar.length; i++) {
+
+        if (calendar[i-1]) {
+
+            if (calendar[i].week !== calendar[i-1].week) {
+                // Changed week!
+                week++;
+                weekly[week] = [];
+                for (j in sessionType) {
+                    weekly[week-1][sessionType[j]] = weekly[week-1][sessionType[j]]/7;
+                    weekly[week][sessionType[j]] = 0;
+                }
+            }
+
+        } else {
+            week = 0;
+            weekly[week] = [];
+            for (j in sessionType) {
+                weekly[week][sessionType[j]] = 0;
+            }
+        }
+
+        for (var j in sessionType) {
+            weekly[week][sessionType[j]] += calendar[i][sessionType[j]][0].duration;
+        }
+    }
+    return weekly;
+}
+
 
 function calculateScoreAverage(calendar, sessionType) {
 
