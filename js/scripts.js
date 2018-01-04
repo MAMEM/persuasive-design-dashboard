@@ -1,9 +1,5 @@
 "use strict";
 
-var sessionType = ['email', 'facebook', 'twitter', 'instagram', 'forum', 'youtube', 'news', 'entertainment', 'health', 'elearning', 'linkedin', 'job' ];
-
-var calendar = [];
-
 function createFBItems(arr) {
 
     var posts = [];
@@ -157,7 +153,35 @@ function initFirebaseData(sessions, snapshot) {
 }
 
 
-function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendarEntry, prevCalendarEntry) {
+function calculateScore(sessions, calendar, dayTS, nextDayTS) {
+
+    // 1.1 E-mail
+    if (sessions.email) { calendar[calendar.length-1].email = calculateDailyScore('email', sessions.email, dayTS, nextDayTS, calendar[calendar.length-1].email, calendar[calendar.length-2] ? calendar[calendar.length-2].email : null); }
+
+    // 1.2 General Social Network activity
+    // Calculate social networks first
+    if (sessions.social.facebook) { calendar[calendar.length-1].facebook = calculateDailyScore('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].facebook, calendar[calendar.length-2] ? calendar[calendar.length-2].facebook: null); }
+    if (sessions.social.twitter) { calendar[calendar.length-1].twitter = calculateDailyScore('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].twitter, calendar[calendar.length-2] ? calendar[calendar.length-2].twitter : null); }
+    if (sessions.social.instagram) { calendar[calendar.length-1].instagram = calculateDailyScore('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].instagram, calendar[calendar.length-2] ? calendar[calendar.length-2].instagram : null); }
+
+    // Now calculate data from social Tracker
+    if (sessions.social.facebook) {  }
+    if (sessions.social.twitter) {  }
+    if (sessions.social.instagram) {  }
+
+    if (sessions.forum) { calendar[calendar.length-1].forum = calculateDailyScore('forum', sessions.forum, dayTS, nextDayTS, calendar[calendar.length-1].forum, calendar[calendar.length-2] ? calendar[calendar.length-2].forum : null); }
+    if (sessions.youtube) { calendar[calendar.length-1].youtube = calculateDailyScore('youtube', sessions.youtube, dayTS, nextDayTS, calendar[calendar.length-1].youtube, calendar[calendar.length-2] ? calendar[calendar.length-2].youtube : null); }
+    if (sessions.news) { calendar[calendar.length-1].news = calculateDailyScore('news', sessions.news, dayTS, nextDayTS, calendar[calendar.length-1].news, calendar[calendar.length-2] ? calendar[calendar.length-2].news : null); }
+    if (sessions.entertainment) { calendar[calendar.length-1].entertainment = calculateDailyScore('entertainment', sessions.entertainment, dayTS, nextDayTS, calendar[calendar.length-1].entertainment, calendar[calendar.length-2] ? calendar[calendar.length-2].entertainment : null); }
+    if (sessions.health) { calendar[calendar.length-1].health = calculateDailyScore('health', sessions.health, dayTS, nextDayTS, calendar[calendar.length-1].health, calendar[calendar.length-2] ? calendar[calendar.length-2].health : null); }
+    if (sessions.elearning) { calendar[calendar.length-1].elearning = calculateDailyScore('elearning', sessions.elearning, dayTS, nextDayTS, calendar[calendar.length-1].elearning, calendar[calendar.length-2] ? calendar[calendar.length-2].elearning : null); }
+    if (sessions.linkedin) { calendar[calendar.length-1].linkedin = calculateDailyScore('linkedin', sessions.linkedin, dayTS, nextDayTS, calendar[calendar.length-1].linkedin, calendar[calendar.length-2] ? calendar[calendar.length-2].linkedin : null); }
+    if (sessions.job) { calendar[calendar.length-1].job = calculateDailyScore('job', sessions.job, dayTS, nextDayTS, calendar[calendar.length-1].job, calendar[calendar.length-2] ? calendar[calendar.length-2].job : null); }
+
+    return calendar;
+}
+
+function calculateDailyScore(sessionType, sessions, dayTS, nextDayTS, calendarEntry, prevCalendarEntry) {
 
     var j = 0;
     var k = 0;
@@ -215,10 +239,9 @@ function calculateScores(sessionType, sessions, dayTS, nextDayTS, calendarEntry,
 
 function calculateScoreAverage(calendar, sessionType) {
 
-    var i = 0;
     var sum = 0;
 
-    for (i=0;i<calendar.length;i++) {
+    for (var i=0;i<calendar.length;i++) {
 
         sum = sum + calendar[i][sessionType][0].score;
     }
@@ -278,48 +301,83 @@ function calculateTrainingIndicators(levels) {
 
     if (levels.basic) {
         if (levels.basic.level1) {
-            if (levels.basic.level1.trophyGained) { $('#basic1Indicator').addClass( 'bg-green' ); }
-            else { $('#basic1Indicator').addClass( 'bg-yellow' ); }
+            if (levels.basic.level1.trophyGained) {
+                $('#basic1Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#basic1Indicator').addClass( 'bg-yellow' );
+            }
         }
 
         if (levels.basic.level2) {
-            if (levels.basic.level2.trophyGained) { $('#basic2Indicator').addClass( 'bg-green' ); }
-            else { $('#basic2Indicator').addClass( 'bg-yellow' ); }
+            if (levels.basic.level2.trophyGained) {
+                $('#basic2Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#basic2Indicator').addClass( 'bg-yellow' );
+            }
         }
     }
 
     if (levels.int) {
         if (levels.int.level1) {
-            if (levels.int.level1.trophyGained) { $('#int1Indicator').addClass( 'bg-green' ); }
-            else { $('#int1Indicator').addClass( 'bg-yellow' ); }
+            if (levels.int.level1.trophyGained) {
+                $('#int1Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#int1Indicator').addClass( 'bg-yellow' );
+            }
         }
         if (levels.int.level2) {
-            if (levels.int.level2.trophyGained) { $('#int2Indicator').addClass( 'bg-green' ); }
-            else { $('#int2Indicator').addClass( 'bg-yellow' ); }
+            if (levels.int.level2.trophyGained) {
+                $('#int2Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#int2Indicator').addClass( 'bg-yellow' );
+            }
         }
         if (levels.int.level3) {
-            if (levels.int.level3.trophyGained) { $('#int3Indicator').addClass( 'bg-green' ); }
-            else { $('#int3Indicator').addClass( 'bg-yellow' ); }
+            if (levels.int.level3.trophyGained) {
+                $('#int3Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#int3Indicator').addClass( 'bg-yellow' );
+            }
         }
     }
 
     if (levels.adv) {
         if (levels.adv.level1) {
-            if (levels.adv.level1.trophyGained) { $('#adv1Indicator').addClass( 'bg-green' ); }
-            else { $('#adv1Indicator').addClass( 'bg-yellow' ); }
+            if (levels.adv.level1.trophyGained) {
+                $('#adv1Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#adv1Indicator').addClass( 'bg-yellow' );
+            }
         }
         if (levels.adv.level2) {
-            if (levels.adv.level2.trophyGained) { $('#adv2Indicator').addClass( 'bg-green' ); }
-            else { $('#adv2Indicator').addClass( 'bg-yellow' ); }
+            if (levels.adv.level2.trophyGained) {
+                $('#adv2Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#adv2Indicator').addClass( 'bg-yellow' );
+            }
         }
         if (levels.adv.level3) {
-            if (levels.adv.level3.trophyGained) { $('#adv3Indicator').addClass( 'bg-green' ); }
-            else { $('#adv3Indicator').addClass( 'bg-yellow' ); }
+            if (levels.adv.level3.trophyGained) {
+                $('#adv3Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#adv3Indicator').addClass( 'bg-yellow' );
+            }
         }
         if (levels.adv.level4) {
-            if (levels.adv.level4.trophyGained) { $('#adv4Indicator').addClass( 'bg-green' ); }
-            else { $('#adv4Indicator').addClass( 'bg-yellow' ); }
+            if (levels.adv.level4.trophyGained) {
+                $('#adv4Indicator').addClass( 'bg-green' );
+            }
+            else {
+                $('#adv4Indicator').addClass( 'bg-yellow' );
+            }
         }
     }
-
 }
