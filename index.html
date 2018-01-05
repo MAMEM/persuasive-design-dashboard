@@ -483,13 +483,47 @@
 
                     $( "#saveInfoButton" ).click(function() {
 
-                        // Update timestamp!
-                        /*firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
-                            "fbTs": fbPosts[0].publicationTime
-                        });*/
+                        var info = [];
+
+                        info.firstName = document.getElementById("firstNameInput").value;
+                        // Capitalize First letter First name
+                        info.firstName = info.firstName.charAt(0).toUpperCase() + info.firstName.slice(1);
+                        info.nickname = document.getElementById("nicknameInput").value;
+
+                        info.gender = document.querySelector('input[name="gender"]:checked').value;
+                        info.age = document.getElementById("ageInput").value;
+                        info.stCollectionName = (document.getElementById("stInput").value.length !== 0) ? document.getElementById("stInput").value : null;
 
 
-                        location.reload();
+                        info.participantGroup = document.querySelector('input[name="target"]:checked').value;
+
+                        info.language = document.querySelector('input[name="lang"]:checked').value;
+                        info.translation = document.getElementById("quizCheckbox").checked;
+
+                        if (!info.firstName || !info.nickname || !info.age) {
+                            alert('Please fill in all fields!');
+                            return 0;
+                        }
+
+                        // When saving data on first level, save name too (to be used on scoreboard).
+                        firebase.database().ref('users/' + currentUser.uid + '/userDetails').update({
+                            "nickname": $( "#nicknameInput" ).val(),
+                            "firstName": $( "#firstNameInput" ).val(),
+                            "gender": info.gender,
+                            "age": info.age,
+                            "lang": info.language,
+                            "quizTranslation": info.translation,
+                            "participantGroup": info.participantGroup,
+                            "socialTracker": !!info.stCollectionName,
+                            "stCollectionName": info.stCollectionName
+
+                        }, function (error) {
+
+                            // Account created safely, now hide irrelevant information.
+                            if (!error) {
+                                location.reload();
+                            }
+                        });
 
 
                     });
