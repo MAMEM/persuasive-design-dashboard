@@ -436,3 +436,14 @@ there.
     width: 100%;
   }
 }
+
+html input[disabled] {
+
+  background-color: #EEEEEE;
+  color: #666666;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  font-style: italic;
+}

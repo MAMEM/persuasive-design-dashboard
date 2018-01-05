@@ -90,7 +90,7 @@
             </div>
 
             <div class="two columns">
-                <button class="interface-btn">
+                <button class="interface-btn" id="profileBtn">
                     <i class="material-icons text-XL">person</i>
                     <span class="text-MD">PROFILE</span>
                 </button>
@@ -224,11 +224,138 @@
                     <div id="chart"></div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div id="profile-section" style="display: none;" class="container">
+
+    <div class="whitespace-separator"></div>
+
+    <h1>Profile</h1>
+
+    <br>
+
+    <div class="twelve columns">
+
+        <div class="six columns">
+
+            <h3>User information</h3>
+
+            <form>
+                <div class="row">
+
+                    <div class="six columns">
+                        <label for="emailInput">E-mail</label>
+                        <input class="u-full-width input-disabled" type="email" placeholder="e.g. user@mail.com" id="emailInput" disabled>
+
+
+                        <label for="nicknameInput">Participants number (Nickname)</label>
+                        <input class="u-full-width" type="text" placeholder="e.g. GS016 or Colibri" id="nicknameInput">
+                    </div>
+
+                    <div class="six columns">
+                        <label for="passInput">Password</label>
+                        <input class="u-full-width input-disabled" type="text" placeholder="6 characters minimum" id="passInput" disabled>
+
+                        <label for="firstNameInput">First Name</label>
+                        <input class="u-full-width" type="text" placeholder="e.g. John" id="firstNameInput">
+                    </div>
+
+                    <div class="twelve columns">
+                        <div class="six columns">
+                            <h5>Gender</h5>
+                            <div class="twelve columns">
+                                <form>
+                                    <div class="six columns">
+                                        <label for="maleRadioBtn">Male</label>
+                                        <input type="radio" name="gender" value="male" id="maleRadioBtn" checked>
+                                    </div>
+                                    <div class="six columns">
+                                        <label for="femaleRadioBtn">Female</label>
+                                        <input type="radio" name="gender" value="female" id="femaleRadioBtn">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="six columns">
+                            <label for="ageInput">Age</label>
+                            <input class="u-full-width" type="number" placeholder="e.g. 34" id="ageInput">
+                            <label for="stInput">Social Tracker User ID</label>
+                            <input class="u-full-width" type="text" placeholder="Leave empty to disable" id="stInput">
+                        </div>
+                    </div>
+
+
+                </div>
+            </form>
 
 
         </div>
 
+        <div class="six columns">
+            <div class="row">
+
+                <div class="twelve columns">
+                    <div class="whitespace-separator"></div>
+                    <h3>Participant group</h3>
+
+                    <div class="three columns">
+                        <label for="parkinsonRadioBtn">Parkinson’s Disease</label>
+                        <input type="radio" name="target" value="parkinson" id="parkinsonRadioBtn" checked>
+                    </div>
+                    <div class="three columns">
+                        <label for="nmdRadioBtn">Neuromuscular Disease</label>
+                        <input type="radio" name="target" value="nmd" id="nmdRadioBtn">
+                    </div>
+                    <div class="three columns">
+                        <label for="highTRadioBtn">High Tetraplegia</label>
+                        <input type="radio" name="target" value="tetraplegia" id="highTRadioBtn">
+                    </div>
+                </div>
+
+                <div class="twelve columns">
+
+                    <h3>Language</h3>
+
+                    <div class="two columns">
+                        <label for="englishRadioBtn">English</label>
+                        <input type="radio" name="lang" value="english" id="englishRadioBtn" checked>
+                    </div>
+                    <div class="two columns">
+                        <label for="greekRadioBtn">Greek</label>
+                        <input type="radio" name="lang" value="greek" id="greekRadioBtn">
+                    </div>
+                    <div class="two columns">
+                        <label for="hebrewRadioBtn">Hebrew</label>
+                        <input type="radio" name="lang" value="hebrew" id="hebrewRadioBtn">
+                    </div>
+                </div>
+
+                <div class="twelve columns">
+                    <div class="whitespace-separator"></div>
+                    <label>
+                        <input type="checkbox" id="quizCheckbox">
+                        <span class="label-body">Translate Quiz questions to local language</span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="twelve columns">
+            <div class="six columns">
+                <button class="button-block" id="cancelChangesButton">Cancel</button>
+            </div>
+
+            <div class="six columns">
+                <button class="button-primary button-block" id="saveInfoButton">Save changes</button>
+            </div>
+        </div>
+
     </div>
+
+
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
@@ -304,6 +431,68 @@
                     var paramPass = '&pass='+user.details.password;
 
                     window.location.href = '../gtw-game/index.html?'+paramUser+''+paramPass;
+                });
+
+                $( "#profileBtn" ).click(function() {
+
+                    $( "#homepage-section" ).hide();
+
+                    $( "#emailInput" ).val(user.details.email);
+                    $( "#passInput" ).val(user.details.password);
+
+                    $( "#nicknameInput" ).val(user.details.nickname);
+                    $( "#firstNameInput" ).val(user.details.firstName);
+                    $( "#ageInput" ).val(user.details.age);
+                    $( "#stInput" ).val(user.ST.collection);
+
+                    if (user.details.gender === 'male') {
+                        $("#maleRadioBtn").prop("checked", true);
+                    } else {
+                        $("#femaleRadioBtn").prop("checked", true);
+                    }
+
+                    if (snapshot.val().userDetails.participantGroup === 'parkinson') {
+                        $("#parkinsonRadioBtn").prop("checked", true);
+                    } else if (snapshot.val().userDetails.participantGroup === 'nmd') {
+                        $("#nmdRadioBtn").prop("checked", true);
+                    } else {
+                        $("#highTRadioBtn").prop("checked", true);
+                    }
+
+                    if (user.details.language === 'english') {
+                        $("#englishRadioBtn").prop("checked", true);
+                    } else if (user.details.language === 'greek') {
+                        $("#greekRadioBtn").prop("checked", true);
+                    } else {
+                        $("#hebrewRadioBtn").prop("checked", true);
+                    }
+
+                    if (user.details.quizTranslation) {
+                        $('#quizCheckbox').prop('checked', true);
+                    } else {
+                        $('#quizCheckbox').prop('checked', false);
+                    }
+
+                    $( "#profile-section" ).show();
+
+
+                    $( "#cancelChangesButton" ).click(function() {
+                        $( "#profile-section" ).hide();
+                        $( "#homepage-section" ).show();
+                    });
+
+                    $( "#saveInfoButton" ).click(function() {
+
+                        // Update timestamp!
+                        /*firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
+                            "fbTs": fbPosts[0].publicationTime
+                        });*/
+
+
+                        location.reload();
+
+
+                    });
 
                 });
 
