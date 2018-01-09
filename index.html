@@ -179,6 +179,7 @@
                                 <span class="progress-bar"><progress id="participationProgressBar" value="50" max="100"></progress></span>
                                 <hr>
                                 <p> 1. E-mail </p>
+
                                 <p> 2. General social network activity </p>
                                 <p>&nbsp; 2a. Facebook </p>
                                 <p>&nbsp; 2b. Twitter </p>
@@ -216,11 +217,15 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
 
                 <div id="graphPanel" style="display: none">
+                    <div class="row">
+                        <button id="basicCatsBtn" style="font-size: 12px;" class="button bg-white button-primary">Basic categories</button>
+                        &nbsp;
+                        <button id="allCatsBtn" style="font-size: 12px;" class="button bg-white">All categories</button>
+                    </div>
                     <div id="chart"></div>
                 </div>
             </div>
@@ -375,6 +380,20 @@
     config.storageBucket = config.projectId + ".appspot.com";
 
     firebase.initializeApp(config);
+
+    $("#basicCatsBtn").click(function() {
+        $("#basicCatsBtn").addClass("button-primary");
+        $("#allCatsBtn").removeClass("button-primary");
+        drawChart(calendar, false);
+    });
+
+    $("#allCatsBtn").click(function() {
+        $("#allCatsBtn").addClass("button-primary");
+        $("#basicCatsBtn").removeClass("button-primary");
+        drawChart(calendar, true);
+    });
+
+
 
     // Set global vars
     var sessionType = ['email', 'facebook', 'twitter', 'instagram', 'forum', 'youtube', 'news', 'entertainment', 'health', 'elearning', 'linkedin', 'job' ];
@@ -543,7 +562,7 @@
                     $( "#graphPanelBtn" ).addClass('tab-btn-active').removeClass('tab-btn-inactive');
                     $( "#detailsPanelBtn" ).removeClass('tab-btn-active').addClass('tab-btn-inactive');
 
-                    drawChart(calendar);
+                    drawChart(calendar, false);
                 });
 
             });
