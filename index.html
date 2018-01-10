@@ -684,8 +684,6 @@
 
                                     console.log("weekly: ", weeklyCalendar);
 
-                                    // TODO Save to Firebase, last date that the information was calculated
-
 
                                     // Score Averages
                                     var averages = [];
@@ -708,23 +706,27 @@
                                     $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment);
                                     $("#scoreAverageEducationIndicator").text(scoreAverage.education);
 
-
                                     // Total
                                     scoreAverage.total = (scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3;
 
                                     // Update total score!
-                                    var reference = firebase.database().ref('users/' + currentUser.uid);
-                                    reference.once('value').then(function () {
-                                        firebase.database().ref('users/' + currentUser.uid + '/scores').update({
-                                            "total": scoreAverage.total
-                                        });
-
-                                        $("#scoreTotalIndicator").text(scoreAverage.total);
-
-                                        // Show page
-                                        $('#loader').hide();
-                                        $("#homepage-section").show();
+                                    firebase.database().ref('users/' + currentUser.uid + '/scores').update({
+                                        "total": scoreAverage.total,
+                                        "average": {
+                                            "participation": scoreAverage.participation,
+                                            "empowerment": scoreAverage.empowerment,
+                                            "education": scoreAverage.education
+                                        },
+                                        "calendar": calendar,
+                                        "weeklyCalendar": weeklyCalendar,
+                                        "lastUpdated": + new Date()
                                     });
+
+                                    $("#scoreTotalIndicator").text(scoreAverage.total);
+
+                                    // Show page
+                                    $('#loader').hide();
+                                    $("#homepage-section").show();
 
 
                                 });
