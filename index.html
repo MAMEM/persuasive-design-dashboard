@@ -59,7 +59,8 @@
                 <br>
                 <div role="button" class="fb-login-button"  data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                 <br>
-                <div class="whitespace-separator"><button id="noFbBtn" class="button"> Continue without Facebook</button></div>
+                <div class="whitespace-separator"></div>
+                <button id="noFbBtn" class="button"> Continue without Facebook</button>
             </div>
         </div>
 
@@ -370,10 +371,26 @@
     google.charts.load('current', {'packages':['corechart', 'line']});
 
     // Initialize Firebase
-    // TODO get apiKey & projectId information from GTW (along with email & password)
+    var initializationCallback;
+    var currentUser;
+    var user = [];
+    user.details = [];
+    user.socialTracker = [];
+    user.FB = [];
+    user.FB.data = [];
+    user.ST = [];
+    user.ST.sources = 0;
+    user.hasFB = false;
+    user.hasST = false;
+
+    // Get info from url
+    var url = new URL(window.location.href);
+    user.details.email = url.searchParams.get("email");
+    user.details.password = url.searchParams.get("pass");
+
     var config = {
-        apiKey: "AIzaSyBMa9gSXsoDo27S7P959QZYf3rJBGDGEIA",
-        projectId: "mamem-phase2-fall17"
+        apiKey: url.searchParams.get("api_key"),
+        projectId: url.searchParams.get("project_id")
     };
     config.authDomain = config.projectId + ".firebaseapp.com";
     config.databaseURL = "https://" + config.projectId + ".firebaseio.com";
@@ -393,32 +410,14 @@
         drawChart(calendar, true);
     });
 
-
-
     // Set global vars
     var sessionType = ['email', 'facebook', 'twitter', 'instagram', 'forum', 'youtube', 'news', 'entertainment', 'health', 'elearning', 'linkedin', 'job' ];
-
-    var initializationCallback;
-    var currentUser;
-    var user = [];
-    user.details = [];
-    user.socialTracker = [];
-    user.FB = [];
-    user.FB.data = [];
-    user.ST = [];
-    user.ST.sources = 0;
-    user.hasFB = false;
-    user.hasST = false;
 
     var calendar = [];
     var weeklyCalendar = [];
 
     // Get information from firebase
     var currentUrl = window.location.href;
-
-    var url = new URL(window.location.href);
-    user.details.email = url.searchParams.get("email");
-    user.details.password = url.searchParams.get("pass");
 
     console.log(user);
 
