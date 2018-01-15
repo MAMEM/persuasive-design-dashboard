@@ -611,7 +611,6 @@
                                     "date": date
                                 });
 
-
                                 reference = firebase.database().ref('users/' + currentUser.uid);
                                 reference.once('value').then(function (snapshot) {
 
@@ -728,9 +727,7 @@
                                     $('#loader').hide();
                                     $("#homepage-section").show();
 
-
                                 });
-
                             }
                         });
 
@@ -813,7 +810,7 @@
 
 
                                         break;
-                                    case 'Youtube':
+                                    /*case 'Youtube':
                                         since = String(user.socialTracker.lastUpdated.ytTs);
                                         console.log("ST YOUTUBE Last saved date - now: ", since, until);
 
@@ -846,7 +843,7 @@
                                                 // Fire callback
                                                 refreshDataCallback.requestComplete(true);
                                             }
-                                        });
+                                        });*/
 
 
 

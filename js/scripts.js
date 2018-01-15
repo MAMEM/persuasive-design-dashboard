@@ -299,24 +299,22 @@ function drawChart(calendar, detailed) {
             data.addColumn('number', sessionType[i]);
         }
 
-        // TODO: Change duration with score
-
         for ( i=0; i < calendar.length; i++ ) {
 
             data.addRows([[
                 calendar[i].day + '/' + calendar[i].month /*+ '-' + calendar[i].year*/,
-                calendar[i][sessionType[0]][0].duration,
-                calendar[i][sessionType[1]][0].duration,
-                calendar[i][sessionType[2]][0].duration,
-                calendar[i][sessionType[3]][0].duration,
-                calendar[i][sessionType[4]][0].duration,
-                calendar[i][sessionType[5]][0].duration,
-                calendar[i][sessionType[6]][0].duration,
-                calendar[i][sessionType[7]][0].duration,
-                calendar[i][sessionType[8]][0].duration,
-                calendar[i][sessionType[9]][0].duration,
-                calendar[i][sessionType[10]][0].duration,
-                calendar[i][sessionType[11]][0].duration
+                calendar[i][sessionType[0]][0].score,
+                calendar[i][sessionType[1]][0].score,
+                calendar[i][sessionType[2]][0].score,
+                calendar[i][sessionType[3]][0].score,
+                calendar[i][sessionType[4]][0].score,
+                calendar[i][sessionType[5]][0].score,
+                calendar[i][sessionType[6]][0].score,
+                calendar[i][sessionType[7]][0].score,
+                calendar[i][sessionType[8]][0].score,
+                calendar[i][sessionType[9]][0].score,
+                calendar[i][sessionType[10]][0].score,
+                calendar[i][sessionType[11]][0].score
             ]]);
         }
 
@@ -331,18 +329,15 @@ function drawChart(calendar, detailed) {
             data.addRows([[
                 calendar[i].day + '/' + calendar[i].month /*+ '-' + calendar[i].year*/,
 
-                (calendar[i][sessionType[0]][0].duration + calendar[i][sessionType[1]][0].duration + calendar[i][sessionType[2]][0].duration +
-                calendar[i][sessionType[3]][0].duration + calendar[i][sessionType[4]][0].duration + calendar[i][sessionType[5]][0].duration + calendar[i][sessionType[6]][0].duration)/7,
+                (calendar[i][sessionType[0]][0].score + calendar[i][sessionType[1]][0].score + calendar[i][sessionType[2]][0].score +
+                calendar[i][sessionType[3]][0].score + calendar[i][sessionType[4]][0].score + calendar[i][sessionType[5]][0].score + calendar[i][sessionType[6]][0].score)/7,
 
-                (calendar[i][sessionType[5]][0].duration + calendar[i][sessionType[6]][0].duration + calendar[i][sessionType[7]][0].duration + calendar[i][sessionType[8]][0].duration)/4,
+                (calendar[i][sessionType[5]][0].score + calendar[i][sessionType[6]][0].score + calendar[i][sessionType[7]][0].score + calendar[i][sessionType[8]][0].score)/4,
 
-                (calendar[i][sessionType[9]][0].duration, + calendar[i][sessionType[10]][0].duration + calendar[i][sessionType[11]][0].duration)/3
+                (calendar[i][sessionType[9]][0].score + calendar[i][sessionType[10]][0].score + calendar[i][sessionType[11]][0].score)/3
             ]]);
-
         }
     }
-
-
 
     var options = {
         title: 'Score',
