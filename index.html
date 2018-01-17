@@ -112,7 +112,7 @@
                 <br>
                 <span class="row">Adv: <span id="adv1Indicator" class="circle"></span>&nbsp;<span id="adv2Indicator" class="circle"></span>&nbsp;<span id="adv3Indicator" class="circle"></span>&nbsp<span id="adv4Indicator" class="circle"></span></span>
                 <br>
-                <p class="align-text-center text-caption">Training status</p>
+                <p class="align-text-center text-caption">Training summary</p>
             </div>
 
             <div class="two columns">
@@ -291,8 +291,6 @@
                             <input class="u-full-width" type="text" placeholder="Leave empty to disable" id="stInput">
                         </div>
                     </div>
-
-
                 </div>
             </form>
 
@@ -670,7 +668,7 @@
                                         gtwStartDate.add(1, 'days');
                                         nextDayTS = gtwStartDate.unix();
 
-                                        calendar = calculateScore(sessions, calendar, dayTS, nextDayTS);
+                                        calendar = calculateDailyCalendar(sessions, calendar, dayTS, nextDayTS);
 
                                         // Time spent online
                                         // Keystrokes
@@ -678,9 +676,39 @@
                                     }
                                     console.log("calendar: ", calendar);
 
-                                    weeklyCalendar = calculateWeeklyScore(calendar, sessionType);
+                                    // Calculate score for each category
+                                    var scores = [];
+                                    var j=0;
+
+                                    for (j in sessionType) {
+                                        scores[sessionType[j]] = [];
+                                    }
+
+
+                                    for (i in calendar) {
+                                        for (j in sessionType) {
+                                            if (calendar[i][sessionType[j]][0].duration !== 0) {
+
+                                                scores[sessionType[j]].push({
+                                                    day: calendar[i].day,
+                                                    week: calendar[i].week,
+                                                    type: sessionType[j],
+                                                    typeIndicator: parseInt(j, 10),
+                                                    calendarEntry: parseInt(i, 10),
+                                                    duration: calendar[i][sessionType[j]][0].duration
+                                                });
+                                            }
+                                        }
+                                    }
+
+                                    for (i in scores) {
+                                        console.log(scores[i]);
+                                    }
+
+                                    weeklyCalendar = calculateWeeklyCalendar(calendar, sessionType);
 
                                     console.log("weekly: ", weeklyCalendar);
+                                    console.log("scores: ", scores);
 
 
                                     // Score Averages
@@ -809,44 +837,43 @@
 
 
                                         break;
-                                    /*case 'Youtube':
-                                        since = String(user.socialTracker.lastUpdated.ytTs);
-                                        console.log("ST YOUTUBE Last saved date - now: ", since, until);
+                                        /*case 'Youtube':
+                                            since = String(user.socialTracker.lastUpdated.ytTs);
+                                            console.log("ST YOUTUBE Last saved date - now: ", since, until);
 
-                                        $.ajax({
-                                            method: "GET",
-                                            url: "http://augreal.mklab.iti.gr:81/api/items",
-                                            data: {
-                                                collection: data.collections[0]._id,
-                                                language: 'all',
-                                                topics: '*',
-                                                unique: false,
-                                                original: "all",
-                                                type: "all",
-                                                source: "Youtube",
-                                                sort: "recency",
-                                                since: since+'001',
-                                                until: until,
-                                                nPerPage: 2000,
-                                                Page: 1
+                                            $.ajax({
+                                                method: "GET",
+                                                url: "http://augreal.mklab.iti.gr:81/api/items",
+                                                data: {
+                                                    collection: data.collections[0]._id,
+                                                    language: 'all',
+                                                    topics: '*',
+                                                    unique: false,
+                                                    original: "all",
+                                                    type: "all",
+                                                    source: "Youtube",
+                                                    sort: "recency",
+                                                    since: since+'001',
+                                                    until: until,
+                                                    nPerPage: 2000,
+                                                    Page: 1
 
-                                            },
-                                            success: function (arr) {
+                                                },
+                                                success: function (arr) {
 
-                                                console.log("YT: ", arr);
+                                                    console.log("YT: ", arr);
 
-                                                // Fire callback
-                                                refreshDataCallback.requestComplete(true);
+                                                    // Fire callback
+                                                    refreshDataCallback.requestComplete(true);
 
-                                            }, error:function() { alert("Error, Could not get YT items");
-                                                // Fire callback
-                                                refreshDataCallback.requestComplete(true);
-                                            }
-                                        });*/
+                                                }, error:function() { alert("Error, Could not get YT items");
+                                                    // Fire callback
+                                                    refreshDataCallback.requestComplete(true);
+                                                }
+                                                break;
+                                            });*/
 
 
-
-                                        break;
                                     case 'GooglePlus':
 
                                         since = String(user.socialTracker.lastUpdated.gpTs);
@@ -930,8 +957,11 @@
                     // Check if there is ST data saved in Firebase
                     if (snapshot.val().socialTracker) {
 
+                        // Set first unix timestamp as 1st February of 2017
                         user.socialTracker.lastUpdated = snapshot.val().socialTracker.lastUpdated;
-                        if (!user.socialTracker.lastUpdated.fbTs && !user.hasFB) { user.socialTracker.lastUpdated.fbTs = snapshot.val().general.starts[0].date; }
+                        if (!user.socialTracker.lastUpdated.fbTs && !user.hasFB) {
+                            user.socialTracker.lastUpdated.fbTs = 1517443200000;
+                        }
 
                     }
 

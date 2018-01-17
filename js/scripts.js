@@ -153,35 +153,37 @@ function initFirebaseData(sessions, snapshot) {
 }
 
 
-function calculateScore(sessions, calendar, dayTS, nextDayTS) {
+function calculateDailyCalendar(sessions, calendar, dayTS, nextDayTS) {
 
     // 1.1 E-mail
-    if (sessions.email) { calendar[calendar.length-1].email = calculateDailyScore('email', sessions.email, dayTS, nextDayTS, calendar[calendar.length-1].email, calendar[calendar.length-2] ? calendar[calendar.length-2].email : null); }
+    if (sessions.email) { calendar[calendar.length-1].email = calculateDailyData('email', sessions.email, dayTS, nextDayTS, calendar[calendar.length-1].email, calendar[calendar.length-2] ? calendar[calendar.length-2].email : null); }
 
     // 1.2 General Social Network activity
     // Calculate social networks first
-    if (sessions.social.facebook) { calendar[calendar.length-1].facebook = calculateDailyScore('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].facebook, calendar[calendar.length-2] ? calendar[calendar.length-2].facebook: null); }
-    if (sessions.social.twitter) { calendar[calendar.length-1].twitter = calculateDailyScore('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].twitter, calendar[calendar.length-2] ? calendar[calendar.length-2].twitter : null); }
-    if (sessions.social.instagram) { calendar[calendar.length-1].instagram = calculateDailyScore('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].instagram, calendar[calendar.length-2] ? calendar[calendar.length-2].instagram : null); }
+    if (sessions.social.facebook) { calendar[calendar.length-1].facebook = calculateDailyData('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].facebook, calendar[calendar.length-2] ? calendar[calendar.length-2].facebook: null); }
+    if (sessions.social.twitter) { calendar[calendar.length-1].twitter = calculateDailyData('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].twitter, calendar[calendar.length-2] ? calendar[calendar.length-2].twitter : null); }
+    if (sessions.social.instagram) { calendar[calendar.length-1].instagram = calculateDailyData('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].instagram, calendar[calendar.length-2] ? calendar[calendar.length-2].instagram : null); }
 
     // Now calculate data from social Tracker
     if (sessions.social.facebook) {  }
     if (sessions.social.twitter) {  }
     if (sessions.social.instagram) {  }
 
-    if (sessions.forum) { calendar[calendar.length-1].forum = calculateDailyScore('forum', sessions.forum, dayTS, nextDayTS, calendar[calendar.length-1].forum, calendar[calendar.length-2] ? calendar[calendar.length-2].forum : null); }
-    if (sessions.youtube) { calendar[calendar.length-1].youtube = calculateDailyScore('youtube', sessions.youtube, dayTS, nextDayTS, calendar[calendar.length-1].youtube, calendar[calendar.length-2] ? calendar[calendar.length-2].youtube : null); }
-    if (sessions.news) { calendar[calendar.length-1].news = calculateDailyScore('news', sessions.news, dayTS, nextDayTS, calendar[calendar.length-1].news, calendar[calendar.length-2] ? calendar[calendar.length-2].news : null); }
-    if (sessions.entertainment) { calendar[calendar.length-1].entertainment = calculateDailyScore('entertainment', sessions.entertainment, dayTS, nextDayTS, calendar[calendar.length-1].entertainment, calendar[calendar.length-2] ? calendar[calendar.length-2].entertainment : null); }
-    if (sessions.health) { calendar[calendar.length-1].health = calculateDailyScore('health', sessions.health, dayTS, nextDayTS, calendar[calendar.length-1].health, calendar[calendar.length-2] ? calendar[calendar.length-2].health : null); }
-    if (sessions.elearning) { calendar[calendar.length-1].elearning = calculateDailyScore('elearning', sessions.elearning, dayTS, nextDayTS, calendar[calendar.length-1].elearning, calendar[calendar.length-2] ? calendar[calendar.length-2].elearning : null); }
-    if (sessions.linkedin) { calendar[calendar.length-1].linkedin = calculateDailyScore('linkedin', sessions.linkedin, dayTS, nextDayTS, calendar[calendar.length-1].linkedin, calendar[calendar.length-2] ? calendar[calendar.length-2].linkedin : null); }
-    if (sessions.job) { calendar[calendar.length-1].job = calculateDailyScore('job', sessions.job, dayTS, nextDayTS, calendar[calendar.length-1].job, calendar[calendar.length-2] ? calendar[calendar.length-2].job : null); }
+    if (sessions.forum) { calendar[calendar.length-1].forum = calculateDailyData('forum', sessions.forum, dayTS, nextDayTS, calendar[calendar.length-1].forum, calendar[calendar.length-2] ? calendar[calendar.length-2].forum : null); }
+    if (sessions.youtube) { calendar[calendar.length-1].youtube = calculateDailyData('youtube', sessions.youtube, dayTS, nextDayTS, calendar[calendar.length-1].youtube, calendar[calendar.length-2] ? calendar[calendar.length-2].youtube : null); }
+    if (sessions.news) { calendar[calendar.length-1].news = calculateDailyData('news', sessions.news, dayTS, nextDayTS, calendar[calendar.length-1].news, calendar[calendar.length-2] ? calendar[calendar.length-2].news : null); }
+    if (sessions.entertainment) { calendar[calendar.length-1].entertainment = calculateDailyData('entertainment', sessions.entertainment, dayTS, nextDayTS, calendar[calendar.length-1].entertainment, calendar[calendar.length-2] ? calendar[calendar.length-2].entertainment : null); }
+    if (sessions.health) { calendar[calendar.length-1].health = calculateDailyData('health', sessions.health, dayTS, nextDayTS, calendar[calendar.length-1].health, calendar[calendar.length-2] ? calendar[calendar.length-2].health : null); }
+    if (sessions.elearning) { calendar[calendar.length-1].elearning = calculateDailyData('elearning', sessions.elearning, dayTS, nextDayTS, calendar[calendar.length-1].elearning, calendar[calendar.length-2] ? calendar[calendar.length-2].elearning : null); }
+    if (sessions.linkedin) { calendar[calendar.length-1].linkedin = calculateDailyData('linkedin', sessions.linkedin, dayTS, nextDayTS, calendar[calendar.length-1].linkedin, calendar[calendar.length-2] ? calendar[calendar.length-2].linkedin : null); }
+    if (sessions.job) { calendar[calendar.length-1].job = calculateDailyData('job', sessions.job, dayTS, nextDayTS, calendar[calendar.length-1].job, calendar[calendar.length-2] ? calendar[calendar.length-2].job : null); }
 
     return calendar;
 }
 
-function calculateDailyScore(sessionType, sessions, dayTS, nextDayTS, calendarEntry, prevCalendarEntry) {
+var typeCalendar = [];
+
+function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEntry, prevCalendarEntry) {
 
     var j = 0;
     var k = 0;
@@ -190,13 +192,11 @@ function calculateDailyScore(sessionType, sessions, dayTS, nextDayTS, calendarEn
     var duration = 0;
     var score = 0;
 
-
     if (sessions) {
-
-        /*console.log(sessions);*/
 
         for (j=0;j < sessions.length; j++) {
 
+            // If there is data for this day
             if (sessions[j].startTimestamp > dayTS && sessions[j].startTimestamp < nextDayTS) {
 
                 if (sessions[j].pages) {
@@ -207,24 +207,14 @@ function calculateDailyScore(sessionType, sessions, dayTS, nextDayTS, calendarEn
 
                 duration += sessions[j].durationUserActive;
                 totalClicks += clicks;
-
             }
         }
 
-        // Calculate score (Jaap formula)
+        // TODO delete score from here
+
         if (prevCalendarEntry) {
             score = prevCalendarEntry[0].duration ? duration / prevCalendarEntry[0].duration : 0 ;
         }
-
-
-        // Calc score
-        /*console.log("=========================");
-        console.log("duration: ", duration);
-        console.log("score: ", score);
-        console.log(sessionType);
-        console.log("all sessions:", sessions);
-        console.log("prev cal entry:", prevCalendarEntry);*/
-
         calendarEntry.push({
             duration: duration,
             clicks: clicks,
@@ -236,7 +226,7 @@ function calculateDailyScore(sessionType, sessions, dayTS, nextDayTS, calendarEn
 }
 
 
-function calculateWeeklyScore(calendar, sessionType) {
+function calculateWeeklyCalendar(calendar, sessionType) {
 
     var weekly = [];
     var week;
@@ -330,7 +320,7 @@ function drawChart(calendar, detailed) {
                 calendar[i].day + '/' + calendar[i].month /*+ '-' + calendar[i].year*/,
 
                 (calendar[i][sessionType[0]][0].score + calendar[i][sessionType[1]][0].score + calendar[i][sessionType[2]][0].score +
-                calendar[i][sessionType[3]][0].score + calendar[i][sessionType[4]][0].score + calendar[i][sessionType[5]][0].score + calendar[i][sessionType[6]][0].score)/7,
+                    calendar[i][sessionType[3]][0].score + calendar[i][sessionType[4]][0].score + calendar[i][sessionType[5]][0].score + calendar[i][sessionType[6]][0].score)/7,
 
                 (calendar[i][sessionType[5]][0].score + calendar[i][sessionType[6]][0].score + calendar[i][sessionType[7]][0].score + calendar[i][sessionType[8]][0].score)/4,
 
