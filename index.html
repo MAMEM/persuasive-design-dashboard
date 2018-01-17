@@ -676,6 +676,8 @@
                                     }
                                     console.log("calendar: ", calendar);
 
+                                    weeklyCalendar = calculateWeeklyCalendar(calendar, sessionType);
+
                                     // Calculate score for each category
                                     var scores = [];
                                     var j=0;
@@ -701,11 +703,12 @@
                                         }
                                     }
 
+                                    // Now calculate for 7 days period
                                     for (i in scores) {
                                         console.log(scores[i]);
                                     }
 
-                                    weeklyCalendar = calculateWeeklyCalendar(calendar, sessionType);
+
 
                                     console.log("weekly: ", weeklyCalendar);
                                     console.log("scores: ", scores);

@@ -191,6 +191,8 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
     var totalClicks = 0;
     var duration = 0;
     var score = 0;
+    var average = 0;
+
 
     if (sessions) {
 
@@ -213,12 +215,16 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
         // TODO delete score from here
 
         if (prevCalendarEntry) {
+
             score = prevCalendarEntry[0].duration ? duration / prevCalendarEntry[0].duration : 0 ;
+            average = prevCalendarEntry[0].duration + duration / 2;
         }
+
         calendarEntry.push({
             duration: duration,
             clicks: clicks,
-            score: score
+            score: score,
+            average: average
         });
 
     }
@@ -332,13 +338,17 @@ function drawChart(calendar, detailed) {
     var options = {
         title: 'Score',
         legend: { position: 'right' },
+        series: {
+            0: { color: '#F44336' },
+            1: { color: '#FFEB3B' },
+            2: { color: '#03A9F4' }
+        },
         height: 500,
         hAxis: {
             textStyle: {
                 fontSize: 9
             }
         }
-
     };
 
     var chart = new google.visualization.LineChart(document.getElementById('chart'));
