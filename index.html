@@ -679,7 +679,7 @@
                                     weeklyCalendar = calculateWeeklyCalendar(calendar, sessionType);
 
                                     // Calculate score for each category
-                                    var scores = [];
+                                    /*var scores = [];
                                     var j=0;
 
                                     for (j in sessionType) {
@@ -707,11 +707,11 @@
                                     for (i in scores) {
                                         console.log(scores[i]);
                                     }
-
+                                    console.log("scores: ", scores);*/
 
 
                                     console.log("weekly: ", weeklyCalendar);
-                                    console.log("scores: ", scores);
+
 
 
                                     // Score Averages
@@ -737,6 +737,8 @@
 
                                     // Total
                                     scoreAverage.total = (scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3;
+
+                                    console.log(scoreAverage);
 
                                     // Update total score!
                                     firebase.database().ref('users/' + currentUser.uid + '/scores').update({

@@ -181,8 +181,6 @@ function calculateDailyCalendar(sessions, calendar, dayTS, nextDayTS) {
     return calendar;
 }
 
-var typeCalendar = [];
-
 function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEntry, prevCalendarEntry) {
 
     var j = 0;
@@ -192,7 +190,12 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
     var duration = 0;
     var score = 0;
     var average = 0;
-
+    var prevValsArr = [];
+    var stDev = 0;
+    var sdNum = 2;
+    var maxAvg = 0;
+    var minAvg = 0;
+    var sdIndicator = 0;
 
     if (sessions) {
 
@@ -206,25 +209,48 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
                         clicks += sessions[j].pages[k].clickCount;
                     }
                 }
-
                 duration += sessions[j].durationUserActive;
                 totalClicks += clicks;
             }
         }
 
-        // TODO delete score from here
-
         if (prevCalendarEntry) {
 
-            score = prevCalendarEntry[0].duration ? duration / prevCalendarEntry[0].duration : 0 ;
-            average = prevCalendarEntry[0].duration + duration / 2;
+            prevValsArr = prevCalendarEntry[0].prevValsArr;
+
+            /*average = prevCalendarEntry[0].duration + duration / 2;*/
+            average = CalculateAverage (prevValsArr);
+
+            // May not be accurate
+            if (prevValsArr.length > 2) {
+                stDev = standardDeviation(prevValsArr);
+            } else {
+                stDev = 100;
+            }
+
+            maxAvg = average + (sdNum * stDev);
+            minAvg = average - (sdNum * stDev);
+
+            sdIndicator = (( duration - average )/( sdNum * stDev ));
+
+            score = 50 + (duration - average)/(maxAvg - average)*50;
+            /*score = 50 + (sdIndicator * 50);*/
+
+            prevValsArr.push(duration);
+
+        } else {
+            prevValsArr = [duration];
+            sdIndicator = 0;
         }
+
+        console.log(score);
 
         calendarEntry.push({
             duration: duration,
             clicks: clicks,
-            score: score,
-            average: average
+            average: average,
+            prevValsArr: prevValsArr,
+            score: score
         });
 
     }
@@ -439,4 +465,29 @@ function calculateTrainingIndicators(levels) {
             }
         }
     }
+}
+
+
+function standardDeviation(values){
+    var avg = CalculateAverage(values);
+
+    var squareDiffs = values.map(function(value){
+        var diff = value - avg;
+        var sqrDiff = diff * diff;
+        return sqrDiff;
+    });
+
+    var avgSquareDiff = CalculateAverage(squareDiffs);
+
+    var stdDev = Math.sqrt(avgSquareDiff);
+    return stdDev;
+}
+
+function CalculateAverage(data){
+    var sum = data.reduce(function(sum, value){
+        return sum + value;
+    }, 0);
+
+    var avg = sum / data.length;
+    return avg;
 }
