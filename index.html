@@ -106,13 +106,25 @@
                 <p class="align-text-center text-caption">Replay the training app to score better</p>
             </div>
             <div class="two columns">
-                <div class="row">Basic: <div id="basic1Indicator" class="circle"></div>&nbsp;<div id="basic2Indicator" class="circle"></div></div>
-                <br>
-                <span class="row">Int: <span id="int1Indicator" class="circle"></span>&nbsp;<span id="int2Indicator" class="circle"></span>&nbsp;<span id="int3Indicator" class="circle"></span></span>
-                <br>
-                <span class="row">Adv: <span id="adv1Indicator" class="circle"></span>&nbsp;<span id="adv2Indicator" class="circle"></span>&nbsp;<span id="adv3Indicator" class="circle"></span>&nbsp<span id="adv4Indicator" class="circle"></span></span>
-                <br>
-                <p class="align-text-center text-caption">Training summary</p>
+                <div class="row">
+                    <div class="ten columns">
+                        <div class="row">Basic: <div id="basic1Indicator" class="circle"></div>&nbsp;<div id="basic2Indicator" class="circle"></div></div>
+                        <br>
+                        <span class="row">Int: <span id="int1Indicator" class="circle"></span>&nbsp;<span id="int2Indicator" class="circle"></span>&nbsp;<span id="int3Indicator" class="circle"></span></span>
+                        <br>
+                        <span class="row">Adv: <span id="adv1Indicator" class="circle"></span>&nbsp;<span id="adv2Indicator" class="circle"></span>&nbsp;<span id="adv3Indicator" class="circle"></span>&nbsp<span id="adv4Indicator" class="circle"></span></span>
+                        <br>
+                        <p class="align-text-center text-caption">Training summary</p>
+                    </div>
+                    <div class="two columns">
+
+                        <div class="progress-bar-vertical-container">
+                            <div role="progressbar" id="trainingPercentageBar" class="progress-bar-vertical"></div>
+                        </div>
+                        <span id="trainingPercentageLabel">25%</span>
+
+                    </div>
+                </div>
             </div>
 
             <div class="two columns">
@@ -712,8 +724,6 @@
 
                                     console.log("weekly: ", weeklyCalendar);
 
-
-
                                     // Score Averages
                                     var averages = [];
                                     var scoreAverage = [];
@@ -751,7 +761,7 @@
                                         "lastUpdated": + new Date()
                                     });
 
-                                    $("#scoreTotalIndicator").text(scoreAverage.total.toFixed(1));
+                                    $("#scoreTotalIndicator").text(scoreAverage.total);
 
                                     // Show page
                                     $('#loader').hide();
@@ -840,41 +850,41 @@
 
 
                                         break;
-                                        /*case 'Youtube':
-                                            since = String(user.socialTracker.lastUpdated.ytTs);
-                                            console.log("ST YOUTUBE Last saved date - now: ", since, until);
+                                    /*case 'Youtube':
+                                        since = String(user.socialTracker.lastUpdated.ytTs);
+                                        console.log("ST YOUTUBE Last saved date - now: ", since, until);
 
-                                            $.ajax({
-                                                method: "GET",
-                                                url: "http://augreal.mklab.iti.gr:81/api/items",
-                                                data: {
-                                                    collection: data.collections[0]._id,
-                                                    language: 'all',
-                                                    topics: '*',
-                                                    unique: false,
-                                                    original: "all",
-                                                    type: "all",
-                                                    source: "Youtube",
-                                                    sort: "recency",
-                                                    since: since+'001',
-                                                    until: until,
-                                                    nPerPage: 2000,
-                                                    Page: 1
+                                        $.ajax({
+                                            method: "GET",
+                                            url: "http://augreal.mklab.iti.gr:81/api/items",
+                                            data: {
+                                                collection: data.collections[0]._id,
+                                                language: 'all',
+                                                topics: '*',
+                                                unique: false,
+                                                original: "all",
+                                                type: "all",
+                                                source: "Youtube",
+                                                sort: "recency",
+                                                since: since+'001',
+                                                until: until,
+                                                nPerPage: 2000,
+                                                Page: 1
 
-                                                },
-                                                success: function (arr) {
+                                            },
+                                            success: function (arr) {
 
-                                                    console.log("YT: ", arr);
+                                                console.log("YT: ", arr);
 
-                                                    // Fire callback
-                                                    refreshDataCallback.requestComplete(true);
+                                                // Fire callback
+                                                refreshDataCallback.requestComplete(true);
 
-                                                }, error:function() { alert("Error, Could not get YT items");
-                                                    // Fire callback
-                                                    refreshDataCallback.requestComplete(true);
-                                                }
-                                                break;
-                                            });*/
+                                            }, error:function() { alert("Error, Could not get YT items");
+                                                // Fire callback
+                                                refreshDataCallback.requestComplete(true);
+                                            }
+                                            break;
+                                        });*/
 
 
                                     case 'GooglePlus':

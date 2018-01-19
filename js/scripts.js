@@ -217,27 +217,33 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
         if (prevCalendarEntry) {
 
             prevValsArr = prevCalendarEntry[0].prevValsArr;
-            average = CalculateAverage(prevValsArr);
+            average = calculateAverage(prevValsArr);
 
-            // TODO check for accuracy (what if std var is zero? - every array item is the same)
-            if (prevValsArr.length > 2) {
-                stDev = standardDeviation(prevValsArr);
-            } else {
-                stDev = 100;
-            }
-
-            // All our data have the same value
-            if (stDev === 0) {
-                score = 50;
-
+            if (average === 0) {
+                if (duration > 0) {
+                    score = 75;
+                } else {
+                    score = 25;
+                }
             } else {
 
-                sdIndicator = ( duration - average )/( sdNum * stDev );
-                score = 50 + (sdIndicator * 50);
+                if (prevValsArr.length > 2) {
+                    stDev = standardDeviation(prevValsArr);
+                } else {
+                    stDev = 100;
+                }
+
+                // All our data have the same value
+                if (stDev === 0) {
+                    stDev = 0.3 * average;
+                }
 
                 /*maxAvg = average + (sdNum * stDev);
                 minAvg = average - (sdNum * stDev);
                 score = 50 + (duration - average)/(maxAvg - average)*50;*/
+
+                sdIndicator = ( duration - average )/( sdNum * stDev );
+                score = 50 + (sdIndicator * 50);
             }
 
             prevValsArr.push(duration);
@@ -246,8 +252,8 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
             prevValsArr = [duration];
         }
 
-        if (score > 100 || score < 0) {
-            /*console.log(score);*/
+        if (score > 100) {
+            score = 100;
         }
 
         calendarEntry.push({
@@ -474,7 +480,7 @@ function calculateTrainingIndicators(levels) {
 
 
 function standardDeviation(values){
-    var avg = CalculateAverage(values);
+    var avg = calculateAverage(values);
 
     var squareDiffs = values.map(function(value){
         var diff = value - avg;
@@ -482,13 +488,13 @@ function standardDeviation(values){
         return sqrDiff;
     });
 
-    var avgSquareDiff = CalculateAverage(squareDiffs);
+    var avgSquareDiff = calculateAverage(squareDiffs);
 
     var stdDev = Math.sqrt(avgSquareDiff);
     return stdDev;
 }
 
-function CalculateAverage(data){
+function calculateAverage(data){
     var sum = data.reduce(function(sum, value){
         return sum + value;
     }, 0);

@@ -76,6 +76,28 @@ p {
     border-radius: 1px;
 }
 
+
+.progress-bar-vertical-container {
+    background-color: #cccccc;
+    border-radius: 3px;
+    box-shadow: none;
+
+    position: relative;
+    width: 16px;
+    height: 100px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.progress-bar-vertical-container > .progress-bar-vertical {
+    width: 100% !important;
+    position: absolute;
+    bottom: 0;
+
+    background-color: rgb(80,186,166);
+    box-shadow: none;
+}
+
 .loading-wrapper {
     width: 100px;
     height: 100px;
