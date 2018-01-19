@@ -121,7 +121,7 @@
                         <div class="progress-bar-vertical-container">
                             <div role="progressbar" id="trainingPercentageBar" class="progress-bar-vertical"></div>
                         </div>
-                        <span id="trainingPercentageLabel">25%</span>
+                        <span id="trainingPercentageLabel"></span>
 
                     </div>
                 </div>
@@ -624,7 +624,10 @@
                                 reference.once('value').then(function (snapshot) {
 
                                     // Calculate training todos
-                                    calculateTrainingIndicators(snapshot.val().training.levels);
+                                    var trainingPercentage = calculateTrainingIndicators(snapshot.val().training.levels);
+
+                                    $('#trainingPercentageBar').css('height', trainingPercentage + '%');
+                                    $('#trainingPercentageLabel').html(trainingPercentage + '%');
 
                                     // Check if there are saved data, to establish boundaries first
                                     console.log("page activity:", snapshot.val().pageActivity);
@@ -686,43 +689,7 @@
                                         // Keystrokes
 
                                     }
-                                    console.log("calendar: ", calendar);
-
                                     weeklyCalendar = calculateWeeklyCalendar(calendar, sessionType);
-
-                                    // Calculate score for each category
-                                    /*var scores = [];
-                                    var j=0;
-
-                                    for (j in sessionType) {
-                                        scores[sessionType[j]] = [];
-                                    }
-
-
-                                    for (i in calendar) {
-                                        for (j in sessionType) {
-                                            if (calendar[i][sessionType[j]][0].duration !== 0) {
-
-                                                scores[sessionType[j]].push({
-                                                    day: calendar[i].day,
-                                                    week: calendar[i].week,
-                                                    type: sessionType[j],
-                                                    typeIndicator: parseInt(j, 10),
-                                                    calendarEntry: parseInt(i, 10),
-                                                    duration: calendar[i][sessionType[j]][0].duration
-                                                });
-                                            }
-                                        }
-                                    }
-
-                                    // Now calculate for 7 days period
-                                    for (i in scores) {
-                                        console.log(scores[i]);
-                                    }
-                                    console.log("scores: ", scores);*/
-
-
-                                    console.log("weekly: ", weeklyCalendar);
 
                                     // Score Averages
                                     var averages = [];
@@ -737,16 +704,16 @@
                                         }
                                     }
 
-                                    scoreAverage.participation = (averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7;
-                                    scoreAverage.empowerment = (averages.youtube + averages.entertainment + averages.news + averages.health) / 4;
-                                    scoreAverage.education = (averages.elearning + averages.linkedin + averages.job) / 3;
+                                    scoreAverage.participation = parseFloat(((averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7).toFixed(1));
+                                    scoreAverage.empowerment = parseFloat(((averages.youtube + averages.entertainment + averages.news + averages.health) / 4).toFixed(1));
+                                    scoreAverage.education = parseFloat(((averages.elearning + averages.linkedin + averages.job) / 3).toFixed(1));
 
-                                    $("#scoreAverageParticipationIndicator").text(scoreAverage.participation.toFixed(1));
-                                    $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment.toFixed(1));
-                                    $("#scoreAverageEducationIndicator").text(scoreAverage.education.toFixed(1));
+                                    $("#scoreAverageParticipationIndicator").text(scoreAverage.participation + '%');
+                                    $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment + '%');
+                                    $("#scoreAverageEducationIndicator").text(scoreAverage.education + '%');
 
                                     // Total
-                                    scoreAverage.total = ((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3);
+                                    scoreAverage.total = parseFloat(((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3).toFixed(1));
 
                                     // Update total score!
                                     firebase.database().ref('users/' + currentUser.uid + '/scores').update({
@@ -761,7 +728,7 @@
                                         "lastUpdated": + new Date()
                                     });
 
-                                    $("#scoreTotalIndicator").text(scoreAverage.total);
+                                    $("#scoreTotalIndicator").text(scoreAverage.total + '%');
 
                                     // Show page
                                     $('#loader').hide();

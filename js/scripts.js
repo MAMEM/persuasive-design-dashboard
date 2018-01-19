@@ -395,22 +395,28 @@ function drawChart(calendar, detailed) {
 
 function calculateTrainingIndicators(levels) {
 
+    var sum = 0;
+
     if (levels.basic) {
         if (levels.basic.level1) {
             if (levels.basic.level1.trophyGained) {
                 $('#basic1Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#basic1Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
 
         if (levels.basic.level2) {
             if (levels.basic.level2.trophyGained) {
                 $('#basic2Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#basic2Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
     }
@@ -419,25 +425,31 @@ function calculateTrainingIndicators(levels) {
         if (levels.int.level1) {
             if (levels.int.level1.trophyGained) {
                 $('#int1Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#int1Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
         if (levels.int.level2) {
             if (levels.int.level2.trophyGained) {
                 $('#int2Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#int2Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
         if (levels.int.level3) {
             if (levels.int.level3.trophyGained) {
                 $('#int3Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#int3Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
     }
@@ -446,36 +458,45 @@ function calculateTrainingIndicators(levels) {
         if (levels.adv.level1) {
             if (levels.adv.level1.trophyGained) {
                 $('#adv1Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#adv1Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
         if (levels.adv.level2) {
             if (levels.adv.level2.trophyGained) {
                 $('#adv2Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#adv2Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
         if (levels.adv.level3) {
             if (levels.adv.level3.trophyGained) {
                 $('#adv3Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#adv3Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
         if (levels.adv.level4) {
             if (levels.adv.level4.trophyGained) {
                 $('#adv4Indicator').addClass( 'bg-yellow' );
+                sum+=2;
             }
             else {
                 $('#adv4Indicator').addClass( 'bg-blue' );
+                sum+=1;
             }
         }
     }
+    return parseInt((sum/18)*100, 10);
 }
 
 
