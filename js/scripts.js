@@ -222,23 +222,23 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
             // TODO check for accuracy (what if std var is zero? - every array item is the same)
             if (prevValsArr.length > 2) {
                 stDev = standardDeviation(prevValsArr);
-
-                // This means that all our data is the same
-                if (stDev === 0) {
-                    stDev = 1;
-                    sdNum = 1;
-                }
             } else {
                 stDev = 100;
             }
 
-            maxAvg = average + (sdNum * stDev);
-            /*score = 50 + (duration - average)/(maxAvg - average)*50;*/
+            // All our data have the same value
+            if (stDev === 0) {
+                score = 50;
 
+            } else {
 
-            minAvg = average - (sdNum * stDev);
-            sdIndicator = (( duration - average )/( sdNum * stDev ));
-            score = 50 + (sdIndicator * 50);
+                sdIndicator = ( duration - average )/( sdNum * stDev );
+                score = 50 + (sdIndicator * 50);
+
+                /*maxAvg = average + (sdNum * stDev);
+                minAvg = average - (sdNum * stDev);
+                score = 50 + (duration - average)/(maxAvg - average)*50;*/
+            }
 
             prevValsArr.push(duration);
 
@@ -246,10 +246,9 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
             prevValsArr = [duration];
         }
 
-
-        /*console.log(sessionType);
-        console.log(stDev);
-        console.log(score);*/
+        if (score > 100 || score < 0) {
+            /*console.log(score);*/
+        }
 
         calendarEntry.push({
             duration: duration,

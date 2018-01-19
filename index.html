@@ -731,14 +731,12 @@
                                     scoreAverage.empowerment = (averages.youtube + averages.entertainment + averages.news + averages.health) / 4;
                                     scoreAverage.education = (averages.elearning + averages.linkedin + averages.job) / 3;
 
-                                    $("#scoreAverageParticipationIndicator").text(scoreAverage.participation);
-                                    $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment);
-                                    $("#scoreAverageEducationIndicator").text(scoreAverage.education);
+                                    $("#scoreAverageParticipationIndicator").text(scoreAverage.participation.toFixed(1));
+                                    $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment.toFixed(1));
+                                    $("#scoreAverageEducationIndicator").text(scoreAverage.education.toFixed(1));
 
                                     // Total
-                                    scoreAverage.total = (scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3;
-
-                                    console.log(scoreAverage);
+                                    scoreAverage.total = ((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3);
 
                                     // Update total score!
                                     firebase.database().ref('users/' + currentUser.uid + '/scores').update({
@@ -753,7 +751,7 @@
                                         "lastUpdated": + new Date()
                                     });
 
-                                    $("#scoreTotalIndicator").text(scoreAverage.total);
+                                    $("#scoreTotalIndicator").text(scoreAverage.total.toFixed(1));
 
                                     // Show page
                                     $('#loader').hide();
