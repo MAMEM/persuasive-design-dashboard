@@ -51,7 +51,11 @@ p {
     -moz-appearance: none;
     appearance: none;
 
-    height: 15px;
+    height: 14px;
+    width: 100%;
+    margin-bottom: 12px;
+
+    display: block;
 
     /* Firefox */
     border: none;
@@ -60,7 +64,28 @@ p {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
 }
 
-.progress-bar progress::-webkit-progress-bar {
+.progress-bar-details progress {
+    margin-top: 8px;
+    margin-bottom: 4px;
+
+    /* Reset the default appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+    height: 8px;
+    width: 100%;
+
+    display: block;
+
+    /* Firefox */
+    border: none;
+    background: #EEE;
+    border-radius: 1px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25) inset;
+}
+
+.progress-bar progress::-webkit-progress-bar, .progress-bar-details progress::-webkit-progress-bar {
     background: #EEE;
     box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
     border-radius: 1px;
@@ -73,6 +98,16 @@ p {
 
 .progress-bar progress::-moz-progress-bar {
     background-color: rgb(80,186,166);
+    border-radius: 1px;
+}
+
+.progress-bar-details progress::-webkit-progress-value {
+    background-color: #607D8B;
+    border-radius: 1px;
+}
+
+.progress-bar-details progress::-moz-progress-bar {
+    background-color: #607D8B;
     border-radius: 1px;
 }
 
@@ -151,7 +186,6 @@ p {
 .bg-red { background-color: #e74c3c; }
 
 
-
 /* Values
 –––––––––––––––––––––––––––––––––––––––––––––––––– */
 
@@ -190,6 +224,9 @@ p {
     font-weight: 300;
     font-style: italic;
     line-height: 120%;
+    word-wrap: break-word;
+    display: block;
+    width: 100%;
 }
 
 .text-caption {
@@ -206,19 +243,28 @@ p {
 }
 
 .interface-btn {
+    height: 120px;
+}
+
+.interface-btn-details {
+    height: 100px;
+}
+
+.interface-btn, .interface-btn-details {
     background-color:rgb(80,186,166);
     padding: 8px;
     border: none;
     color: white;
     width: 100%;
-    height: 120px;
     box-shadow: 0 2px 2px rgba(0,0,0,0.23);
 }
-.interface-btn i {
+
+.interface-btn i, .interface-btn-details i {
     display: block;
 }
 
 .interface-btn:hover, .interface-btn:active, .interface-btn:enabled,
+.interface-btn-details:hover, .interface-btn-details:active, .interface-btn-details:enabled,
 .tab-btn:hover, .tab-btn:active, .tab-btn:enabled {
     color: white;
 }

@@ -189,42 +189,142 @@
                             <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">people</i>
                                 <span class="text-MD">Participation & Social</span>
-                                <span class="progress-bar"><progress id="participationProgressBar" value="50" max="100"></progress></span>
-                                <hr>
-                                <p> 1. E-mail </p>
+                                <span class="progress-bar"><progress id="participationProgressBar" max="100"></progress></span>
 
-                                <p> 2. General social network activity </p>
-                                <p>&nbsp; 2a. Facebook </p>
-                                <p>&nbsp; 2b. Twitter </p>
-                                <p> 3. Participation in fora </p>
-                                <p> 4. Time spent online </p>
-                                <p> 5. Keyboard typing </p>
+                                <div class="row">
+
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">mail</i>
+                                            <span class="text-SM">E-mail</span>
+                                            <span class="progress-bar-details"><progress id="mailPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="mailPercentage"></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">public</i>
+                                            <span class="text-SM">Social media</span>
+                                            <span class="progress-bar-details"><progress id="socialPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="socialPercentage"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">forum</i>
+                                            <span class="text-SM">Fora</span>
+                                            <span class="progress-bar-details"><progress id="forumPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="foraPercentage"></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">ondemand_video</i>
+                                            <span class="text-SM">YouTube</span>
+                                            <span class="progress-bar-details"><progress id="ytPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="ytPercentage"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">import_contacts</i>
+                                            <span class="text-SM">News</span>
+                                            <span class="progress-bar-details"><progress id="newsPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="newsPercentage"></span>
+                                        </button>
+                                    </div>
+                                </div>
                                 <br>
                             </div>
 
                             <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">mood</i>
                                 <span class="text-MD">Empowerment & Wellbeing</span>
-                                <span class="progress-bar"><progress id="empowermentProgressBar" value="25" max="100"></progress></span>
-                                <hr>
-                                <p> 1. Gaming (X) </p>
-                                <p> 2. Entertainment (YouTube) </p>
-                                <p> 3. Health-related resources </p>
-                                <p> 4. Reading news </p>
-                                <p> 5. Time spent online </p>
+                                <span class="progress-bar"><progress id="empowermentProgressBar" max="100"></progress></span>
+
+                                <div class="row">
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">ondemand_video</i>
+                                            <span class="text-SM">YouTube</span>
+                                            <span class="progress-bar-details"><progress id="ytPbar2" max="100"></progress></span>
+                                            <span class="text-SM" id="ytPercentage2"></span>
+                                        </button>
+                                    </div>
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">star</i>
+                                            <span class="text-SM">Entertainment</span>
+                                            <span class="progress-bar-details"><progress id="entPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="entPercentage"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">import_contacts</i>
+                                            <span class="text-SM">News</span>
+                                            <span class="progress-bar-details"><progress id="newsPbar2" max="100"></progress></span>
+                                            <span class="text-SM" id="newsPercentage2"></span>
+                                        </button>
+                                    </div>
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">local_hospital</i>
+                                            <span class="text-SM">Health</span>
+                                            <span class="progress-bar-details"><progress id="healthPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="healthPercentage"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <br>
                             </div>
 
                             <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">school</i>
                                 <span class="text-MD">Education & Employment</span>
-                                <span class="progress-bar"><progress id="educationProgressBar" value="80" max="100"></progress></span>
-                                <hr>
-                                <p> 1. E-learning resources </p>
-                                <p> 2. Professional networks </p>
-                                <p> 3. Personal business website </p>
-                                <p> 4. Client & job search </p>
-                                <p> 5. Online work tools (X) </p>
+                                <span class="progress-bar"><progress id="educationProgressBar" max="100"></progress></span>
+
+                                <div class="row">
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">school</i>
+                                            <span class="text-SM">E-learning</span>
+                                            <span class="progress-bar-details"><progress id="learningPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="learningPercentage"></span>
+                                        </button>
+                                    </div>
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">data_usage</i>
+                                            <span class="text-SM">Pro networks</span>
+                                            <span class="progress-bar-details"><progress id="linkedinPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="linkedInPercentage"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="six columns">
+                                        <button class="interface-btn-details">
+                                            <i class="material-icons text-LG">search</i>
+                                            <span class="text-SM">Job search</span>
+                                            <span class="progress-bar-details"><progress id="jobPbar" max="100"></progress></span>
+                                            <span class="text-SM" id="jobPercentage"></span>
+                                        </button>
+                                    </div>
+                                </div>
+
                                 <br>
 
                             </div>
@@ -430,6 +530,29 @@
     var currentUrl = window.location.href;
 
     console.log(user);
+
+    var modal = document.querySelector('.modal');
+    var closeButtons = document.querySelectorAll('.close-modal');
+    // set open modal behaviour
+    document.querySelector('.open-modal').addEventListener('click', function() {
+        modal.classList.toggle('modal-open');
+    });
+    // set close modal behaviour
+    for (var i = 0; i < closeButtons.length; ++i) {
+        closeButtons[i].addEventListener('click', function() {
+            modal.classList.toggle('modal-open');
+        });
+    }
+    // close modal if clicked outside content area
+    document.querySelector('.modal-inner').addEventListener('click', function() {
+        modal.classList.toggle('modal-open');
+    });
+    // prevent modal inner from closing parent when clicked
+    document.querySelector('.modal-content').addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+
+
 
     firebase.auth().signInWithEmailAndPassword(user.details.email, user.details.password).then(function() {
 
@@ -704,6 +827,35 @@
                                         }
                                     }
 
+                                    averages.social = parseFloat(((averages.facebook + averages.twitter + averages.instagram)/3).toFixed(1));
+
+                                    $("#mailPbar").val(averages.email).prop('title', averages.email + '%');
+                                    $("#socialPbar").val(averages.social).prop('title', averages.social + '%');
+                                    $("#forumPbar").val(averages.forum).prop('title', averages.forum + '%');
+                                    $("#ytPbar").val(averages.youtube).prop('title', averages.youtube + '%');
+                                    $("#newsPbar").val(averages.news).prop('title', averages.news + '%');
+                                    $("#ytPbar2").val(averages.youtube).prop('title', averages.youtube + '%');
+                                    $("#entPbar").val(averages.entertainment).prop('title', averages.entertainment + '%');
+                                    $("#newsPbar2").val(averages.news).prop('title', averages.news + '%');
+                                    $("#healthPbar").val(averages.health).prop('title', averages.health + '%');
+                                    $("#learningPbar").val(averages.elearning).prop('title', averages.elearning + '%');
+                                    $("#linkedinPbar").val(averages.linkedin).prop('title', averages.linkedin + '%');
+                                    $("#jobPbar").val(averages.job).prop('title', averages.job + '%');
+
+                                    $("#mailPercentage").text(averages.email + '%');
+                                    $("#socialPercentage").text(averages.social + '%');
+                                    $("#foraPercentage").text(averages.forum + '%');
+                                    $("#ytPercentage").text(averages.youtube + '%');
+                                    $("#newsPercentage").text(averages.news + '%');
+                                    $("#ytPercentage2").text(averages.youtube + '%');
+                                    $("#entPercentage").text(averages.entertainment + '%');
+                                    $("#newsPercentage2").text(averages.news + '%');
+                                    $("#healthPercentage").text(averages.health + '%');
+                                    $("#learningPercentage").text(averages.elearning + '%');
+                                    $("#linkedInPercentage").text(averages.linkedin + '%');
+                                    $("#jobPercentage").text(averages.job + '%');
+
+
                                     scoreAverage.participation = parseFloat(((averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7).toFixed(1));
                                     scoreAverage.empowerment = parseFloat(((averages.youtube + averages.entertainment + averages.news + averages.health) / 4).toFixed(1));
                                     scoreAverage.education = parseFloat(((averages.elearning + averages.linkedin + averages.job) / 3).toFixed(1));
@@ -711,6 +863,10 @@
                                     $("#scoreAverageParticipationIndicator").text(scoreAverage.participation + '%');
                                     $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment + '%');
                                     $("#scoreAverageEducationIndicator").text(scoreAverage.education + '%');
+
+                                    $("#participationProgressBar").val(scoreAverage.participation).prop('title', scoreAverage.participation + '%');
+                                    $("#empowermentProgressBar").val(scoreAverage.empowerment).prop('title', scoreAverage.empowerment + '%');
+                                    $("#educationProgressBar").val(scoreAverage.education).prop('title', scoreAverage.education + '%');
 
                                     // Total
                                     scoreAverage.total = parseFloat(((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3).toFixed(1));

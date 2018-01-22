@@ -315,7 +315,7 @@ function calculateScoreAverage(calendar, sessionType) {
         sum = sum + calendar[i][sessionType][0].score;
     }
 
-    return sum / calendar.length;
+    return parseFloat((sum / calendar.length).toFixed(1));
 }
 
 function drawChart(calendar, detailed) {
