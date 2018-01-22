@@ -194,7 +194,7 @@
                                 <div class="row">
 
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsEmailBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">mail</i>
                                             <span class="text-SM">E-mail</span>
                                             <span class="progress-bar-details"><progress id="mailPbar" max="100"></progress></span>
@@ -203,7 +203,7 @@
                                     </div>
 
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsSocialBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">public</i>
                                             <span class="text-SM">Social media</span>
                                             <span class="progress-bar-details"><progress id="socialPbar" max="100"></progress></span>
@@ -214,7 +214,7 @@
 
                                 <div class="row">
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsForaBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">forum</i>
                                             <span class="text-SM">Fora</span>
                                             <span class="progress-bar-details"><progress id="forumPbar" max="100"></progress></span>
@@ -223,7 +223,7 @@
                                     </div>
 
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsYtBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">ondemand_video</i>
                                             <span class="text-SM">YouTube</span>
                                             <span class="progress-bar-details"><progress id="ytPbar" max="100"></progress></span>
@@ -233,7 +233,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsNewsBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">import_contacts</i>
                                             <span class="text-SM">News</span>
                                             <span class="progress-bar-details"><progress id="newsPbar" max="100"></progress></span>
@@ -251,7 +251,7 @@
 
                                 <div class="row">
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsYtBtn2" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">ondemand_video</i>
                                             <span class="text-SM">YouTube</span>
                                             <span class="progress-bar-details"><progress id="ytPbar2" max="100"></progress></span>
@@ -259,7 +259,7 @@
                                         </button>
                                     </div>
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsEntBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">star</i>
                                             <span class="text-SM">Entertainment</span>
                                             <span class="progress-bar-details"><progress id="entPbar" max="100"></progress></span>
@@ -270,7 +270,7 @@
 
                                 <div class="row">
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsNewsBtn2" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">import_contacts</i>
                                             <span class="text-SM">News</span>
                                             <span class="progress-bar-details"><progress id="newsPbar2" max="100"></progress></span>
@@ -278,7 +278,7 @@
                                         </button>
                                     </div>
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsHealthBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">local_hospital</i>
                                             <span class="text-SM">Health</span>
                                             <span class="progress-bar-details"><progress id="healthPbar" max="100"></progress></span>
@@ -297,7 +297,7 @@
 
                                 <div class="row">
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsElearningBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">school</i>
                                             <span class="text-SM">E-learning</span>
                                             <span class="progress-bar-details"><progress id="learningPbar" max="100"></progress></span>
@@ -305,7 +305,7 @@
                                         </button>
                                     </div>
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsProBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">data_usage</i>
                                             <span class="text-SM">Pro networks</span>
                                             <span class="progress-bar-details"><progress id="linkedinPbar" max="100"></progress></span>
@@ -316,7 +316,7 @@
 
                                 <div class="row">
                                     <div class="six columns">
-                                        <button class="interface-btn-details">
+                                        <button id="detailsJobBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">search</i>
                                             <span class="text-SM">Job search</span>
                                             <span class="progress-bar-details"><progress id="jobPbar" max="100"></progress></span>
@@ -345,6 +345,27 @@
         </div>
     </div>
 </div>
+
+<!--Modal Window-->
+<div class="modal">
+    <div class="modal-inner">
+        <div class="modal-content">
+            <div class="modal-close-icon">
+                <a href="javascript:void(0)" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
+            </div>
+            <div class="modal-content-inner">
+                <h4 id="modal-header">blah blah</h4>
+                <p id="modal-text">sdfdfdsfsd fsd fsdf ds fds</p>
+            </div>
+            <hr class="modal-buttons-seperator">
+            <div class="modal-buttons">
+                <button class="button close-modal">Close</button>
+                <button class="button button-primary close-modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="profile-section" style="display: none;" class="container">
 
@@ -533,10 +554,23 @@
 
     var modal = document.querySelector('.modal');
     var closeButtons = document.querySelectorAll('.close-modal');
+
     // set open modal behaviour
-    document.querySelector('.open-modal').addEventListener('click', function() {
+
+    $(document).on('click', ".open-modal", function() {
+
+        initiateModalInformation($(this).attr("id"));
+
+        function initiateModalInformation(id) {
+
+            
+
+
+        }
+
         modal.classList.toggle('modal-open');
     });
+
     // set close modal behaviour
     for (var i = 0; i < closeButtons.length; ++i) {
         closeButtons[i].addEventListener('click', function() {
@@ -551,6 +585,8 @@
     document.querySelector('.modal-content').addEventListener('click', function(e) {
         e.stopPropagation();
     });
+
+
 
 
 
