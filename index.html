@@ -354,7 +354,7 @@
                 <a href="javascript:void(0)" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
             </div>
             <div class="modal-content-inner">
-                <h4 id="modal-header">To get better spend more time in the following websites:</h4>
+                <h4 id="modal-header">To improve your score on <span id="modal-header-task-name"></span>, spend more time on the following websites:</h4>
                 <div id="modal-website-list" class="modal-website-container"></div>
             </div>
             <hr class="modal-buttons-seperator">
@@ -780,7 +780,6 @@
                                     $('#trainingPercentageLabel').html(trainingPercentage + '%');
 
                                     // Check if there are saved data, to establish boundaries first
-                                    console.log("page activity:", snapshot.val().pageActivity);
 
                                     var gtwStartDate = moment.unix(snapshot.val().general.start[0].timestamp);
                                     var today = moment.utc();

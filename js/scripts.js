@@ -506,6 +506,8 @@ function initiateModalInformation(id) {
     switch(id) {
         case "detailsEmailBtn":
 
+            $( "#modal-header-task-name" ).html( 'E-mail' );
+
             $( "#modal-website-list" ).append( '<a href="http://www.gmail.com" target="_blank">Gmail</a>' );
 
             if (user.details.group === 'tetraplegia') {
@@ -526,6 +528,8 @@ function initiateModalInformation(id) {
 
             break;
         case "detailsSocialBtn":
+
+            $( "#modal-header-task-name" ).html( 'Social Media Networks' );
 
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
@@ -549,6 +553,8 @@ function initiateModalInformation(id) {
             break;
         case "detailsForaBtn":
 
+            $( "#modal-header-task-name" ).html( 'Fora' );
+
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.zap.co.il" target="_blank">Zap</a>'+
@@ -567,11 +573,15 @@ function initiateModalInformation(id) {
         case "detailsYtBtn":
         case "detailsYtBtn2":
 
+            $( "#modal-header-task-name" ).html( 'YouTube' );
+
             $( "#modal-website-list" ).append( '<a href="http://www.youtube.com" target="_blank">YouTube</a>' );
 
             break;
         case "detailsNewsBtn":
         case "detailsNewsBtn2":
+
+            $( "#modal-header-task-name" ).html( 'News' );
 
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
@@ -612,6 +622,8 @@ function initiateModalInformation(id) {
             break;
         case "detailsEntBtn":
 
+            $( "#modal-header-task-name" ).html( 'Entertainment' );
+
             $( "#modal-website-list" ).append('<a href="http://www.ynet.co.il" target="_blank">Netflix</a>');
 
             if (user.details.group === 'tetraplegia') {
@@ -627,6 +639,8 @@ function initiateModalInformation(id) {
             }
             break;
         case "detailsHealthBtn":
+
+            $( "#modal-header-task-name" ).html( 'Health' );
 
             if (user.details.group === 'tetraplegia') {
 
@@ -646,6 +660,8 @@ function initiateModalInformation(id) {
             break;
         case "detailsElearningBtn":
 
+            $( "#modal-header-task-name" ).html( 'E-learning' );
+
             $( "#modal-website-list" ).append('<a href="http://www.coursera.com" target="_blank">Coursera</a>');
 
             if (user.details.group === 'tetraplegia') {
@@ -664,10 +680,15 @@ function initiateModalInformation(id) {
 
             break;
         case "detailsProBtn":
+
+            $( "#modal-header-task-name" ).html( 'LinkedIn' );
+
             $( "#modal-website-list" ).append('<a href="http://www.linkedin.com" target="_blank">LinkedIn</a>');
 
             break;
         case "detailsJobBtn":
+
+            $( "#modal-header-task-name" ).html( 'Jobs' );
 
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
