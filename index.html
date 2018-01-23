@@ -854,7 +854,7 @@
                                         }
                                     }
 
-                                    averages.social = parseFloat(((averages.facebook + averages.twitter + averages.instagram)/3).toFixed(1));
+                                    averages.social = parseInt((averages.facebook + averages.twitter + averages.instagram)/3, 10);
 
                                     $("#mailPbar").val(averages.email).prop('title', averages.email + '%');
                                     $("#socialPbar").val(averages.social).prop('title', averages.social + '%');
@@ -883,9 +883,9 @@
                                     $("#jobPercentage").text(averages.job + '%');
 
 
-                                    scoreAverage.participation = parseFloat(((averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7).toFixed(1));
-                                    scoreAverage.empowerment = parseFloat(((averages.youtube + averages.entertainment + averages.news + averages.health) / 4).toFixed(1));
-                                    scoreAverage.education = parseFloat(((averages.elearning + averages.linkedin + averages.job) / 3).toFixed(1));
+                                    scoreAverage.participation = parseInt(((averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7), 10);
+                                    scoreAverage.empowerment = parseInt(((averages.youtube + averages.entertainment + averages.news + averages.health) / 4), 10);
+                                    scoreAverage.education = parseInt(((averages.elearning + averages.linkedin + averages.job) / 3), 10);
 
                                     $("#scoreAverageParticipationIndicator").text(scoreAverage.participation + '%');
                                     $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment + '%');
@@ -896,7 +896,7 @@
                                     $("#educationProgressBar").val(scoreAverage.education).prop('title', scoreAverage.education + '%');
 
                                     // Total
-                                    scoreAverage.total = parseFloat(((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3).toFixed(1));
+                                    scoreAverage.total = parseInt(((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3), 10);
 
                                     // Update total score!
                                     firebase.database().ref('users/' + currentUser.uid + '/scores').update({
