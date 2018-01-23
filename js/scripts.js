@@ -499,6 +499,190 @@ function calculateTrainingIndicators(levels) {
     return parseInt((sum/18)*100, 10);
 }
 
+function initiateModalInformation(id) {
+
+    $( "#modal-website-list" ).html( '' );
+
+    switch(id) {
+        case "detailsEmailBtn":
+
+            $( "#modal-website-list" ).append( '<a href="http://www.gmail.com" target="_blank">Gmail</a>' );
+
+            if (user.details.group === 'tetraplegia') {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.mail.ru" target="_blank">Mail.ru</a>'+
+                    '<a href="http://www.hotmail.com" target="_blank">Hotmail</a>'+
+                    '<a href="http://www.mail.walla.co.il" target="_blank">Walla</a>'+
+                    '<a href="http://www.live.com" target="_blank">Live.com</a>'
+                );
+
+            } else {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.windowslive.com" target="_blank">Windows Live</a>'+
+                    '<a href="http://www.yahoo.com" target="_blank">Yahoo</a>'+
+                    '<a href="http://www.hotmail.com" target="_blank">Hotmail</a>' +
+                    '<a href="http://www.cosmote.gr" target="_blank">Cosmote</a>' );
+            }
+
+            break;
+        case "detailsSocialBtn":
+
+            if (user.details.group === 'tetraplegia') {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.facebook.co.il" target="_blank">Facebook</a>' +
+                    '<a href="http://www.twitter.co.il" target="_blank">Twitter</a>' +
+                    '<a href="http://www.ok.ru" target="_blank">OK.ru</a>' +
+                    '<a href="http://www.whatsapp.com" target="_blank">Whatsapp</a>'
+                );
+            } else {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.facebook.com" target="_blank">Facebook</a>' +
+                    '<a href="http://www.twitter.com" target="_blank">Twitter</a>'
+                );
+            }
+
+            $( "#modal-website-list" ).append(
+                '<a href="http://www.instagram.com" target="_blank">Instagram</a>' +
+                '<a href="http://www.plus.google.com" target="_blank">Google+</a>'
+            );
+
+            break;
+        case "detailsForaBtn":
+
+            if (user.details.group === 'tetraplegia') {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.zap.co.il" target="_blank">Zap</a>'+
+                    '<a href="http://www.carsforum.co.il" target="_blank">Cars Forum</a>'+
+                    '<a href="http://www.atraf.co.il" target="_blank">Atraf</a>'+
+                    '<a href="http://www.yad2.co.il" target="_blank">Yad2</a>'
+                );
+            } else {
+                $( "#modal-website-list" ).append( '' +
+                    '<a href="http://www.mdahellas.gr" target="_blank">MDA Hellas</a>'+
+                    '<a href="http://www.artimeleia.gr" target="_blank">Αρτιμέλεια</a>'
+                );
+            }
+
+            break;
+        case "detailsYtBtn":
+        case "detailsYtBtn2":
+
+            $( "#modal-website-list" ).append( '<a href="http://www.youtube.com" target="_blank">YouTube</a>' );
+
+            break;
+        case "detailsNewsBtn":
+        case "detailsNewsBtn2":
+
+            if (user.details.group === 'tetraplegia') {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.ynet.co.il" target="_blank">Ynet</a>' +
+                    '<a href="http://www.walla.co.il" target="_blank">Walla</a>' +
+                    '<a href="http://www.mako.co.il" target="_blank">Mako</a>' +
+                    '<a href="http://www.yahoo.com" target="_blank">Yahoo</a>' +
+                    '<a href="http://www.sport5.co.il" target="_blank">Sport5</a>' +
+                    '<a href="http://www.one.co.il" target="_blank">One</a>' +
+                    '<a href="http://www.themarker.com" target="_blank">The Marker</a>'
+                );
+            } else {
+
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.in.gr" target="_blank">in.gr</a>'+
+                    '<a href="http://www.taxheaven.gr" target="_blank">Tax Heaven</a>'+
+                    '<a href="http://www.ekathimerini.com" target="_blank">Καθημερινή</a>'+
+                    '<a href="http://www.tovima.gr" target="_blank">Το Βήμα</a>'+
+                    '<a href="http://www.iefimerida.gr" target="_blank">Iefimerida</a>'+
+                    '<a href="http://www.theguardian.com" target="_blank">The Guardian</a>'+
+                    '<a href="http://www.nba.com" target="_blank">NBA</a>'+
+                    '<a href="http://www.gazzetta.gr" target="_blank">Gazzetta</a>'+
+                    '<a href="http://www.protothema.gr" target="_blank">Πρώτο Θέμα</a>'+
+                    '<a href="http://www.newsit.gr" target="_blank">News it</a>'+
+                    '<a href="http://www.sport24.gr" target="_blank">Sport24</a>'+
+                    '<a href="http://www.news247.gr" target="_blank">News247</a>'+
+                    '<a href="http://www.newsbomb.gr" target="_blank">Newsbomb</a>'+
+                    '<a href="http://www.newsbeast.gr" target="_blank">Newsbeast</a>'+
+                    '<a href="http://www.zougla.gr" target="_blank">Ζούγκλα</a>'+
+                    '<a href="http://www.contra.gr" target="_blank">Contra</a>'+
+                    '<a href="http://www.lifo.gr" target="_blank">LIFO</a>'+
+                    '<a href="http://www.pronews.gr" target="_blank">Pro News</a>'+
+                    '<a href="http://www.diaforetiko.gr" target="_blank">Διαφορετικό</a>'+
+                    '<a href="http://www.novasports.gr" target="_blank">Nova Sports</a>'
+                );
+            }
+
+            break;
+        case "detailsEntBtn":
+
+            $( "#modal-website-list" ).append('<a href="http://www.ynet.co.il" target="_blank">Netflix</a>');
+
+            if (user.details.group === 'tetraplegia') {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.dailybuzz.co.il" target="_blank">Daily Buzz</a>' +
+                    '<a href="http://www.sdarot.click" target="_blank">Sdarot</a>' +
+                    '<a href="http://www.tvil.me" target="_blank">Tvil</a>' +
+                    '<a href="http://www.mako.co.il" target="_blank">Mako</a>'
+                );
+            } else {
+                $( "#modal-website-list" ).append('<a href="http://www.gamato.gr" target="_blank">gamato.gr</a>');
+
+            }
+            break;
+        case "detailsHealthBtn":
+
+            if (user.details.group === 'tetraplegia') {
+
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.tlvmed.co.il" target="_blank">TLVMed</a>' +
+                    '<a href="http://www.maccabi4u.co.il" target="_blank">Maccabi4U</a>' +
+                    '<a href="http://www.clalit.org.il" target="_blank">Clalit</a>' +
+                    '<a href="http://www.iherb.com" target="_blank">IHerb</a>' +
+                    '<a href="http://www.healthy.walla.co.il" target="_blank">Healthy - Walla</a>'
+                );
+
+            } else if (user.details.group === 'parkinson') {
+                $( "#modal-website-list" ).append('<a href="http://www.parkinsonofficial.gr" target="_blank">Parkinson Official</a>');
+
+            }
+
+            break;
+        case "detailsElearningBtn":
+
+            $( "#modal-website-list" ).append('<a href="http://www.coursera.com" target="_blank">Coursera</a>');
+
+            if (user.details.group === 'tetraplegia') {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.cet.ac.il" target="_blank">CET</a>' +
+                    '<a href="http://www.education.gov.il" target="_blank">Education.gov.il</a>' +
+                    '<a href="http://www.openu.ac.il" target="_blank">OpenU</a>' +
+                    '<a href="http://www.huji.ac.il" target="_blank">Huji</a>' +
+                    '<a href="http://www.tau.ac.il" target="_blank">Tau</a>'
+                );
+            } else {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.elearn.elke.uoa.gr" target="_blank">E-learn - UOA</a>'
+                );
+            }
+
+            break;
+        case "detailsProBtn":
+            $( "#modal-website-list" ).append('<a href="http://www.linkedin.com" target="_blank">LinkedIn</a>');
+
+            break;
+        case "detailsJobBtn":
+
+            if (user.details.group === 'tetraplegia') {
+                $( "#modal-website-list" ).append(
+                    '<a href="http://www.alljobs.co.il" target="_blank">AllJobs</a>' +
+                    '<a href="http://www.drushim.co.il" target="_blank">Drushim</a>' +
+                    '<a href="http://www.jobmaster.co.il" target="_blank">Jobmaster</a>' +
+                    '<a href="http://www.jobnet.co.il" target="_blank">Jobnet</a>'
+                );
+            }
+
+            break;
+
+    }
+
+}
 
 function standardDeviation(values){
     var avg = calculateAverage(values);

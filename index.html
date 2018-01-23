@@ -354,12 +354,11 @@
                 <a href="javascript:void(0)" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
             </div>
             <div class="modal-content-inner">
-                <h4 id="modal-header">blah blah</h4>
-                <p id="modal-text">sdfdfdsfsd fsd fsdf ds fds</p>
+                <h4 id="modal-header">To get better spend more time in the following websites:</h4>
+                <div id="modal-website-list" class="modal-website-container"></div>
             </div>
             <hr class="modal-buttons-seperator">
             <div class="modal-buttons">
-                <button class="button close-modal">Close</button>
                 <button class="button button-primary close-modal">OK</button>
             </div>
         </div>
@@ -558,16 +557,7 @@
     // set open modal behaviour
 
     $(document).on('click', ".open-modal", function() {
-
         initiateModalInformation($(this).attr("id"));
-
-        function initiateModalInformation(id) {
-
-            
-
-
-        }
-
         modal.classList.toggle('modal-open');
     });
 
@@ -602,6 +592,7 @@
                 user.details.age = snapshot.val().userDetails.age;
                 user.details.firstName = snapshot.val().userDetails.firstName;
                 user.details.language = snapshot.val().userDetails.lang;
+                user.details.group = snapshot.val().userDetails.participantGroup;
                 user.details.quizTranslation = snapshot.val().userDetails.quizTranslation;
                 user.hasST = snapshot.val().userDetails.socialTracker;
                 user.ST.collection = snapshot.val().userDetails.stCollectionName;

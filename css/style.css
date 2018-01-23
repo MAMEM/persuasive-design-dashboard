@@ -308,4 +308,10 @@ p {
     padding: 24px;
 }
 
+.modal-website-container a {
+    display: block;
+    width: 100%;
+    padding: 4px 0 4px 0;
+}
+
 
