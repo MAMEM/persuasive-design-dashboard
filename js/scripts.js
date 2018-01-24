@@ -698,11 +698,8 @@ function initiateModalInformation(id) {
                     '<a href="http://www.jobnet.co.il" target="_blank">Jobnet</a>'
                 );
             }
-
             break;
-
     }
-
 }
 
 function standardDeviation(values){
