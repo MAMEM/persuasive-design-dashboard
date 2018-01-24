@@ -55,7 +55,7 @@
     <div class="container">
         <div class="row">
             <div class="twelve columns">
-                <h4>Please login with Facebook to proceed</h4>
+                <h4>Select an option</h4>
                 <br>
                 <div role="button" class="fb-login-button"  data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                 <br>
@@ -63,9 +63,6 @@
                 <button id="noFbBtn" class="button"> Continue without Facebook</button>
             </div>
         </div>
-
-
-
     </div>
 </div>
 
@@ -85,36 +82,36 @@
             <div class="two columns">
                 <button class="interface-btn">
                     <i class="material-icons text-XL">help</i>
-                    <span class="text-MD">HELP</span>
+                    <span id="helpBtnText" class="text-MD">HELP</span>
                 </button>
-                <p class="align-text-center text-caption">Contact us if you need help</p>
+                <p id="helpBtnTextDesc" class="align-text-center text-caption">Contact us if you need help</p>
             </div>
 
             <div class="two columns">
                 <button class="interface-btn" id="profileBtn">
                     <i class="material-icons text-XL">person</i>
-                    <span class="text-MD">PROFILE</span>
+                    <span id="profileBtnText" class="text-MD">PROFILE</span>
                 </button>
-                <p class="align-text-center text-caption">Edit your information</p>
+                <p id="profileBtnTextDesc" class="align-text-center text-caption">Edit your information</p>
             </div>
 
             <div class="two columns">
                 <button  class="interface-btn" id="trainingBtn">
                     <i class="material-icons text-XL">desktop_windows</i>
-                    <span class="text-MD">TRAINING</span>
+                    <span id="trainingBtnText" class="text-MD">TRAINING</span>
                 </button>
-                <p class="align-text-center text-caption">Replay the training app to score better</p>
+                <p id="trainingBtnTextDesc" class="align-text-center text-caption">Replay the training app to score better</p>
             </div>
             <div class="two columns">
                 <div class="row">
                     <div class="ten columns">
-                        <div class="row">Basic: <div id="basic1Indicator" class="circle"></div>&nbsp;<div id="basic2Indicator" class="circle"></div></div>
+                        <span class="row"><span id="basicText">Basic:</span> <span id="basic1Indicator" class="circle"></span>&nbsp;<span id="basic2Indicator" class="circle"></span></span>
                         <br>
-                        <span class="row">Int: <span id="int1Indicator" class="circle"></span>&nbsp;<span id="int2Indicator" class="circle"></span>&nbsp;<span id="int3Indicator" class="circle"></span></span>
+                        <span class="row"><span id="intText">Int:</span> <span id="int1Indicator" class="circle"></span>&nbsp;<span id="int2Indicator" class="circle"></span>&nbsp;<span id="int3Indicator" class="circle"></span></span>
                         <br>
-                        <span class="row">Adv: <span id="adv1Indicator" class="circle"></span>&nbsp;<span id="adv2Indicator" class="circle"></span>&nbsp;<span id="adv3Indicator" class="circle"></span>&nbsp<span id="adv4Indicator" class="circle"></span></span>
+                        <span class="row"><span id="advText">Adv:</span> <span id="adv1Indicator" class="circle"></span>&nbsp;<span id="adv2Indicator" class="circle"></span>&nbsp;<span id="adv3Indicator" class="circle"></span>&nbsp<span id="adv4Indicator" class="circle"></span></span>
                         <br>
-                        <p class="align-text-center text-caption">Training summary</p>
+                        <p id="trainingSummaryText" class="align-text-center text-caption">Training summary</p>
                     </div>
                     <div class="two columns">
 
@@ -144,13 +141,13 @@
                     </div>
                 </div>
                 <br>
-                <p class="align-text-center text-caption">Score summary</p>
+                <p id="scoreSummaryText" class="align-text-center text-caption">Score summary</p>
             </div>
 
             <div class="two columns">
-                <span id="interfaceUsername" class="u-pull-right">Put username here</span>
+                <span id="interfaceUsername" class="u-pull-right"> > Not logged in < </span>
                 <br>
-                <span class="u-pull-right">Total score</span>
+                <span id="totalScoreText" class="u-pull-right">Total score</span>
                 <br>
                 <span class="u-pull-right"><b id="scoreTotalIndicator">6.0</b></span>
             </div>
@@ -166,14 +163,14 @@
 
                 <div class="six columns">
                     <button class="tab-btn tab-btn-active" id="detailsPanelBtn">
-                        <span class="text-LG">DETAILS</span>
-                        <span class="text-SM align-text-center">See how you can improve</span>
+                        <span id="detailsText" class="text-LG">DETAILS</span>
+                        <span id="detailsTextDesc" class="text-SM align-text-center">See how you can improve</span>
                     </button>
                 </div>
                 <div class="six columns">
                     <button class="tab-btn tab-btn-inactive" id="graphPanelBtn">
-                        <span class="text-LG">GRAPHS</span>
-                        <span class="text-SM align-text-center">See how well you perform over time</span>
+                        <span id="graphsText" class="text-LG">GRAPHS</span>
+                        <span id="graphsTextDesc" class="text-SM align-text-center">See how well you perform over time</span>
                     </button>
                 </div>
             </div>
@@ -183,12 +180,12 @@
                 <div id="detailsPanel">
 
                     <div class="twelve columns">
-                        <h5 class="section-heading">How to get better</h5>
+                        <h5 id="getBetterText" class="section-heading">How to get better</h5>
 
                         <div class="row">
                             <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">people</i>
-                                <span class="text-MD">Participation & Social</span>
+                                <span id="participationText" class="text-MD">Participation & Social</span>
                                 <span class="progress-bar"><progress id="participationProgressBar" max="100"></progress></span>
 
                                 <div class="row">
@@ -196,7 +193,7 @@
                                     <div class="six columns">
                                         <button id="detailsEmailBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">mail</i>
-                                            <span class="text-SM">E-mail</span>
+                                            <span id="emailText" class="text-SM">E-mail</span>
                                             <span class="progress-bar-details"><progress id="mailPbar" max="100"></progress></span>
                                             <span class="text-SM" id="mailPercentage"></span>
                                         </button>
@@ -205,7 +202,7 @@
                                     <div class="six columns">
                                         <button id="detailsSocialBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">public</i>
-                                            <span class="text-SM">Social media</span>
+                                            <span id="socialText" class="text-SM">Social media</span>
                                             <span class="progress-bar-details"><progress id="socialPbar" max="100"></progress></span>
                                             <span class="text-SM" id="socialPercentage"></span>
                                         </button>
@@ -216,7 +213,7 @@
                                     <div class="six columns">
                                         <button id="detailsForaBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">forum</i>
-                                            <span class="text-SM">Fora</span>
+                                            <span id="foraText" class="text-SM">Fora</span>
                                             <span class="progress-bar-details"><progress id="forumPbar" max="100"></progress></span>
                                             <span class="text-SM" id="foraPercentage"></span>
                                         </button>
@@ -225,7 +222,7 @@
                                     <div class="six columns">
                                         <button id="detailsYtBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">ondemand_video</i>
-                                            <span class="text-SM">YouTube</span>
+                                            <span id="youtubeText" class="text-SM">YouTube</span>
                                             <span class="progress-bar-details"><progress id="ytPbar" max="100"></progress></span>
                                             <span class="text-SM" id="ytPercentage"></span>
                                         </button>
@@ -235,7 +232,7 @@
                                     <div class="six columns">
                                         <button id="detailsNewsBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">import_contacts</i>
-                                            <span class="text-SM">News</span>
+                                            <span id="newsText" class="text-SM">News</span>
                                             <span class="progress-bar-details"><progress id="newsPbar" max="100"></progress></span>
                                             <span class="text-SM" id="newsPercentage"></span>
                                         </button>
@@ -246,14 +243,14 @@
 
                             <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">mood</i>
-                                <span class="text-MD">Empowerment & Wellbeing</span>
+                                <span id="empowermentText" class="text-MD">Empowerment & Wellbeing</span>
                                 <span class="progress-bar"><progress id="empowermentProgressBar" max="100"></progress></span>
 
                                 <div class="row">
                                     <div class="six columns">
                                         <button id="detailsYtBtn2" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">ondemand_video</i>
-                                            <span class="text-SM">YouTube</span>
+                                            <span id="youtubeText2" class="text-SM">YouTube</span>
                                             <span class="progress-bar-details"><progress id="ytPbar2" max="100"></progress></span>
                                             <span class="text-SM" id="ytPercentage2"></span>
                                         </button>
@@ -261,7 +258,7 @@
                                     <div class="six columns">
                                         <button id="detailsEntBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">star</i>
-                                            <span class="text-SM">Entertainment</span>
+                                            <span id="entertainmentText" class="text-SM">Entertainment</span>
                                             <span class="progress-bar-details"><progress id="entPbar" max="100"></progress></span>
                                             <span class="text-SM" id="entPercentage"></span>
                                         </button>
@@ -272,7 +269,7 @@
                                     <div class="six columns">
                                         <button id="detailsNewsBtn2" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">import_contacts</i>
-                                            <span class="text-SM">News</span>
+                                            <span id="newsText2" class="text-SM">News</span>
                                             <span class="progress-bar-details"><progress id="newsPbar2" max="100"></progress></span>
                                             <span class="text-SM" id="newsPercentage2"></span>
                                         </button>
@@ -280,7 +277,7 @@
                                     <div class="six columns">
                                         <button id="detailsHealthBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">local_hospital</i>
-                                            <span class="text-SM">Health</span>
+                                            <span id="healthText" class="text-SM">Health</span>
                                             <span class="progress-bar-details"><progress id="healthPbar" max="100"></progress></span>
                                             <span class="text-SM" id="healthPercentage"></span>
                                         </button>
@@ -292,14 +289,14 @@
 
                             <div class="four columns text-white">
                                 <i class="material-icons text-LG" style="vertical-align: bottom">school</i>
-                                <span class="text-MD">Education & Employment</span>
+                                <span id="educationText" class="text-MD">Education & Employment</span>
                                 <span class="progress-bar"><progress id="educationProgressBar" max="100"></progress></span>
 
                                 <div class="row">
                                     <div class="six columns">
                                         <button id="detailsElearningBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">school</i>
-                                            <span class="text-SM">E-learning</span>
+                                            <span id="elearningText" class="text-SM">E-learning</span>
                                             <span class="progress-bar-details"><progress id="learningPbar" max="100"></progress></span>
                                             <span class="text-SM" id="learningPercentage"></span>
                                         </button>
@@ -307,7 +304,7 @@
                                     <div class="six columns">
                                         <button id="detailsProBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">data_usage</i>
-                                            <span class="text-SM">Pro networks</span>
+                                            <span id="proText" class="text-SM">Pro networks</span>
                                             <span class="progress-bar-details"><progress id="linkedinPbar" max="100"></progress></span>
                                             <span class="text-SM" id="linkedInPercentage"></span>
                                         </button>
@@ -318,7 +315,7 @@
                                     <div class="six columns">
                                         <button id="detailsJobBtn" class="open-modal interface-btn-details">
                                             <i class="material-icons text-LG">search</i>
-                                            <span class="text-SM">Job search</span>
+                                            <span id="jobText" class="text-SM">Job search</span>
                                             <span class="progress-bar-details"><progress id="jobPbar" max="100"></progress></span>
                                             <span class="text-SM" id="jobPercentage"></span>
                                         </button>
@@ -354,7 +351,7 @@
                 <a href="javascript:void(0)" class="close-modal"><i class="fa fa-times" aria-hidden="true"></i></a>
             </div>
             <div class="modal-content-inner">
-                <h4 id="modal-header">To improve your score on <span id="modal-header-task-name"></span>, spend more time on the following websites:</h4>
+                <h4 id="modal-header"><span id="modalHeaderText1">To improve your score on</span> <span id="modal-header-task-name"></span>, <span id="modalHeaderText2">spend more time on the following websites</span>:</h4>
                 <div id="modal-website-list" class="modal-website-container"></div>
             </div>
             <hr class="modal-buttons-seperator">
@@ -494,6 +491,7 @@
 
 </div>
 
+<script type="text/javascript" src="js/text.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
 <script type="text/javascript" src="js/callback.js"></script>
 <script type="text/javascript">
@@ -555,7 +553,6 @@
     var closeButtons = document.querySelectorAll('.close-modal');
 
     // set open modal behaviour
-
     $(document).on('click', ".open-modal", function() {
         initiateModalInformation($(this).attr("id"));
         modal.classList.toggle('modal-open');
@@ -578,8 +575,6 @@
 
 
 
-
-
     firebase.auth().signInWithEmailAndPassword(user.details.email, user.details.password).then(function() {
 
         var currentUser =  firebase.auth().currentUser;
@@ -596,6 +591,8 @@
                 user.details.quizTranslation = snapshot.val().userDetails.quizTranslation;
                 user.hasST = snapshot.val().userDetails.socialTracker;
                 user.ST.collection = snapshot.val().userDetails.stCollectionName;
+
+                translate(user.details.language);
 
                 $("#interfaceUsername").text(user.details.nickname);
 

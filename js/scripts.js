@@ -285,7 +285,7 @@ function calculateWeeklyCalendar(calendar, sessionType) {
                 week++;
                 weekly[week] = {};
                 for (j in sessionType) {
-                    weekly[week-1][sessionType[j]] = weekly[week-1][sessionType[j]]/7;
+                    weekly[week-1][sessionType[j]] = parseInt((weekly[week-1][sessionType[j]]/7), 10);
                     weekly[week][sessionType[j]] = 0;
                 }
             }
@@ -299,7 +299,7 @@ function calculateWeeklyCalendar(calendar, sessionType) {
         }
 
         for (j in sessionType) {
-            weekly[week][sessionType[j]] += calendar[i][sessionType[j]][0].duration;
+            weekly[week][sessionType[j]] += calendar[i][sessionType[j]][0].score;
         }
     }
     return weekly;
@@ -353,9 +353,9 @@ function drawChart(calendar, detailed) {
 
     } else {
 
-        data.addColumn('number', 'Participation & Social');
-        data.addColumn('number', 'Empowerment & Wellbeing');
-        data.addColumn('number', 'Education & Employment');
+        data.addColumn('number', text.participation);
+        data.addColumn('number', text.empowerment);
+        data.addColumn('number', text.education);
 
         for ( i=0; i < calendar.length; i++ ) {
 
@@ -373,7 +373,7 @@ function drawChart(calendar, detailed) {
     }
 
     var options = {
-        title: 'Score',
+        title: text.score,
         legend: { position: 'right' },
         series: {
             0: { color: '#F44336' },
@@ -506,7 +506,7 @@ function initiateModalInformation(id) {
     switch(id) {
         case "detailsEmailBtn":
 
-            $( "#modal-header-task-name" ).html( 'E-mail' );
+            $( "#modal-header-task-name" ).html( text.email );
 
             $( "#modal-website-list" ).append( '<a href="http://www.gmail.com" target="_blank">Gmail</a>' );
 
@@ -529,7 +529,7 @@ function initiateModalInformation(id) {
             break;
         case "detailsSocialBtn":
 
-            $( "#modal-header-task-name" ).html( 'Social Media Networks' );
+            $( "#modal-header-task-name" ).html( text.social_media_networks );
 
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
@@ -553,7 +553,7 @@ function initiateModalInformation(id) {
             break;
         case "detailsForaBtn":
 
-            $( "#modal-header-task-name" ).html( 'Fora' );
+            $( "#modal-header-task-name" ).html( text.fora );
 
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
@@ -573,7 +573,7 @@ function initiateModalInformation(id) {
         case "detailsYtBtn":
         case "detailsYtBtn2":
 
-            $( "#modal-header-task-name" ).html( 'YouTube' );
+            $( "#modal-header-task-name" ).html( text.youtube );
 
             $( "#modal-website-list" ).append( '<a href="http://www.youtube.com" target="_blank">YouTube</a>' );
 
@@ -581,7 +581,7 @@ function initiateModalInformation(id) {
         case "detailsNewsBtn":
         case "detailsNewsBtn2":
 
-            $( "#modal-header-task-name" ).html( 'News' );
+            $( "#modal-header-task-name" ).html( text.news );
 
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
@@ -622,7 +622,7 @@ function initiateModalInformation(id) {
             break;
         case "detailsEntBtn":
 
-            $( "#modal-header-task-name" ).html( 'Entertainment' );
+            $( "#modal-header-task-name" ).html( text.entertainment );
 
             $( "#modal-website-list" ).append('<a href="http://www.ynet.co.il" target="_blank">Netflix</a>');
 
@@ -640,7 +640,7 @@ function initiateModalInformation(id) {
             break;
         case "detailsHealthBtn":
 
-            $( "#modal-header-task-name" ).html( 'Health' );
+            $( "#modal-header-task-name" ).html( text.health );
 
             if (user.details.group === 'tetraplegia') {
 
@@ -660,7 +660,7 @@ function initiateModalInformation(id) {
             break;
         case "detailsElearningBtn":
 
-            $( "#modal-header-task-name" ).html( 'E-learning' );
+            $( "#modal-header-task-name" ).html( text.elearning );
 
             $( "#modal-website-list" ).append('<a href="http://www.coursera.com" target="_blank">Coursera</a>');
 
@@ -688,7 +688,7 @@ function initiateModalInformation(id) {
             break;
         case "detailsJobBtn":
 
-            $( "#modal-header-task-name" ).html( 'Jobs' );
+            $( "#modal-header-task-name" ).html( text.jobs );
 
             if (user.details.group === 'tetraplegia') {
                 $( "#modal-website-list" ).append(
