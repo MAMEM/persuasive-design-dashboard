@@ -105,11 +105,11 @@
             <div class="two columns">
                 <div class="row">
                     <div class="ten columns">
-                        <span class="row"><span id="basicText">Basic:</span> <span id="basic1Indicator" class="circle"></span>&nbsp;<span id="basic2Indicator" class="circle"></span></span>
+                        <span class="row"><span id="basicText">Basic:</span> <span id="basic1Indicator" class="circle"></span><span id="basic2Indicator" class="circle"></span></span>
                         <br>
-                        <span class="row"><span id="intText">Int:</span> <span id="int1Indicator" class="circle"></span>&nbsp;<span id="int2Indicator" class="circle"></span>&nbsp;<span id="int3Indicator" class="circle"></span></span>
+                        <span class="row"><span id="intText">Int:</span> <span id="int1Indicator" class="circle"></span><span id="int2Indicator" class="circle"></span><span id="int3Indicator" class="circle"></span></span>
                         <br>
-                        <span class="row"><span id="advText">Adv:</span> <span id="adv1Indicator" class="circle"></span>&nbsp;<span id="adv2Indicator" class="circle"></span>&nbsp;<span id="adv3Indicator" class="circle"></span>&nbsp<span id="adv4Indicator" class="circle"></span></span>
+                        <span class="row"><span id="advText">Adv:</span> <span id="adv1Indicator" class="circle"></span><span id="adv2Indicator" class="circle"></span><span id="adv3Indicator" class="circle"></span><span id="adv4Indicator" class="circle"></span></span>
                         <br>
                         <p id="trainingSummaryText" class="align-text-center text-caption">Training summary</p>
                     </div>
@@ -118,7 +118,7 @@
                         <div class="progress-bar-vertical-container">
                             <div role="progressbar" id="trainingPercentageBar" class="progress-bar-vertical"></div>
                         </div>
-                        <span id="trainingPercentageLabel"></span>
+                        <span id="trainingPercentageLabel" class="align-text-center text-caption"></span>
 
                     </div>
                 </div>
@@ -539,15 +539,13 @@
     });
 
     // Set global vars
-    var sessionType = ['email', 'facebook', 'twitter', 'instagram', 'forum', 'youtube', 'news', 'entertainment', 'health', 'elearning', 'linkedin', 'job' ];
+    var sessionType = ['email', 'facebook', 'twitter', 'instagram', 'forum', 'youtube', 'news', 'entertainment', 'health', 'elearning', 'linkedin', 'job'];
 
     var calendar = [];
     var weeklyCalendar = [];
 
     // Get information from firebase
     var currentUrl = window.location.href;
-
-    console.log(user);
 
     var modal = document.querySelector('.modal');
     var closeButtons = document.querySelectorAll('.close-modal');
@@ -591,6 +589,16 @@
                 user.details.quizTranslation = snapshot.val().userDetails.quizTranslation;
                 user.hasST = snapshot.val().userDetails.socialTracker;
                 user.ST.collection = snapshot.val().userDetails.stCollectionName;
+
+                if (user.details.language === 'english') {
+                    $("html").attr("lang", "en");
+                } else if (user.details.language === 'greek') {
+                    $("html").attr("lang", "el");
+                } else {
+                    $("html").attr("lang", "he").attr("dir", "rtl");
+                }
+
+
 
                 translate(user.details.language);
 

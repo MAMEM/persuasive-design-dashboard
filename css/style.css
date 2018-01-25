@@ -121,7 +121,7 @@ p {
     width: 16px;
     height: 100px;
     display: inline-block;
-    margin-right: 10px;
+    margin: 0 4px 0 4px;
 }
 
 .progress-bar-vertical-container > .progress-bar-vertical {
@@ -164,8 +164,8 @@ p {
 
 .circle {
     display: inline-block;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     line-height: 22px;
     border-radius: 50%;
     -moz-border-radius: 50%;
