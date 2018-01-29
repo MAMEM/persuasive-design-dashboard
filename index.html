@@ -80,7 +80,7 @@
         <div class="row">
 
             <div class="two columns">
-                <button class="interface-btn">
+                <button class="interface-btn" id="contactBtn">
                     <i class="material-icons text-XL">help</i>
                     <span id="helpBtnText" class="text-MD">HELP</span>
                 </button>
@@ -607,6 +607,16 @@
                 $( "#noFbBtn" ).click(function() {
                     loadHomepage(false);
                 });
+
+
+                $( "#contactBtn" ).click(function() {
+                    if (user.details.language === ' hebrew') {
+                        window.location.href = "mailto:amihai.gottlieb@gmail.com";
+                    } else {
+                        window.location.href = "mailto:chariskominatou@mindsearch.gr";
+                    }
+                });
+
 
                 $( "#trainingBtn" ).click(function() {
 
