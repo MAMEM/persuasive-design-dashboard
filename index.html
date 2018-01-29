@@ -526,6 +526,7 @@
 
     firebase.initializeApp(config);
 
+
     $("#basicCatsBtn").click(function() {
         $("#basicCatsBtn").addClass("button-primary");
         $("#allCatsBtn").removeClass("button-primary");
@@ -570,7 +571,6 @@
     document.querySelector('.modal-content').addEventListener('click', function(e) {
         e.stopPropagation();
     });
-
 
 
     firebase.auth().signInWithEmailAndPassword(user.details.email, user.details.password).then(function() {
@@ -688,7 +688,6 @@
                             return 0;
                         }
 
-                        // When saving data on first level, save name too (to be used on scoreboard).
                         firebase.database().ref('users/' + currentUser.uid + '/userDetails').update({
                             "nickname": $( "#nicknameInput" ).val(),
                             "firstName": $( "#firstNameInput" ).val(),
@@ -707,10 +706,7 @@
                                 location.reload();
                             }
                         });
-
-
                     });
-
                 });
 
                 $( "#detailsPanelBtn" ).click(function() {
@@ -779,10 +775,16 @@
                                 reference.once('value').then(function (snapshot) {
 
                                     // Calculate training todos
-                                    var trainingPercentage = calculateTrainingIndicators(snapshot.val().training.levels);
+                                    if (snapshot.val().training) {
 
-                                    $('#trainingPercentageBar').css('height', trainingPercentage + '%');
-                                    $('#trainingPercentageLabel').html(trainingPercentage + '%');
+                                        var trainingPercentage = calculateTrainingIndicators(snapshot.val().training.levels);
+
+                                        $('#trainingPercentageBar').css('height', trainingPercentage + '%');
+                                        $('#trainingPercentageLabel').html(trainingPercentage + '%');
+
+                                    } else {
+                                        // TODO empty states
+                                    }
 
                                     // Check if there are saved data, to establish boundaries first
 
@@ -792,18 +794,31 @@
                                     gtwStartDate = gtwStartDate.startOf('day');
                                     today = today.startOf('day');
 
-                                    var yearDiff = today.diff(gtwStartDate, 'years');
-                                    var weekDiff = today.diff(gtwStartDate, 'weeks');
-                                    var daysDiff = today.diff(gtwStartDate, 'days');
+                                    var today_unix = moment.unix(today);
+
+                                    var yearDiff = 0;
+                                    var weekDiff = 0;
+                                    var daysDiff = 0;
+
+                                    if (today_unix <= gtwStartDate) {
+
+                                    } else {
+                                        yearDiff = today.diff(gtwStartDate, 'years');
+                                        weekDiff = today.diff(gtwStartDate, 'weeks');
+                                        daysDiff = today.diff(gtwStartDate, 'days');
+
+                                    }
                                     console.log(yearDiff, weekDiff, daysDiff);
+
+
 
                                     var dayTS;
                                     var nextDayTS;
                                     var sessions = [];
 
-                                    sessions = initFirebaseData(sessions, snapshot);
-
-                                    var socialNetworkActivity = !!(snapshot.val().pageActivity.facebook || snapshot.val().pageActivity.twitter || snapshot.val().socialTracker);
+                                    if (snapshot.val().pageActivity) {
+                                        sessions = initFirebaseData(sessions, snapshot);
+                                    }
 
                                     for (i=0;i < daysDiff; i++) {
 
@@ -989,6 +1004,8 @@
 
                                                         console.log("Twitter Data collection - COMPLETE");
 
+                                                        user.socialTracker.lastUpdated.twTs = until;
+
                                                         // Fire callback
                                                         refreshDataCallback.requestComplete(true);
                                                     });
@@ -1004,42 +1021,6 @@
 
 
                                         break;
-                                    /*case 'Youtube':
-                                        since = String(user.socialTracker.lastUpdated.ytTs);
-                                        console.log("ST YOUTUBE Last saved date - now: ", since, until);
-
-                                        $.ajax({
-                                            method: "GET",
-                                            url: "http://augreal.mklab.iti.gr:81/api/items",
-                                            data: {
-                                                collection: data.collections[0]._id,
-                                                language: 'all',
-                                                topics: '*',
-                                                unique: false,
-                                                original: "all",
-                                                type: "all",
-                                                source: "Youtube",
-                                                sort: "recency",
-                                                since: since+'001',
-                                                until: until,
-                                                nPerPage: 2000,
-                                                Page: 1
-
-                                            },
-                                            success: function (arr) {
-
-                                                console.log("YT: ", arr);
-
-                                                // Fire callback
-                                                refreshDataCallback.requestComplete(true);
-
-                                            }, error:function() { alert("Error, Could not get YT items");
-                                                // Fire callback
-                                                refreshDataCallback.requestComplete(true);
-                                            }
-                                            break;
-                                        });*/
-
 
                                     case 'GooglePlus':
 
@@ -1084,6 +1065,8 @@
                                                         });
 
                                                         console.log("GP Data collection - COMPLETE");
+
+                                                        user.socialTracker.lastUpdated.gpTs = until;
 
                                                         // Fire callback
                                                         refreshDataCallback.requestComplete(true);
@@ -1130,8 +1113,20 @@
                             user.socialTracker.lastUpdated.fbTs = 1517443200000;
                         }
 
-                    }
+                        if (!user.socialTracker.lastUpdated.twTs) {
+                            user.socialTracker.lastUpdated.twTs = 1517443200000;
+                        }
 
+                        if (!user.socialTracker.lastUpdated.gpTs) {
+                            user.socialTracker.lastUpdated.gpTs = 1517443200000;
+                        }
+
+                    } else {
+                        user.socialTracker.lastUpdated = {};
+                        user.socialTracker.lastUpdated.fbTs = 1517443200000;
+                        user.socialTracker.lastUpdated.twTs = 1517443200000;
+                        user.socialTracker.lastUpdated.gpTs = 1517443200000;
+                    }
 
                     if (user.hasFB) {
 
