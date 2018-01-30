@@ -511,7 +511,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-website-list" ).append( '<a href="http://www.gmail.com" target="_blank">Gmail</a>' );
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.mail.ru" target="_blank">Mail.ru</a>'+
                     '<a href="http://www.hotmail.com" target="_blank">Hotmail</a>'+
@@ -532,7 +532,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-header-task-name" ).html( text.social_media_networks );
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.facebook.co.il" target="_blank">Facebook</a>' +
                     '<a href="http://www.twitter.co.il" target="_blank">Twitter</a>' +
@@ -556,7 +556,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-header-task-name" ).html( text.fora );
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.zap.co.il" target="_blank">Zap</a>'+
                     '<a href="http://www.carsforum.co.il" target="_blank">Cars Forum</a>'+
@@ -584,7 +584,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-header-task-name" ).html( text.news );
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.ynet.co.il" target="_blank">Ynet</a>' +
                     '<a href="http://www.walla.co.il" target="_blank">Walla</a>' +
@@ -627,7 +627,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-website-list" ).append('<a href="http://www.ynet.co.il" target="_blank">Netflix</a>');
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.dailybuzz.co.il" target="_blank">Daily Buzz</a>' +
                     '<a href="http://www.sdarot.click" target="_blank">Sdarot</a>' +
@@ -643,7 +643,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-header-task-name" ).html( text.health );
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
 
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.tlvmed.co.il" target="_blank">TLVMed</a>' +
@@ -665,7 +665,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-website-list" ).append('<a href="http://www.coursera.com" target="_blank">Coursera</a>');
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.cet.ac.il" target="_blank">CET</a>' +
                     '<a href="http://www.education.gov.il" target="_blank">Education.gov.il</a>' +
@@ -691,7 +691,7 @@ function initiateModalInformation(id) {
 
             $( "#modal-header-task-name" ).html( text.jobs );
 
-            if (user.details.group === 'tetraplegia') {
+            if (user.details.language === 'hebrew') {
                 $( "#modal-website-list" ).append(
                     '<a href="http://www.alljobs.co.il" target="_blank">AllJobs</a>' +
                     '<a href="http://www.drushim.co.il" target="_blank">Drushim</a>' +
