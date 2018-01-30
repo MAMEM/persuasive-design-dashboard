@@ -118,7 +118,7 @@
                         <div class="progress-bar-vertical-container">
                             <div role="progressbar" id="trainingPercentageBar" class="progress-bar-vertical"></div>
                         </div>
-                        <span id="trainingPercentageLabel" class="align-text-center text-caption"></span>
+                        <span id="trainingPercentageLabel" class="align-text-center text-caption">0%</span>
 
                     </div>
                 </div>
@@ -611,9 +611,14 @@
 
                 $( "#contactBtn" ).click(function() {
                     if (user.details.language === ' hebrew') {
-                        window.location.href = "mailto:amihai.gottlieb@gmail.com";
+                        /*window.location.href = "mailto:amihai.gottlieb@gmail.com";*/
+
+                        window.open('mailto:amihai.gottlieb@gmail.com','_blank');
+
                     } else {
-                        window.location.href = "mailto:chariskominatou@mindsearch.gr";
+                        /*window.location.href = "mailto:chariskominatou@mindsearch.gr";*/
+
+                        window.open('mailto:amihai.gottlieb@gmail.com','_blank');
                     }
                 });
 
@@ -820,8 +825,6 @@
                                     }
                                     console.log(yearDiff, weekDiff, daysDiff);
 
-
-
                                     var dayTS;
                                     var nextDayTS;
                                     var sessions = [];
@@ -854,7 +857,6 @@
                                             health: [], // 2.2
                                             elearning: [], // 3.1
                                             linkedin: [], // 3.2
-                                            /*work: [], // 3.4*/
                                             job: [] // 3.5
 
                                         });
@@ -954,7 +956,8 @@
                         // Maybe this will never happen but let's handle it if the user creates a FB account in the future!
                         if (data.count === 0) {
 
-                            alert("Social Tracker Collection not found. Please add a Collection!");
+                            // Fire callback
+                            refreshDataCallback.requestComplete(true);
 
                         } else {
 
@@ -1020,15 +1023,15 @@
                                                         refreshDataCallback.requestComplete(true);
                                                     });
 
-                                                } else { refreshDataCallback.requestComplete(true); }
+                                                } else {
+                                                    refreshDataCallback.requestComplete(true);
+                                                }
 
                                             }, error:function() { alert("Error, Could not get Twitter items");
                                                 // Fire callback
                                                 refreshDataCallback.requestComplete(true);
                                             }
                                         });
-
-
 
                                         break;
 
@@ -1235,9 +1238,14 @@
             url: "http://augreal.mklab.iti.gr:81/api/collection/"+user.ST.collection,
             success: function(data) {
 
-                user.ST.sources = data.collections[0].accounts.length;
+                if (data.count !== 0) {
+                    user.ST.sources = data.collections[0].accounts.length;
+                } else {
+                    user.ST.sources = 1;
+                }
 
                 // Fire callback 2 - Firebase logged-in
+                console.log("second");
                 initializationCallback.requestComplete(true);
 
             }, error:function() { alert("Error, Could not load Social Tracker API"); }
