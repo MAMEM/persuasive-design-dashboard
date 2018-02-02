@@ -299,7 +299,13 @@ function calculateWeeklyCalendar(calendar, sessionType) {
         }
 
         for (j in sessionType) {
-            weekly[week][sessionType[j]] += calendar[i][sessionType[j]][0].score;
+
+            if (calendar[i][sessionType[j]][0]) {
+
+                calendar[i][sessionType[j]][0].score = calendar[i][sessionType[j]][0] ? calendar[i][sessionType[j]][0].score : 0 ;
+
+                weekly[week][sessionType[j]] += calendar[i][sessionType[j]][0].score;
+            }
         }
     }
     return weekly;
@@ -309,22 +315,41 @@ function calculateWeeklyCalendar(calendar, sessionType) {
 function calculateScoreAverage(calendar, sessionType) {
 
     var sum = 0;
+    var avg = 0;
+    var counter = 0;
 
     for (var i=0;i<calendar.length;i++) {
 
-        sum = sum + calendar[i][sessionType][0].score;
+        if (calendar[i][sessionType].length !== 0) {
+            sum = sum + calendar[i][sessionType][0].score;
+            counter++;
+        }
     }
 
-    sum = sum ? sum / calendar.length : 0 ;
-    return parseInt(sum, 10);
+    avg = sum ? sum / counter : 0 ;
+    return parseInt(avg, 10);
 }
 
 function drawChart(calendar, detailed) {
 
-    var i=0;
+    var i=0, j=0;
+
+    console.log(calendar);
 
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Date');
+
+
+    for ( i=0; i < calendar.length; i++ ) {
+        for ( j=0; j < 12; j++ ) {
+
+            if (!calendar[i][sessionType[j]][0]) {
+                calendar[i][sessionType[j]][0] = [];
+                calendar[i][sessionType[j]][0].score = 0;
+            }
+
+        }
+    }
 
     if (detailed) {
 

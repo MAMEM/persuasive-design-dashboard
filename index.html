@@ -803,7 +803,7 @@
 
                                     // Check if there are saved data, to establish boundaries first
 
-                                    var gtwStartDate = moment.unix(snapshot.val().general.start[0].timestamp);
+                                    var gtwStartDate = moment.utc(parseInt(snapshot.val().general.start[0].timestamp, 10));
                                     var today = moment.utc();
 
                                     gtwStartDate = gtwStartDate.startOf('day');
