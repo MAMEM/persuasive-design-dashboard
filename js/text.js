@@ -36,7 +36,38 @@ var textEnglish = {
     cats_all: 'All categories',
     score: 'Score',
     modal_header_1: 'To improve your score on',
-    modal_header_2: 'spend more time on the following websites'
+    modal_header_2: 'spend more time on the following websites',
+
+    user_info: 'User information',
+    mail_placeholder: 'e.g. user@mail.com',
+    nickname_label: 'Participants number (Nickname)',
+    nickname_placeholder: 'e.g. GS016 or Colibri',
+    password: 'Password',
+    password_placeholder: '6 characters minimum',
+    first_name: 'First name',
+    first_name_placeholder: 'e.g. John',
+    male: 'male',
+    female: 'female',
+    age: 'age',
+    age_placeholder: 'e.g. 34',
+    social_tracker_id: 'Social Tracker User ID',
+    st_placeholder: 'Leave empty to disable',
+    participant_group: 'Participant group',
+    parkinson: 'Parkinson’s Disease',
+    neuromuscular: 'Neuromuscular Disease',
+    tetraplegia: 'High Tetraplegia',
+    language: 'Language',
+    english: 'English',
+    greek: 'Greek',
+    hebrew: 'Hebrew',
+    quiz_label: 'Translate Quiz questions to local language',
+    cancel: 'Cancel',
+    save_changes: 'Save changes',
+    help_2: 'Help',
+    send_message: 'Send us a message',
+    message: 'Message',
+    message_placeholder: 'Add your message',
+    submit: 'Submit'
 };
 
 var textGreek = {
@@ -75,7 +106,38 @@ var textGreek = {
     cats_all: 'Όλες οι κατηγορίες',
     score: 'Βαθμολογία',
     modal_header_1: 'Για να βελτιώσετε τη βαθμολογία σας στο',
-    modal_header_2: 'ασχοληθείτε περισσότερο με τους ακόλουθους ιστότοπους'
+    modal_header_2: 'ασχοληθείτε περισσότερο με τους ακόλουθους ιστότοπους',
+
+    user_info: 'User information',
+    mail_placeholder: 'e.g. user@mail.com',
+    nickname_label: 'Participants number (Nickname)',
+    nickname_placeholder: 'e.g. GS016 or Colibri',
+    password: 'Password',
+    password_placeholder: '6 characters minimum',
+    first_name: 'First name',
+    first_name_placeholder: 'e.g. John',
+    male: 'male',
+    female: 'female',
+    age: 'age',
+    age_placeholder: 'e.g. 34',
+    social_tracker_id: 'Social Tracker User ID',
+    st_placeholder: 'Leave empty to disable',
+    participant_group: 'Participant group',
+    parkinson: 'Parkinson’s Disease',
+    neuromuscular: 'Neuromuscular Disease',
+    tetraplegia: 'High Tetraplegia',
+    language: 'Language',
+    english: 'English',
+    greek: 'Greek',
+    hebrew: 'Hebrew',
+    quiz_label: 'Translate Quiz questions to local language',
+    cancel: 'Cancel',
+    save_changes: 'Save changes',
+    help_2: 'Help',
+    send_message: 'Send us a message',
+    message: 'Message',
+    message_placeholder: 'Add your message',
+    submit: 'Submit'
 };
 
 var textHebrew = {
@@ -114,8 +176,38 @@ var textHebrew = {
     cats_all: 'כל הקטגוריות',
     score: 'ציון',
     modal_header_1: 'כדי לשפר את הציון שלכם ב',
-    modal_header_2: 'יש להשקיע יותר זמן באתרים הבאים'
+    modal_header_2: 'יש להשקיע יותר זמן באתרים הבאים',
 
+    user_info: 'User information',
+    mail_placeholder: 'e.g. user@mail.com',
+    nickname_label: 'Participants number (Nickname)',
+    nickname_placeholder: 'e.g. GS016 or Colibri',
+    password: 'Password',
+    password_placeholder: '6 characters minimum',
+    first_name: 'First name',
+    first_name_placeholder: 'e.g. John',
+    male: 'male',
+    female: 'female',
+    age: 'age',
+    age_placeholder: 'e.g. 34',
+    social_tracker_id: 'Social Tracker User ID',
+    st_placeholder: 'Leave empty to disable',
+    participant_group: 'Participant group',
+    parkinson: 'Parkinson’s Disease',
+    neuromuscular: 'Neuromuscular Disease',
+    tetraplegia: 'High Tetraplegia',
+    language: 'Language',
+    english: 'English',
+    greek: 'Greek',
+    hebrew: 'Hebrew',
+    quiz_label: 'Translate Quiz questions to local language',
+    cancel: 'Cancel',
+    save_changes: 'Save changes',
+    help_2: 'Help',
+    send_message: 'Send us a message',
+    message: 'Message',
+    message_placeholder: 'Add your message',
+    submit: 'Submit'
 };
 
 function translate(lang) {
@@ -174,4 +266,35 @@ function renderText(text) {
     $('#modalHeaderText1').text(text.modal_header_1);
     $('#modalHeaderText2').text(text.modal_header_2);
 
+    $('#userInformationLabel').text(text.user_info);
+    $('#emailInputLabel').text(text.email);
+    $('#emailInput').attr("placeholder", text.mail_placeholder);
+    $('#nicknameInputLabel').text(text.nickname_label);
+    $('#nicknameInput').attr("placeholder", text.nickname_placeholder);
+    $('#passwordLabel').text(text.password);
+    $('#passInput').attr("placeholder", text.password_placeholder);
+    $('#firstNameLabel').text(text.first_name);
+    $('#firstNameInput').attr("placeholder", text.first_name_placeholder);
+    $('#maleLabel').text(text.male);
+    $('#femaleLabel').text(text.female);
+    $('#ageLabel').text(text.age);
+    $('#ageInput').attr("placeholder", text.age_placeholder);
+    $('#stLabel').text(text.social_tracker_id);
+    $('#stInput').attr("placeholder", text.st_placeholder);
+    $('#participantsLabel').text(text.participant_group);
+    $('#parkinsonLabel').text(text.parkinson);
+    $('#neuromuscularLabel').text(text.neuromuscular);
+    $('#tetraplegiaLabel').text(text.tetraplegia);
+    $('#languageLabel').text(text.language);
+    $('#englishLabel').text(text.english);
+    $('#greekLabel').text(text.greek);
+    $('#hebrewLabel').text(text.hebrew);
+    $('#quizLabel').text(text.quiz_label);
+    $('#cancelChangesButton').text(text.cancel);
+    $('#helpLabel').text(text.help_2);
+    $('#messageTitleLabel').text(text.send_message);
+    $('#messageLabel').text(text.message);
+    $('#emailContent').attr("placeholder", text.message_placeholder);
+    $('#cancelHelpButton').text(text.cancel);
+    $('#submitBtn').text(text.submit);
 }

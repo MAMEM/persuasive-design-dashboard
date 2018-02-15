@@ -372,28 +372,28 @@
     <br>
 
     <div class="twelve columns">
+        <form>
+            <div class="six columns">
 
-        <div class="six columns">
+                <h3 id="userInformationLabel">User information</h3>
 
-            <h3>User information</h3>
 
-            <form>
                 <div class="row">
 
                     <div class="six columns">
-                        <label for="emailInput">E-mail</label>
+                        <label for="emailInput" id="emailInputLabel">E-mail</label>
                         <input class="u-full-width input-disabled" type="email" placeholder="e.g. user@mail.com" id="emailInput" disabled>
 
 
-                        <label for="nicknameInput">Participants number (Nickname)</label>
+                        <label for="nicknameInput" id="nicknameInputLabel">Participants number (Nickname)</label>
                         <input class="u-full-width" type="text" placeholder="e.g. GS016 or Colibri" id="nicknameInput">
                     </div>
 
                     <div class="six columns">
-                        <label for="passInput">Password</label>
+                        <label for="passInput" id="passwordLabel">Password</label>
                         <input class="u-full-width input-disabled" type="text" placeholder="6 characters minimum" id="passInput" disabled>
 
-                        <label for="firstNameInput">First Name</label>
+                        <label for="firstNameInput" id="firstNameLabel">First Name</label>
                         <input class="u-full-width" type="text" placeholder="e.g. John" id="firstNameInput">
                     </div>
 
@@ -403,92 +403,87 @@
                             <div class="twelve columns">
                                 <form>
                                     <div class="six columns">
-                                        <label for="maleRadioBtn">Male</label>
+                                        <label for="maleRadioBtn" id="maleLabel">Male</label>
                                         <input type="radio" name="gender" value="male" id="maleRadioBtn" checked>
                                     </div>
                                     <div class="six columns">
-                                        <label for="femaleRadioBtn">Female</label>
+                                        <label for="femaleRadioBtn" id="femaleLabel">Female</label>
                                         <input type="radio" name="gender" value="female" id="femaleRadioBtn">
                                     </div>
                                 </form>
                             </div>
                         </div>
                         <div class="six columns">
-                            <label for="ageInput">Age</label>
+                            <label for="ageInput" id="ageLabel">Age</label>
                             <input class="u-full-width" type="number" placeholder="e.g. 34" id="ageInput">
-                            <label for="stInput">Social Tracker User ID</label>
+                            <label for="stInput" id="stLabel">Social Tracker User ID</label>
                             <input class="u-full-width" type="text" placeholder="Leave empty to disable" id="stInput">
                         </div>
                     </div>
                 </div>
-            </form>
-
-
-        </div>
-
-        <div class="six columns">
-            <div class="row">
-
-                <div class="twelve columns">
-                    <div class="whitespace-separator"></div>
-                    <h3>Participant group</h3>
-
-                    <div class="three columns">
-                        <label for="parkinsonRadioBtn">Parkinson’s Disease</label>
-                        <input type="radio" name="target" value="parkinson" id="parkinsonRadioBtn" checked>
-                    </div>
-                    <div class="three columns">
-                        <label for="nmdRadioBtn">Neuromuscular Disease</label>
-                        <input type="radio" name="target" value="nmd" id="nmdRadioBtn">
-                    </div>
-                    <div class="three columns">
-                        <label for="highTRadioBtn">High Tetraplegia</label>
-                        <input type="radio" name="target" value="tetraplegia" id="highTRadioBtn">
-                    </div>
-                </div>
-
-                <div class="twelve columns">
-
-                    <h3>Language</h3>
-
-                    <div class="two columns">
-                        <label for="englishRadioBtn">English</label>
-                        <input type="radio" name="lang" value="english" id="englishRadioBtn" checked>
-                    </div>
-                    <div class="two columns">
-                        <label for="greekRadioBtn">Greek</label>
-                        <input type="radio" name="lang" value="greek" id="greekRadioBtn">
-                    </div>
-                    <div class="two columns">
-                        <label for="hebrewRadioBtn">Hebrew</label>
-                        <input type="radio" name="lang" value="hebrew" id="hebrewRadioBtn">
-                    </div>
-                </div>
-
-                <div class="twelve columns">
-                    <div class="whitespace-separator"></div>
-                    <label>
-                        <input type="checkbox" id="quizCheckbox">
-                        <span class="label-body">Translate Quiz questions to local language</span>
-                    </label>
-                </div>
-
-            </div>
-        </div>
-
-        <div class="twelve columns">
-            <div class="six columns">
-                <button class="button-block" id="cancelChangesButton">Cancel</button>
             </div>
 
             <div class="six columns">
-                <button class="button-primary button-block" id="saveInfoButton">Save changes</button>
-            </div>
-        </div>
+                <div class="row">
 
+                    <div class="twelve columns">
+                        <div class="whitespace-separator"></div>
+                        <h3 id="participantsLabel">Participant group</h3>
+
+                        <div class="three columns">
+                            <label for="parkinsonRadioBtn" id="parkinsonLabel">Parkinson’s Disease</label>
+                            <input type="radio" name="target" value="parkinson" id="parkinsonRadioBtn" checked>
+                        </div>
+                        <div class="three columns">
+                            <label for="nmdRadioBtn" id="neuromuscularLabel">Neuromuscular Disease</label>
+                            <input type="radio" name="target" value="nmd" id="nmdRadioBtn">
+                        </div>
+                        <div class="three columns">
+                            <label for="highTRadioBtn" id="tetraplegiaLabel">High Tetraplegia</label>
+                            <input type="radio" name="target" value="tetraplegia" id="highTRadioBtn">
+                        </div>
+                    </div>
+
+                    <div class="twelve columns">
+
+                        <h3 id="languageLabel">Language</h3>
+
+                        <div class="two columns">
+                            <label for="englishRadioBtn" id="englishLabel">English</label>
+                            <input type="radio" name="lang" value="english" id="englishRadioBtn" checked>
+                        </div>
+                        <div class="two columns">
+                            <label for="greekRadioBtn" id="greekLabel">Greek</label>
+                            <input type="radio" name="lang" value="greek" id="greekRadioBtn">
+                        </div>
+                        <div class="two columns">
+                            <label for="hebrewRadioBtn" id="hebrewLabel">Hebrew</label>
+                            <input type="radio" name="lang" value="hebrew" id="hebrewRadioBtn">
+                        </div>
+                    </div>
+
+                    <div class="twelve columns">
+                        <div class="whitespace-separator"></div>
+                        <label>
+                            <input type="checkbox" id="quizCheckbox">
+                            <span class="label-body" id="quizLabel">Translate Quiz questions to local language</span>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="twelve columns">
+                <div class="six columns">
+                    <button class="button-block" id="cancelChangesButton">Cancel</button>
+                </div>
+
+                <div class="six columns">
+                    <button class="button-primary button-block" id="saveInfoButton">Save changes</button>
+                </div>
+            </div>
+        </form>
     </div>
-
-
 </div>
 
 
@@ -498,18 +493,18 @@
 
     <div class="ten columns offset-by-one">
 
-        <h1>Help</h1>
+        <h1 id="helpLabel">Help</h1>
 
         <br>
 
         <div class="twelve columns">
 
-            <h3>Send us a message</h3>
+            <h3 id="messageTitleLabel">Send us a message</h3>
 
             <form name="contactform" method="post" id="emailForm" action="send_email.php">
                 <div class="row">
 
-                    <label for="userEmail">Message</label>
+                    <label for="emailContent" id="messageLabel">Message</label>
                     <textarea name="emailContent" class="u-full-width" placeholder="Add your message" id="emailContent"></textarea>
 
                     <input name="userEmail" class="u-full-width input-disabled" type="hidden" id="userEmail">
@@ -523,7 +518,7 @@
                     </div>
 
                     <div class="six columns">
-                        <button class="button-primary button-block" name="submitBtn" type="submit" form="emailForm" value="Submit">Submit</button>
+                        <button class="button-primary button-block" name="submitBtn" type="submit" form="emailForm" value="Submit" id="submitBtn">Submit</button>
                     </div>
                 </div>
             </form>
