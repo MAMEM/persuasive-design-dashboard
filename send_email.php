@@ -6,7 +6,7 @@ if(isset($_POST['recipientEmail'])) {
 	$email_to = $_POST['recipientEmail'];
 	$email_from = $_POST['userEmail'];
 	$email_subject = "MAMEM Dashboard Help requested";
-	$email_message = $_POST['emailContent'];
+	$email_content = $_POST['emailContent'];
 
 	function died($error) {
 		// your error code can go here
@@ -30,9 +30,9 @@ if(isset($_POST['recipientEmail'])) {
 		return str_replace($bad,"",$string);
 	}
 
-
+	$email_message = '';
 	$email_message .= "From: ".$email_from."\n";
-	$email_message .= "Message: ".$email_message."\n";
+	$email_message .= "Message: ".$email_content."\n";
 
 	// create email headers
 	$headers = 'From: '.$email_from."\r\n".
