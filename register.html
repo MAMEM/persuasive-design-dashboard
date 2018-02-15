@@ -20,30 +20,31 @@
 
     <div class="twelve columns">
 
-        <div class="six columns">
+        <form role="form">
+            <div class="six columns">
 
-            <h3>User information</h3>
+                <h3>User information</h3>
 
-            <form>
+
                 <div class="row">
 
                     <div class="six columns">
                         <label for="emailInput">E-mail</label>
-                        <input class="u-full-width" type="email" placeholder="e.g. user@mail.com" id="emailInput">
+                        <input class="u-full-width" type="email" placeholder="e.g. user@mail.com" id="emailInput" required>
                         <label for="emailInputDouble">Re-enter E-mail</label>
-                        <input class="u-full-width" type="email" placeholder="e.g. user@mail.com" id="emailInputDouble">
+                        <input class="u-full-width" type="email" placeholder="e.g. user@mail.com" id="emailInputDouble" required>
 
                         <label for="nicknameInput">Participants number (Nickname)</label>
-                        <input class="u-full-width" type="text" placeholder="e.g. GS016 or Colibri" id="nicknameInput">
+                        <input class="u-full-width" type="text" placeholder="e.g. GS016 or Colibri" id="nicknameInput" required>
                     </div>
 
                     <div class="six columns">
                         <label for="passInput">Password</label>
-                        <input class="u-full-width" type="text" placeholder="6 characters minimum" id="passInput">
+                        <input class="u-full-width" type="text" placeholder="6 characters minimum" id="passInput" required>
                         <label for="passInputDouble">Re-enter Password</label>
-                        <input class="u-full-width" type="text" placeholder="6 characters minimum" id="passInputDouble">
+                        <input class="u-full-width" type="text" placeholder="6 characters minimum" id="passInputDouble" required>
                         <label for="firstNameInput">First Name</label>
-                        <input class="u-full-width" type="text" placeholder="e.g. John" id="firstNameInput">
+                        <input class="u-full-width" type="text" placeholder="e.g. John" id="firstNameInput" required>
                     </div>
 
                     <div class="twelve columns">
@@ -64,69 +65,66 @@
                         </div>
                         <div class="six columns">
                             <label for="ageInput">Age</label>
-                            <input class="u-full-width" type="number" placeholder="e.g. 34" id="ageInput">
+                            <input class="u-full-width" type="number" placeholder="e.g. 34" id="ageInput" required min="1">
                             <label for="stInput">Social Tracker User ID</label>
                             <input class="u-full-width" type="text" placeholder="Leave empty to disable" id="stInput">
                         </div>
                     </div>
                 </div>
-            </form>
-
-
-
-        </div>
-
-        <div class="six columns">
-            <div class="row">
-
-                <div class="twelve columns">
-                    <div class="whitespace-separator"></div>
-                    <h3>Participant group</h3>
-
-                    <div class="three columns">
-                        <label for="parkinsonRadioBtn">Parkinson’s Disease</label>
-                        <input type="radio" name="target" value="parkinson" id="parkinsonRadioBtn" checked>
-                    </div>
-                    <div class="three columns">
-                        <label for="nmdRadioBtn">Neuromuscular Disease</label>
-                        <input type="radio" name="target" value="nmd" id="nmdRadioBtn">
-                    </div>
-                    <div class="three columns">
-                        <label for="highTRadioBtn">High Tetraplegia</label>
-                        <input type="radio" name="target" value="tetraplegia" id="highTRadioBtn">
-                    </div>
-                </div>
-
-                <div class="twelve columns">
-
-                    <h3>Language</h3>
-
-                    <div class="two columns">
-                        <label for="englishRadioBtn">English</label>
-                        <input type="radio" name="lang" value="english" id="englishRadioBtn" checked>
-                    </div>
-                    <div class="two columns">
-                        <label for="greekRadioBtn">Greek</label>
-                        <input type="radio" name="lang" value="greek" id="greekRadioBtn">
-                    </div>
-                    <div class="two columns">
-                        <label for="hebrewRadioBtn">Hebrew</label>
-                        <input type="radio" name="lang" value="hebrew" id="hebrewRadioBtn">
-                    </div>
-                </div>
-
-                <div class="twelve columns">
-                    <div class="whitespace-separator"></div>
-                    <label>
-                        <input type="checkbox" id="quizCheckbox">
-                        <span class="label-body">Translate Quiz questions to local language</span>
-                    </label>
-                </div>
-
             </div>
-        </div>
 
-        <button class="button-primary button-block" id="registerButton">Register</button>
+            <div class="six columns">
+                <div class="row">
+
+                    <div class="twelve columns">
+                        <div class="whitespace-separator"></div>
+                        <h3>Participant group</h3>
+
+                        <div class="three columns">
+                            <label for="parkinsonRadioBtn">Parkinson’s Disease</label>
+                            <input type="radio" name="target" value="parkinson" id="parkinsonRadioBtn" checked>
+                        </div>
+                        <div class="three columns">
+                            <label for="nmdRadioBtn">Neuromuscular Disease</label>
+                            <input type="radio" name="target" value="nmd" id="nmdRadioBtn">
+                        </div>
+                        <div class="three columns">
+                            <label for="highTRadioBtn">High Tetraplegia</label>
+                            <input type="radio" name="target" value="tetraplegia" id="highTRadioBtn">
+                        </div>
+                    </div>
+
+                    <div class="twelve columns">
+
+                        <h3>Language</h3>
+
+                        <div class="two columns">
+                            <label for="englishRadioBtn">English</label>
+                            <input type="radio" name="lang" value="english" id="englishRadioBtn" checked>
+                        </div>
+                        <div class="two columns">
+                            <label for="greekRadioBtn">Greek</label>
+                            <input type="radio" name="lang" value="greek" id="greekRadioBtn">
+                        </div>
+                        <div class="two columns">
+                            <label for="hebrewRadioBtn">Hebrew</label>
+                            <input type="radio" name="lang" value="hebrew" id="hebrewRadioBtn">
+                        </div>
+                    </div>
+
+                    <div class="twelve columns">
+                        <div class="whitespace-separator"></div>
+                        <label>
+                            <input type="checkbox" id="quizCheckbox">
+                            <span class="label-body">Translate Quiz questions to local language</span>
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" class="button-primary button-block" id="registerButton">Register</button>
+        </form>
     </div>
 </div>
 
@@ -211,6 +209,12 @@
 
         if (!info.email || !info.password || !info.firstName || !info.nickname || !info.age) {
             alert('Please fill in all Register fields!');
+            return 0;
+        }
+
+        var re = /^\w+$/;
+        if (!re.test(info.password)) {
+            alert('Your password should contain only latin characters and numbers');
             return 0;
         }
 

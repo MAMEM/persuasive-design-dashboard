@@ -57,7 +57,7 @@
             <div class="twelve columns">
                 <h4>Select an option</h4>
                 <br>
-                <div role="button" class="fb-login-button"  data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                <div role="button" class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                 <br>
                 <div class="whitespace-separator"></div>
                 <button id="noFbBtn" class="button"> Continue without Facebook</button>
@@ -491,6 +491,49 @@
 
 </div>
 
+
+<div id="help-section" style="display: none;" class="container">
+
+    <div class="whitespace-separator"></div>
+
+    <div class="ten columns offset-by-one">
+
+        <h1>Help</h1>
+
+        <br>
+
+        <div class="twelve columns">
+
+            <h3>Send us a message</h3>
+
+            <form name="contactform" method="post" id="emailForm" action="send_email.php">
+                <div class="row">
+
+                    <label for="userEmail">Message</label>
+                    <textarea name="emailContent" class="u-full-width" placeholder="Add your message" id="emailContent"></textarea>
+
+                    <input name="userEmail" class="u-full-width input-disabled" type="hidden" id="userEmail">
+                    <input name="recipientEmail" class="u-full-width input-disabled" type="hidden" id="recipientEmail">
+
+                </div>
+
+                <div class="row">
+                    <div class="six columns">
+                        <button type="button" class="button-block" name="cancelBtn" id="cancelHelpButton">Cancel</button>
+                    </div>
+
+                    <div class="six columns">
+                        <button class="button-primary button-block" name="submitBtn" type="submit" form="emailForm" value="Submit">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+
 <script type="text/javascript" src="js/text.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
 <script type="text/javascript" src="js/callback.js"></script>
@@ -598,8 +641,6 @@
                     $("html").attr("lang", "he").attr("dir", "rtl");
                 }
 
-
-
                 translate(user.details.language);
 
                 $("#interfaceUsername").text(user.details.nickname);
@@ -610,16 +651,34 @@
 
 
                 $( "#contactBtn" ).click(function() {
-                    if (user.details.language === ' hebrew') {
-                        /*window.location.href = "mailto:amihai.gottlieb@gmail.com";*/
 
-                        window.open('mailto:amihai.gottlieb@gmail.com','_blank');
+                    $( "#homepage-section" ).hide();
+
+                    $( "#help-section" ).show();
+
+                    $( "#userEmail" ).val(user.details.email);
+
+                    if (user.details.language === ' hebrew') {
+
+                        $( "#recipientEmail" ).val('amihai.gottlieb@gmail.com');
 
                     } else {
-                        /*window.location.href = "mailto:chariskominatou@mindsearch.gr";*/
 
-                        window.open('mailto:chariskominatou@mindsearch.gr','_blank');
+                        // set e-mail to greek
+                        $( "#recipientEmail" ).val('chariskominatou@mindsearch.gr');
+
                     }
+
+
+                    $( "#recipientEmail" ).val('sushi.pervert@gmail.com');
+
+
+
+                    $( "#cancelHelpButton" ).click(function() {
+                        $( "#help-section" ).hide();
+                        $( "#homepage-section" ).show();
+                    });
+
                 });
 
 
