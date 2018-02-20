@@ -626,7 +626,7 @@
                 user.details.group = snapshot.val().userDetails.participantGroup;
                 user.details.quizTranslation = snapshot.val().userDetails.quizTranslation;
                 user.hasST = snapshot.val().userDetails.socialTracker;
-                user.ST.collection = snapshot.val().userDetails.stCollectionName;
+                user.ST.collection = snapshot.val().userDetails.stCollectionName ? snapshot.val().userDetails.stCollectionName : null;
 
                 if (user.details.language === 'english') {
                     $("html").attr("lang", "en");
@@ -811,343 +811,345 @@
             numRequest: 2,
             singleCallback: function() {
 
-                // Authenticate with Social Tracker - Get Collection
-                $.ajax({
-                    method: "GET",
-                    url: "http://augreal.mklab.iti.gr:81/api/collection/"+user.ST.collection,
-                    success: function(data) {
+                if (user.ST.collection) {
 
-                        console.log(user.ST.sources);
+                    // Authenticate with Social Tracker - Get Collection
+                    $.ajax({
+                        method: "GET",
+                        url: "http://augreal.mklab.iti.gr:81/api/collection/"+user.ST.collection,
+                        success: function(data) {
 
-                        var refreshDataCallback = new MyRequestsCompleted({
-                            numRequest: user.ST.sources,
-                            singleCallback: function() {
+                            console.log(user.ST.sources);
 
-                                var reference = firebase.database().ref('users/' + currentUser.uid + '/general/dashboardVisits');
-                                var ts = Math.floor(Date.now()/1000);
-                                var date = String(new Date(ts));
+                            var refreshDataCallback = new MyRequestsCompleted({
+                                numRequest: user.ST.sources,
+                                singleCallback: function() {}
+                            });
 
-                                reference.child(ts).set({
-                                    "date": date
-                                });
+                            // Owner not found, create owner collection and log everything from this timestamp and onward!
+                            // Maybe this will never happen but let's handle it if the user creates a FB account in the future!
+                            if (data.count === 0) {
 
-                                reference = firebase.database().ref('users/' + currentUser.uid);
-                                reference.once('value').then(function (snapshot) {
+                                // Fire callback
+                                refreshDataCallback.requestComplete(true);
 
-                                    // Calculate training todos
-                                    if (snapshot.val().training) {
+                            } else {
 
-                                        var trainingPercentage = calculateTrainingIndicators(snapshot.val().training.levels);
+                                var i, socialSource = '';
+                                for (i=0; i < data.collections[0].accounts.length; i++) {
 
-                                        $('#trainingPercentageBar').css('height', trainingPercentage + '%');
-                                        $('#trainingPercentageLabel').html(trainingPercentage + '%');
+                                    socialSource = data.collections[0].accounts[i].source;
+                                    var until = String(Math.floor(Date.now()));
+                                    var since;
 
-                                    } else {
-                                        // TODO empty states
-                                    }
+                                    console.log(socialSource);
 
-                                    // Check if there are saved data, to establish boundaries first
+                                    // Facebook not applicable, since we don't save FB data on the Social Tracker.
+                                    switch(socialSource) {
 
-                                    var gtwStartDate = moment.utc(parseInt(snapshot.val().general.start[0].timestamp, 10));
-                                    var today = moment.utc();
+                                        case 'Twitter':
 
-                                    gtwStartDate = gtwStartDate.startOf('day');
-                                    today = today.startOf('day');
+                                            since = String(user.socialTracker.lastUpdated.twTs);
+                                            console.log("ST TWITTER Last saved date - now: ", since, until);
 
-                                    var today_unix = moment.unix(today);
+                                            $.ajax({
+                                                method: "GET",
+                                                url: "http://augreal.mklab.iti.gr:81/api/items",
+                                                data: {
+                                                    collection: data.collections[0]._id,
+                                                    language: 'all',
+                                                    topics: '*',
+                                                    unique: false,
+                                                    original: "all",
+                                                    type: "all",
+                                                    source: "Twitter",
+                                                    sort: "recency",
+                                                    since: since + '001',
+                                                    until: until,
+                                                    nPerPage: 2000,
+                                                    Page: 1
 
-                                    var yearDiff = 0;
-                                    var weekDiff = 0;
-                                    var daysDiff = 0;
+                                                },
+                                                success: function (arr) {
 
-                                    if (today_unix <= gtwStartDate) {
+                                                    console.log("TW: ", arr);
 
-                                    } else {
-                                        yearDiff = today.diff(gtwStartDate, 'years');
-                                        weekDiff = today.diff(gtwStartDate, 'weeks');
-                                        daysDiff = today.diff(gtwStartDate, 'days');
+                                                    if (arr.length !== 0) {
 
-                                    }
-                                    console.log(yearDiff, weekDiff, daysDiff);
+                                                        var tweets = createTwitterItems(arr);
 
-                                    var dayTS;
-                                    var nextDayTS;
-                                    var sessions = [];
+                                                        var reference = firebase.database().ref('users/' + currentUser.uid + '/socialTracker/twitter/tweets');
+                                                        reference.once('value').then(function (snapshot) {
 
-                                    if (snapshot.val().pageActivity) {
-                                        sessions = initFirebaseData(sessions, snapshot);
-                                    }
+                                                            // Upload Twitter items
+                                                            for (var i in tweets) { reference.child(tweets[i].publicationTime).set(tweets[i]); }
 
-                                    for (i=0;i < daysDiff; i++) {
+                                                            // Update timestamp!
+                                                            firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
+                                                                "twTs": tweets[0].publicationTime
+                                                            });
 
-                                        dayTS = gtwStartDate.unix();
+                                                            console.log("Twitter Data collection - COMPLETE");
 
-                                        calendar.push({
-                                            year: gtwStartDate.year(),
-                                            month: gtwStartDate.month() + 1, // month starts from 0
-                                            monthString: gtwStartDate.format("MMMM"),
-                                            week: gtwStartDate.week(),
-                                            day: gtwStartDate.date(),
-                                            weekDay: gtwStartDate.isoWeekday(),
-                                            weekDayString: gtwStartDate.format('dddd'),
-                                            ts: dayTS,
-                                            email: [], // 1.1
-                                            facebook: [], // 1.2
-                                            twitter: [], // 1.2
-                                            instagram: [], // 1.2
-                                            forum: [], // 1.3
-                                            youtube: [], // 1.6 & 2.1
-                                            news: [], // 1.7 & 2.4
-                                            entertainment: [], // 2.1
-                                            health: [], // 2.2
-                                            elearning: [], // 3.1
-                                            linkedin: [], // 3.2
-                                            job: [] // 3.5
+                                                            user.socialTracker.lastUpdated.twTs = until;
 
-                                        });
-
-                                        gtwStartDate.add(1, 'days');
-                                        nextDayTS = gtwStartDate.unix();
-
-                                        calendar = calculateDailyCalendar(sessions, calendar, dayTS, nextDayTS);
-
-                                        // Time spent online
-                                        // Keystrokes
-
-                                    }
-                                    weeklyCalendar = calculateWeeklyCalendar(calendar, sessionType);
-
-                                    // Score Averages
-                                    var averages = [];
-                                    var scoreAverage = [];
-                                    scoreAverage.participation = 0;
-                                    scoreAverage.empowerment = 0;
-                                    scoreAverage.education = 0;
-
-                                    for (var k in sessionType) {
-                                        if (typeof sessionType[k] !== 'function') {
-                                            averages[sessionType[k]] = calculateScoreAverage(calendar, sessionType[k]);
-                                        }
-                                    }
-
-                                    averages.social = parseInt((averages.facebook + averages.twitter + averages.instagram)/3, 10);
-
-                                    $("#mailPbar").val(averages.email).prop('title', averages.email + '%');
-                                    $("#socialPbar").val(averages.social).prop('title', averages.social + '%');
-                                    $("#forumPbar").val(averages.forum).prop('title', averages.forum + '%');
-                                    $("#ytPbar").val(averages.youtube).prop('title', averages.youtube + '%');
-                                    $("#newsPbar").val(averages.news).prop('title', averages.news + '%');
-                                    $("#ytPbar2").val(averages.youtube).prop('title', averages.youtube + '%');
-                                    $("#entPbar").val(averages.entertainment).prop('title', averages.entertainment + '%');
-                                    $("#newsPbar2").val(averages.news).prop('title', averages.news + '%');
-                                    $("#healthPbar").val(averages.health).prop('title', averages.health + '%');
-                                    $("#learningPbar").val(averages.elearning).prop('title', averages.elearning + '%');
-                                    $("#linkedinPbar").val(averages.linkedin).prop('title', averages.linkedin + '%');
-                                    $("#jobPbar").val(averages.job).prop('title', averages.job + '%');
-
-                                    $("#mailPercentage").text(averages.email + '%');
-                                    $("#socialPercentage").text(averages.social + '%');
-                                    $("#foraPercentage").text(averages.forum + '%');
-                                    $("#ytPercentage").text(averages.youtube + '%');
-                                    $("#newsPercentage").text(averages.news + '%');
-                                    $("#ytPercentage2").text(averages.youtube + '%');
-                                    $("#entPercentage").text(averages.entertainment + '%');
-                                    $("#newsPercentage2").text(averages.news + '%');
-                                    $("#healthPercentage").text(averages.health + '%');
-                                    $("#learningPercentage").text(averages.elearning + '%');
-                                    $("#linkedInPercentage").text(averages.linkedin + '%');
-                                    $("#jobPercentage").text(averages.job + '%');
-
-
-                                    scoreAverage.participation = parseInt(((averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7), 10);
-                                    scoreAverage.empowerment = parseInt(((averages.youtube + averages.entertainment + averages.news + averages.health) / 4), 10);
-                                    scoreAverage.education = parseInt(((averages.elearning + averages.linkedin + averages.job) / 3), 10);
-
-                                    $("#scoreAverageParticipationIndicator").text(scoreAverage.participation + '%');
-                                    $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment + '%');
-                                    $("#scoreAverageEducationIndicator").text(scoreAverage.education + '%');
-
-                                    $("#participationProgressBar").val(scoreAverage.participation).prop('title', scoreAverage.participation + '%');
-                                    $("#empowermentProgressBar").val(scoreAverage.empowerment).prop('title', scoreAverage.empowerment + '%');
-                                    $("#educationProgressBar").val(scoreAverage.education).prop('title', scoreAverage.education + '%');
-
-                                    // Total
-                                    scoreAverage.total = parseInt(((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3), 10);
-
-                                    // Update total score!
-                                    firebase.database().ref('users/' + currentUser.uid + '/scores').update({
-                                        "total": scoreAverage.total,
-                                        "average": {
-                                            "participation": scoreAverage.participation,
-                                            "empowerment": scoreAverage.empowerment,
-                                            "education": scoreAverage.education
-                                        },
-                                        "calendar": calendar,
-                                        "weeklyCalendar": weeklyCalendar,
-                                        "lastUpdated": + new Date()
-                                    });
-
-                                    $("#scoreTotalIndicator").text(scoreAverage.total + '%');
-
-                                    // Show page
-                                    $('#loader').hide();
-                                    $("#homepage-section").show();
-
-                                });
-                            }
-                        });
-
-                        // Owner not found, create owner collection and log everything from this timestamp and onward!
-                        // Maybe this will never happen but let's handle it if the user creates a FB account in the future!
-                        if (data.count === 0) {
-
-                            // Fire callback
-                            refreshDataCallback.requestComplete(true);
-
-                        } else {
-
-                            var i, socialSource = '';
-                            for (i=0; i < data.collections[0].accounts.length; i++) {
-
-                                socialSource = data.collections[0].accounts[i].source;
-                                var until = String(Math.floor(Date.now()));
-                                var since;
-
-                                console.log(socialSource);
-
-                                // Facebook not applicable, since we don't save FB data on the Social Tracker.
-                                switch(socialSource) {
-
-                                    case 'Twitter':
-
-                                        since = String(user.socialTracker.lastUpdated.twTs);
-                                        console.log("ST TWITTER Last saved date - now: ", since, until);
-
-                                        $.ajax({
-                                            method: "GET",
-                                            url: "http://augreal.mklab.iti.gr:81/api/items",
-                                            data: {
-                                                collection: data.collections[0]._id,
-                                                language: 'all',
-                                                topics: '*',
-                                                unique: false,
-                                                original: "all",
-                                                type: "all",
-                                                source: "Twitter",
-                                                sort: "recency",
-                                                since: since + '001',
-                                                until: until,
-                                                nPerPage: 2000,
-                                                Page: 1
-
-                                            },
-                                            success: function (arr) {
-
-                                                console.log("TW: ", arr);
-
-                                                if (arr.length !== 0) {
-
-                                                    var tweets = createTwitterItems(arr);
-
-                                                    var reference = firebase.database().ref('users/' + currentUser.uid + '/socialTracker/twitter/tweets');
-                                                    reference.once('value').then(function (snapshot) {
-
-                                                        // Upload Twitter items
-                                                        for (var i in tweets) { reference.child(tweets[i].publicationTime).set(tweets[i]); }
-
-                                                        // Update timestamp!
-                                                        firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
-                                                            "twTs": tweets[0].publicationTime
+                                                            // Fire callback
+                                                            refreshDataCallback.requestComplete(true);
                                                         });
 
-                                                        console.log("Twitter Data collection - COMPLETE");
-
-                                                        user.socialTracker.lastUpdated.twTs = until;
-
-                                                        // Fire callback
+                                                    } else {
                                                         refreshDataCallback.requestComplete(true);
-                                                    });
+                                                    }
 
-                                                } else {
+                                                }, error:function() { alert("Error, Could not get Twitter items");
+                                                    // Fire callback
                                                     refreshDataCallback.requestComplete(true);
                                                 }
+                                            });
 
-                                            }, error:function() { alert("Error, Could not get Twitter items");
-                                                // Fire callback
-                                                refreshDataCallback.requestComplete(true);
-                                            }
-                                        });
+                                            break;
 
-                                        break;
+                                        case 'GooglePlus':
 
-                                    case 'GooglePlus':
+                                            since = String(user.socialTracker.lastUpdated.gpTs);
+                                            console.log("ST GPLUS Last saved date - now: ", since, until);
 
-                                        since = String(user.socialTracker.lastUpdated.gpTs);
-                                        console.log("ST GPLUS Last saved date - now: ", since, until);
+                                            $.ajax({
+                                                method: "GET",
+                                                url: "http://augreal.mklab.iti.gr:81/api/items",
+                                                data: {
+                                                    collection: data.collections[0]._id,
+                                                    language: 'all',
+                                                    topics: '*',
+                                                    unique: false,
+                                                    original: "all",
+                                                    type: "all",
+                                                    source: "GooglePlus",
+                                                    sort: "recency",
+                                                    since: since+'001',
+                                                    until: until,
+                                                    nPerPage: 2000,
+                                                    Page: 1
 
-                                        $.ajax({
-                                            method: "GET",
-                                            url: "http://augreal.mklab.iti.gr:81/api/items",
-                                            data: {
-                                                collection: data.collections[0]._id,
-                                                language: 'all',
-                                                topics: '*',
-                                                unique: false,
-                                                original: "all",
-                                                type: "all",
-                                                source: "GooglePlus",
-                                                sort: "recency",
-                                                since: since+'001',
-                                                until: until,
-                                                nPerPage: 2000,
-                                                Page: 1
+                                                },
+                                                success: function (arr) {
 
-                                            },
-                                            success: function (arr) {
+                                                    console.log("GP: ", arr);
 
-                                                console.log("GP: ", arr);
+                                                    if (arr.length !== 0) {
 
-                                                if (arr.length !== 0) {
+                                                        var gPosts = createGooglePlusItems(arr);
 
-                                                    var gPosts = createGooglePlusItems(arr);
+                                                        var reference = firebase.database().ref('users/' + currentUser.uid + '/socialTracker/googlePlus/posts');
+                                                        reference.once('value').then(function (snapshot) {
 
-                                                    var reference = firebase.database().ref('users/' + currentUser.uid + '/socialTracker/googlePlus/posts');
-                                                    reference.once('value').then(function (snapshot) {
+                                                            // Upload Twitter items
+                                                            for (var i in gPosts) { reference.child(gPosts[i].publicationTime).set(gPosts[i]); }
 
-                                                        // Upload Twitter items
-                                                        for (var i in gPosts) { reference.child(gPosts[i].publicationTime).set(gPosts[i]); }
+                                                            // Update timestamp!
+                                                            firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
+                                                                "gpTs": gPosts[0].publicationTime
+                                                            });
 
-                                                        // Update timestamp!
-                                                        firebase.database().ref('users/' + currentUser.uid + '/socialTracker/lastUpdated').update({
-                                                            "gpTs": gPosts[0].publicationTime
+                                                            console.log("GP Data collection - COMPLETE");
+
+                                                            user.socialTracker.lastUpdated.gpTs = until;
+
+                                                            // Fire callback
+                                                            refreshDataCallback.requestComplete(true);
                                                         });
 
-                                                        console.log("GP Data collection - COMPLETE");
-
-                                                        user.socialTracker.lastUpdated.gpTs = until;
-
-                                                        // Fire callback
-                                                        refreshDataCallback.requestComplete(true);
-                                                    });
-
-                                                } else { refreshDataCallback.requestComplete(true); }
+                                                    } else { refreshDataCallback.requestComplete(true); }
 
 
-                                            }, error:function() { alert("Error, Could not get G+ items");
-                                                // Fire callback
-                                                refreshDataCallback.requestComplete(true);
-                                            }
-                                        });
+                                                }, error:function() { alert("Error, Could not get G+ items");
+                                                    // Fire callback
+                                                    refreshDataCallback.requestComplete(true);
+                                                }
+                                            });
 
-                                        // Fire callback
-                                        refreshDataCallback.requestComplete(true);
+                                            // Fire callback
+                                            refreshDataCallback.requestComplete(true);
 
-                                        break;
-                                    default:
+                                            break;
+                                        default:
+                                    }
                                 }
                             }
+                        }, error:function() { console.log("Error, Could not load Social Tracker API"); }
+                    });
+                }
+
+
+                var reference = firebase.database().ref('users/' + currentUser.uid + '/general/dashboardVisits');
+                var ts = Math.floor(Date.now()/1000);
+                var date = String(new Date(ts));
+
+                reference.child(ts).set({
+                    "date": date
+                });
+
+                reference = firebase.database().ref('users/' + currentUser.uid);
+                reference.once('value').then(function (snapshot) {
+
+                    // Calculate training todos
+                    if (snapshot.val().training) {
+
+                        var trainingPercentage = calculateTrainingIndicators(snapshot.val().training.levels);
+
+                        $('#trainingPercentageBar').css('height', trainingPercentage + '%');
+                        $('#trainingPercentageLabel').html(trainingPercentage + '%');
+
+                    } else {
+                        // TODO empty states
+                    }
+
+                    // Check if there are saved data, to establish boundaries first
+
+                    var gtwStartDate = moment.utc(parseInt(snapshot.val().general.start[0].timestamp, 10));
+                    var today = moment.utc();
+
+                    gtwStartDate = gtwStartDate.startOf('day');
+                    today = today.startOf('day');
+
+                    var today_unix = moment.unix(today);
+
+                    var yearDiff = 0;
+                    var weekDiff = 0;
+                    var daysDiff = 0;
+
+                    if (today_unix <= gtwStartDate) {
+
+                    } else {
+                        yearDiff = today.diff(gtwStartDate, 'years');
+                        weekDiff = today.diff(gtwStartDate, 'weeks');
+                        daysDiff = today.diff(gtwStartDate, 'days');
+
+                    }
+
+                    var dayTS;
+                    var nextDayTS;
+                    var sessions = [];
+
+                    if (snapshot.val().pageActivity) {
+                        sessions = initFirebaseData(sessions, snapshot);
+                    }
+
+                    for (i=0;i < daysDiff; i++) {
+
+                        dayTS = gtwStartDate.unix();
+
+                        calendar.push({
+                            year: gtwStartDate.year(),
+                            month: gtwStartDate.month() + 1, // month starts from 0
+                            monthString: gtwStartDate.format("MMMM"),
+                            week: gtwStartDate.week(),
+                            day: gtwStartDate.date(),
+                            weekDay: gtwStartDate.isoWeekday(),
+                            weekDayString: gtwStartDate.format('dddd'),
+                            ts: dayTS,
+                            email: [], // 1.1
+                            facebook: [], // 1.2
+                            twitter: [], // 1.2
+                            instagram: [], // 1.2
+                            forum: [], // 1.3
+                            youtube: [], // 1.6 & 2.1
+                            news: [], // 1.7 & 2.4
+                            entertainment: [], // 2.1
+                            health: [], // 2.2
+                            elearning: [], // 3.1
+                            linkedin: [], // 3.2
+                            job: [] // 3.5
+
+                        });
+
+                        gtwStartDate.add(1, 'days');
+                        nextDayTS = gtwStartDate.unix();
+
+                        calendar = calculateDailyCalendar(sessions, calendar, dayTS, nextDayTS);
+
+                        // Time spent online
+                        // Keystrokes
+
+                    }
+                    weeklyCalendar = calculateWeeklyCalendar(calendar, sessionType);
+
+                    // Score Averages
+                    var averages = [];
+                    var scoreAverage = [];
+                    scoreAverage.participation = 0;
+                    scoreAverage.empowerment = 0;
+                    scoreAverage.education = 0;
+
+                    for (var k in sessionType) {
+                        if (typeof sessionType[k] !== 'function') {
+                            averages[sessionType[k]] = calculateScoreAverage(calendar, sessionType[k]);
                         }
-                    }, error:function() { alert("Error, Could not load Social Tracker API"); }
+                    }
+
+                    averages.social = parseInt((averages.facebook + averages.twitter + averages.instagram)/3, 10);
+
+                    $("#mailPbar").val(averages.email).prop('title', averages.email + '%');
+                    $("#socialPbar").val(averages.social).prop('title', averages.social + '%');
+                    $("#forumPbar").val(averages.forum).prop('title', averages.forum + '%');
+                    $("#ytPbar").val(averages.youtube).prop('title', averages.youtube + '%');
+                    $("#newsPbar").val(averages.news).prop('title', averages.news + '%');
+                    $("#ytPbar2").val(averages.youtube).prop('title', averages.youtube + '%');
+                    $("#entPbar").val(averages.entertainment).prop('title', averages.entertainment + '%');
+                    $("#newsPbar2").val(averages.news).prop('title', averages.news + '%');
+                    $("#healthPbar").val(averages.health).prop('title', averages.health + '%');
+                    $("#learningPbar").val(averages.elearning).prop('title', averages.elearning + '%');
+                    $("#linkedinPbar").val(averages.linkedin).prop('title', averages.linkedin + '%');
+                    $("#jobPbar").val(averages.job).prop('title', averages.job + '%');
+
+                    $("#mailPercentage").text(averages.email + '%');
+                    $("#socialPercentage").text(averages.social + '%');
+                    $("#foraPercentage").text(averages.forum + '%');
+                    $("#ytPercentage").text(averages.youtube + '%');
+                    $("#newsPercentage").text(averages.news + '%');
+                    $("#ytPercentage2").text(averages.youtube + '%');
+                    $("#entPercentage").text(averages.entertainment + '%');
+                    $("#newsPercentage2").text(averages.news + '%');
+                    $("#healthPercentage").text(averages.health + '%');
+                    $("#learningPercentage").text(averages.elearning + '%');
+                    $("#linkedInPercentage").text(averages.linkedin + '%');
+                    $("#jobPercentage").text(averages.job + '%');
+
+
+                    scoreAverage.participation = parseInt(((averages.email + averages.facebook + averages.twitter + averages.instagram + averages.forum + averages.youtube + averages.news) / 7), 10);
+                    scoreAverage.empowerment = parseInt(((averages.youtube + averages.entertainment + averages.news + averages.health) / 4), 10);
+                    scoreAverage.education = parseInt(((averages.elearning + averages.linkedin + averages.job) / 3), 10);
+
+                    $("#scoreAverageParticipationIndicator").text(scoreAverage.participation + '%');
+                    $("#scoreAverageEmpowermentIndicator").text(scoreAverage.empowerment + '%');
+                    $("#scoreAverageEducationIndicator").text(scoreAverage.education + '%');
+
+                    $("#participationProgressBar").val(scoreAverage.participation).prop('title', scoreAverage.participation + '%');
+                    $("#empowermentProgressBar").val(scoreAverage.empowerment).prop('title', scoreAverage.empowerment + '%');
+                    $("#educationProgressBar").val(scoreAverage.education).prop('title', scoreAverage.education + '%');
+
+                    // Total
+                    scoreAverage.total = parseInt(((scoreAverage.participation + scoreAverage.empowerment + scoreAverage.education)/3), 10);
+
+                    // Update total score!
+                    firebase.database().ref('users/' + currentUser.uid + '/scores').update({
+                        "total": scoreAverage.total,
+                        "average": {
+                            "participation": scoreAverage.participation,
+                            "empowerment": scoreAverage.empowerment,
+                            "education": scoreAverage.education
+                        },
+                        "calendar": calendar,
+                        "weeklyCalendar": weeklyCalendar,
+                        "lastUpdated": + new Date()
+                    });
+
+                    $("#scoreTotalIndicator").text(scoreAverage.total + '%');
+
+                    // Show page
+                    $('#loader').hide();
+                    $("#homepage-section").show();
+
                 });
             }
         });

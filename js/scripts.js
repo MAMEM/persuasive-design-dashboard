@@ -334,8 +334,6 @@ function drawChart(calendar, detailed) {
 
     var i=0, j=0;
 
-    console.log(calendar);
-
     var data = new google.visualization.DataTable();
     data.addColumn('string', 'Date');
 
