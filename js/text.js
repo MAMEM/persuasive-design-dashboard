@@ -4,6 +4,7 @@ var textEnglish = {
     help: 'HELP',
     help_desc: 'Contact us if you need help',
     profile: 'PROFILE',
+    profile_small: 'Profile',
     profile_desc: 'Edit your information',
     training: 'TRAINING',
     training_desc: 'Replay the training software to score better',
@@ -67,13 +68,15 @@ var textEnglish = {
     send_message: 'Send us a message',
     message: 'Message',
     message_placeholder: 'Add your message',
-    submit: 'Submit'
+    submit: 'Submit',
+    gender: 'Gender'
 };
 
 var textGreek = {
     help: 'ΒΟΗΘΕΙΑ',
     help_desc: 'Επικοινωνήστε μαζί μας',
-    profile: 'ΠΡΟΦΙΛ',
+    profile: 'ΣΤΟΙΧΕΙΑ',
+    profile_small: 'Στοιχεία',
     profile_desc: 'Επεξεργασία προσωπικών στοιχείων',
     training: 'ΕΚΠΑΙΔΕΥΣΗ',
     training_desc: 'Δοκιμάστε να πετύχετε καλύτερη βαθμολογία',
@@ -137,13 +140,15 @@ var textGreek = {
     send_message: 'Στείλτε μας ένα μήνυμα',
     message: 'Μήνυμα',
     message_placeholder: 'Γράψτε το μήνυμα σας',
-    submit: 'Υποβολή'
+    submit: 'Υποβολή',
+    gender: 'Φύλο'
 };
 
 var textHebrew = {
     help: 'עזרה',
     help_desc: 'פנו אלינו אם אתם זקוקים לעזרה',
     profile: 'פרופיל',
+    profile_small: 'פרופיל',
     profile_desc: 'ערכו את המידע שלכם',
     training: 'אימון',
     training_desc: 'הפעל מחדש את תוכנת האימון כדי לקבל ציון טוב יותר',
@@ -170,7 +175,7 @@ var textHebrew = {
     entertainment: 'בידור',
     health: 'בריאות',
     elearning: 'E-learning',
-    pro: 'רשתות מקצעויות,',
+    pro: 'רשתות מקצעויות',
     job: 'חיפוש עבודה',
     cats_basic: 'קטגוריות בסיסיות',
     cats_all: 'כל הקטגוריות',
@@ -207,7 +212,8 @@ var textHebrew = {
     send_message: 'שלח לנו הודעה',
     message: 'הודעה',
     message_placeholder: 'הוסף את הודעתך כאן',
-    submit: 'שלח'
+    submit: 'שלח',
+    gender: 'מגדר'
 };
 
 function translate(lang) {
@@ -297,4 +303,9 @@ function renderText(text) {
     $('#emailContent').attr("placeholder", text.message_placeholder);
     $('#cancelHelpButton').text(text.cancel);
     $('#submitBtn').text(text.submit);
+    $('#genderLabel').text(text.gender);
+    $('#saveInfoButton').text(text.save_changes);
+    $('#profileLabel').text(text.profile_small);
+
+
 }
