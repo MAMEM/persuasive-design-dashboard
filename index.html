@@ -57,7 +57,7 @@
             <div class="twelve columns">
                 <h4>Select an option</h4>
                 <br>
-                <div role="button" class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                <div style="visibility: hidden" role="button" class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                 <br>
                 <div class="whitespace-separator"></div>
                 <button id="noFbBtn" class="button"> Continue without Facebook</button>
@@ -522,18 +522,16 @@
                     </div>
                 </div>
             </form>
-
         </div>
 
     </div>
 </div>
 
-
 <script type="text/javascript" src="js/text.js"></script>
 <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
 <script type="text/javascript" src="js/callback.js"></script>
-<script type="text/javascript">
 
+<script>
     google.charts.load('current', {'packages':['corechart', 'line']});
 
     // Initialize Firebase
@@ -618,6 +616,9 @@
 
             return firebase.database().ref('/users/' + currentUser.uid).once('value').then(function(snapshot) {
 
+                // Delete me at the end of the experiments
+                loadHomepage(false);
+
                 user.details.nickname = snapshot.val().userDetails.nickname;
                 user.details.gender = snapshot.val().userDetails.gender;
                 user.details.age = snapshot.val().userDetails.age;
@@ -673,7 +674,7 @@
                     var paramUser = '&email='+user.details.email;
                     var paramPass = '&pass='+user.details.password;
 
-                    window.location.href = '../gtw-game/index.html?'+paramUser+''+paramPass;
+                    window.location.href = '../game/index.html?'+paramUser+''+paramPass;
                 });
 
                 $( "#profileBtn" ).click(function() {
@@ -1265,8 +1266,6 @@
 
                     } else {
 
-                        console.log("Νot FB logged in");
-
                         // Fire callback - Facebook OFF
                         initializationCallback.requestComplete(true);
                     }
@@ -1292,10 +1291,11 @@
                 }
 
                 // Fire callback 2 - Firebase logged-in
-                console.log("second");
                 initializationCallback.requestComplete(true);
 
-            }, error:function() { alert("Error, Could not load Social Tracker API"); }
+            }, error:function() { console.log("Error, Could not load Social Tracker API");
+                initializationCallback.requestComplete(true);
+            }
         });
     }
 
