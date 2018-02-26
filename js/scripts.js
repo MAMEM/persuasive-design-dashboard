@@ -160,14 +160,12 @@ function calculateDailyCalendar(sessions, calendar, dayTS, nextDayTS) {
 
     // 1.2 General Social Network activity
     // Calculate social networks first
-    if (sessions.social.facebook) { calendar[calendar.length-1].facebook = calculateDailyData('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].facebook, calendar[calendar.length-2] ? calendar[calendar.length-2].facebook: null); }
-    if (sessions.social.twitter) { calendar[calendar.length-1].twitter = calculateDailyData('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].twitter, calendar[calendar.length-2] ? calendar[calendar.length-2].twitter : null); }
-    if (sessions.social.instagram) { calendar[calendar.length-1].instagram = calculateDailyData('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].instagram, calendar[calendar.length-2] ? calendar[calendar.length-2].instagram : null); }
 
-    // Now calculate data from social Tracker
-    if (sessions.social.facebook) {  }
-    if (sessions.social.twitter) {  }
-    if (sessions.social.instagram) {  }
+    if (sessions.social) {
+        if (sessions.social.facebook) { calendar[calendar.length-1].facebook = calculateDailyData('facebook', sessions.social.facebook, dayTS, nextDayTS, calendar[calendar.length-1].facebook, calendar[calendar.length-2] ? calendar[calendar.length-2].facebook: null); }
+        if (sessions.social.twitter) { calendar[calendar.length-1].twitter = calculateDailyData('twitter', sessions.social.twitter, dayTS, nextDayTS, calendar[calendar.length-1].twitter, calendar[calendar.length-2] ? calendar[calendar.length-2].twitter : null); }
+        if (sessions.social.instagram) { calendar[calendar.length-1].instagram = calculateDailyData('instagram', sessions.social.instagram, dayTS, nextDayTS, calendar[calendar.length-1].instagram, calendar[calendar.length-2] ? calendar[calendar.length-2].instagram : null); }
+    }
 
     if (sessions.forum) { calendar[calendar.length-1].forum = calculateDailyData('forum', sessions.forum, dayTS, nextDayTS, calendar[calendar.length-1].forum, calendar[calendar.length-2] ? calendar[calendar.length-2].forum : null); }
     if (sessions.youtube) { calendar[calendar.length-1].youtube = calculateDailyData('youtube', sessions.youtube, dayTS, nextDayTS, calendar[calendar.length-1].youtube, calendar[calendar.length-2] ? calendar[calendar.length-2].youtube : null); }
