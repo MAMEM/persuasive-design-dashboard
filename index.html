@@ -51,7 +51,7 @@
 </script>
 
 
-<div id="fb-login-section" class="section hero" style="visibility: hidden;">
+<div id="fb-login-section" class="section hero">
     <div class="container">
         <div class="row">
             <div class="twelve columns">
@@ -616,8 +616,8 @@
 
             return firebase.database().ref('/users/' + currentUser.uid).once('value').then(function(snapshot) {
 
-                // Delete me at the end of the experiments
-                loadHomepage(false);
+                // Toggle for fb or not
+                //loadHomepage(false);
 
                 user.details.nickname = snapshot.val().userDetails.nickname;
                 user.details.gender = snapshot.val().userDetails.gender;
@@ -1171,7 +1171,7 @@
                         // Set first unix timestamp as 1st February of 2017
                         user.socialTracker.lastUpdated = snapshot.val().socialTracker.lastUpdated;
                         if (!user.socialTracker.lastUpdated.fbTs && !user.hasFB) {
-                            user.socialTracker.lastUpdated.fbTs = 1517443200000;
+                            user.socialTracker.lastUpdated.fbTs = 1517443200;
                         }
 
                         if (!user.socialTracker.lastUpdated.twTs) {
@@ -1184,7 +1184,7 @@
 
                     } else {
                         user.socialTracker.lastUpdated = {};
-                        user.socialTracker.lastUpdated.fbTs = 1517443200000;
+                        user.socialTracker.lastUpdated.fbTs = 1517443200;
                         user.socialTracker.lastUpdated.twTs = 1517443200000;
                         user.socialTracker.lastUpdated.gpTs = 1517443200000;
                     }
@@ -1202,7 +1202,7 @@
                                 email: response.email,
                                 name: response.name,
                                 avatar: response.picture.data.url,
-                                friends: response.friends.summary.total_count,
+                                /*friends: response.friends.summary.total_count,*/
                                 id: response.id,
                                 profile: response.link,
                                 locale: response.locale
@@ -1210,12 +1210,18 @@
 
                             console.log("Got FB user information");
 
+                            console.log(user.FB);
+
                             // 1b. Get FB user posts
                             FB.api('/me/feed', {
                                 access_token: token,
                                 since: user.socialTracker.lastUpdated.fbTs,
                                 fields: 'name, message, link, likes, shares, comments, created_time, permalink_url, status_type, type, source, picture' // Unused: message_tags
-                            }, function(response) { getAllFBPostsRecursive(response); });
+                            }, function(response) {
+
+                                console.log(response);
+
+                                getAllFBPostsRecursive(response); });
                         });
 
                         function getAllFBPostsRecursive(response) {
@@ -1278,8 +1284,11 @@
             }
         });
 
+        // Fire callback 2 - Firebase logged-in
+        initializationCallback.requestComplete(true);
+
         // 2. Check ST
-        $.ajax({
+        /*$.ajax({
             method: "GET",
             url: "http://augreal.mklab.iti.gr:81/api/collection/"+user.ST.collection,
             success: function(data) {
@@ -1296,7 +1305,7 @@
             }, error:function() { console.log("Error, Could not load Social Tracker API");
                 initializationCallback.requestComplete(true);
             }
-        });
+        });*/
     }
 
 </script>
