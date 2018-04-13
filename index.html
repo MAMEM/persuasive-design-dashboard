@@ -57,7 +57,7 @@
             <div class="twelve columns">
                 <h4>Select an option</h4>
                 <br>
-                <div style="visibility: hidden" role="button" class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
+                <div role="button" data-scope="email, public_profile, user_posts, user_status, user_likes, user_location" class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
                 <br>
                 <div class="whitespace-separator"></div>
                 <button id="noFbBtn" class="button"> Continue without Facebook</button>
@@ -542,6 +542,7 @@
     user.socialTracker = [];
     user.FB = [];
     user.FB.data = [];
+    user.FB.userDetails = {};
     user.ST = [];
     user.ST.sources = 0;
     user.hasFB = false;
@@ -1210,7 +1211,9 @@
 
                             console.log("Got FB user information");
 
-                            console.log(user.FB);
+                            console.log("**user: ", user.FB);
+                            console.log("**last updated ts:", user.socialTracker.lastUpdated.fbTs);
+                            console.log("**token:", token);
 
                             // 1b. Get FB user posts
                             FB.api('/me/feed', {
