@@ -195,12 +195,16 @@ function calculateDailyData(sessionType, sessions, dayTS, nextDayTS, calendarEnt
     var minAvg = 0;
     var sdIndicator = 0;
 
+    var startTimestamp;
+
     if (sessions) {
 
         for (j=0;j < sessions.length; j++) {
 
+            startTimestamp = parseInt(sessions[j].startTimestamp.slice(0, -3), 10);
+
             // If there is data for this day
-            if (sessions[j].startTimestamp > dayTS && sessions[j].startTimestamp < nextDayTS) {
+            if (startTimestamp > dayTS && startTimestamp < nextDayTS) {
 
                 if (sessions[j].pages) {
                     for (k in sessions[j].pages) {
