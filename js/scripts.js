@@ -33,9 +33,19 @@ function createFBItems(arr) {
 
         if (media_post) {
             posts[posts.length-1].mediaType = has_image ? 'image' : 'video';
-            posts[posts.length-1].mediaUrl = has_image ?  arr[i].picture :  arr[i].source;
+        }
+
+        if (arr[i].picture) {
             posts[posts.length-1].thumbnail = arr[i].picture;
         }
+
+        if (arr[i].source) {
+            posts[posts.length-1].mediaUrl = arr[i].source;
+        } else {
+            posts[posts.length-1].mediaUrl = "";
+        }
+
+
     }
 
     return posts;
